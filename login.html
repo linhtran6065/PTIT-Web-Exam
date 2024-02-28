@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        form {
+            width: 300px;
+            margin: 0 auto;
+        }
+        input {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Đăng nhập</h2>
+
+<form id="loginForm">
+    <label for="loginUsername">Tên đăng nhập:</label>
+    <input type="text" id="loginUsername" required><br>
+
+    <label for="loginPassword">Mật khẩu:</label>
+    <input type="password" id="loginPassword" required><br>
+
+    <button type="button" onclick="validateLogin()">Đăng nhập</button>
+    
+    <!-- Thêm nút "Đăng ký" để chuyển đến trang đăng ký -->
+    <a href="register.html">Đăng ký</a>
+</form>
+
+<script>
+    function validateLogin() {
+        var loginUsername = document.getElementById("loginUsername").value;
+        var loginPassword = document.getElementById("loginPassword").value;
+
+        // Kiểm tra tính hợp lệ - Demo: Kiểm tra từ cơ sở dữ liệu (mô phỏng)
+        var user = JSON.parse(localStorage.getItem(loginUsername));
+        if (user && user.password === loginPassword) {
+            alert("Đăng nhập thành công!\nTên đăng nhập: " + loginUsername);
+        } else {
+            alert("Tên đăng nhập hoặc mật khẩu không đúng!");
+        }
+    }
+</script>
+
+</body>
+</html>
