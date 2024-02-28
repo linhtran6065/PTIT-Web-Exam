@@ -48,13 +48,32 @@
         // Kiểm tra tính hợp lệ - Demo: Chỉ kiểm tra có giá trị hay không
         if (registerUsername && registerEmail && registerPassword && confirmPassword) {
             if (registerPassword === confirmPassword) {
-                alert("Đăng ký thành công!\nTên người dùng: " + registerUsername + "\nEmail: " + registerEmail);
+                // Kiểm tra xem người dùng đã tồn tại chưa
+                if (!isUserExist(registerUsername)) {
+                    // Lưu thông tin người dùng vào localStorage
+                    var user = {
+                        username: registerUsername,
+                        email: registerEmail,
+                        password: registerPassword
+                    };
+                    localStorage.setItem(registerUsername, JSON.stringify(user));
+
+                    alert("Đăng ký thành công!\nTên người dùng: " + registerUsername + "\nEmail: " + registerEmail);
+                    window.location.href = "login.html";
+                } else {
+                    alert("Tên người dùng đã tồn tại. Vui lòng chọn tên khác.");
+                }
             } else {
                 alert("Mật khẩu và xác nhận mật khẩu không khớp!");
             }
         } else {
             alert("Vui lòng nhập đầy đủ thông tin đăng ký!");
         }
+    }
+
+    // Hàm kiểm tra xem người dùng đã tồn tại hay chưa
+    function isUserExist(username) {
+        return localStorage.getItem(username) !== null;
     }
 </script>
 
