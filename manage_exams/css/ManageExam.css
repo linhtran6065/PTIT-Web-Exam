@@ -1,10 +1,9 @@
-.employee-form {
-  border-style: solid;
+.createForm {
   padding: 10px;
   margin: auto;
   width: 50%;
 }
-.container {
+/* .container {
   display: flex;
   margin: 19px;
 }
@@ -14,8 +13,8 @@
 .container .form-action-buttons {
   flex: 2;
   align-items: center;
-}
-.exam-table {
+} */
+/* .exam-table {
   border-style: solid;
   padding: 20px;
   margin: auto;
@@ -60,22 +59,22 @@ input[type="submit"] {
   background-color: black;
   color: white;
   padding: 10px 18px;
-  /* margin: 0px 0; */
+   margin: 0px 0; 
   border: none;
   border-radius: 5px;
   cursor: pointer;
-}
+} */
 
 form div.form-action-buttons {
   text-align: right;
 }
 
-a {
+/*a {
   cursor: pointer;
   text-decoration: underline;
   color: #0000ee;
   margin-right: 4px;
-}
+} */
 
 label.validation-error {
   color: red;
@@ -84,4 +83,103 @@ label.validation-error {
 
 .hide {
   display: none;
+}
+*/ body {
+  font-family: Arial, sans-serif;
+  background-color: #f8f8f8;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+.header #createBtn {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+.navbar {
+  background-color: #d32f2f !important ;
+  color: white;
+  height: 10vh;
+}
+#avatar {
+  font-weight: bold !important;
+}
+.nav-link {
+  color: white !important;
+  font-size: 1.1rem;
+}
+
+.dropdown-toggle {
+  width: 12vw !important;
+}
+
+.navbar img {
+  width: 2.5vw;
+}
+
+h1 {
+  color: #d32f2f;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+input[type="text"] {
+  margin-bottom: 10px;
+  padding: 10px;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+input[type="text"]:focus,
+select:focus {
+  outline: none;
+  border-color: #d32f2f;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #d32f2f;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #b71c1c;
+}
+.detailBtn {
+  display: flex;
+}
+.detailBtn button {
+  padding: 5px 5px;
+  margin-right: 2px;
 }
