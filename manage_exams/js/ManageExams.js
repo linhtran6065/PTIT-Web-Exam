@@ -17,7 +17,9 @@ var selectedRow = null;
 //   formData["city"] = document.getElementById("city").value;
 //   return formData;
 // }
-
+function onCreateQuestion(data) {
+  window.location.href = "../Create.html";
+}
 function insertNewRecord(data) {
   var table = document
     .getElementById("examList")
@@ -79,5 +81,6 @@ function validate() {
     )
       document.getElementById("fullNameValidationError").classList.add("hide");
   }
+
   return isValid;
 }

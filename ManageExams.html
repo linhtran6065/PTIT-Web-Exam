@@ -18,7 +18,7 @@
             <h4>HHHHHHHHHHHH</h4>
         </div>
         <div class="form-action-buttons">
-            <input type="submit" value="Create new exam">
+            <input type="submit" value="Create new exam" onclick="onCreate(this)">
         </div>
     </div>
     <!-- <hr> -->
@@ -58,7 +58,13 @@
                 </tr>
             </thead>
             <tbody>
-
+                <tr>
+                    <td>Tên bài thi</td>
+                    <td>Mô tả</td>
+                    <td>Loại</td>
+                    <td><button onclick="onCreateQuestion(this)"> Question</button></td>
+                    <td><button onclick="onViewQuestion(this)"> View</button></td>
+                </tr>
             </tbody>
         </table>
     </div>

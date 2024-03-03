@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button onclick="myForm()"> Create new question</button>
+    <button onclick="saveAll()"> Finish</button>
+    <button onclick="deleteAll()"> DeleteAll</button>
+    <ol id="form-container">
+
+    </ol>
+    <script>
+        var data = [];
+        function myForm() {
+            var formContainer = document.getElementById("form-container");
+            var item = document.createElement("li");
+            var form = document.createElement("form");
+            var question = document.createElement("INPUT");
+            question.setAttribute("type", "text");
+            question.setAttribute("class", "question");
+
+            var optionBtn = document.createElement("button");
+            optionBtn.textContent = "Add option";
+            optionBtn.setAttribute("type", "button");
+            optionBtn.onclick = () => optionForm(form);
+
+            var saveBtn = document.createElement("button");
+            saveBtn.textContent = "Save";
+            saveBtn.setAttribute("type", "button");
+            saveBtn.onclick = () => saveFunction(form);
+
+            var editBtn = document.createElement("button");
+            editBtn.textContent = "Edit";
+            editBtn.setAttribute("type", "button");
+            editBtn.onclick = () => editFunction(form);
+            editBtn.style.display = "none";
+
+            var deleteBtn = document.createElement("button");
+            deleteBtn.textContent = "Delete";
+            deleteBtn.setAttribute("type", "button");
+            deleteBtn.onclick = () => deleteFunction(item);
+
+            form.appendChild(question);
+            form.appendChild(editBtn);
+            form.appendChild(optionBtn);
+            form.appendChild(saveBtn);
+            form.appendChild(deleteBtn);
+
+            item.appendChild(form);
+            formContainer.appendChild(item);
+        }
+        function optionForm(form) {
+            var optionInput = document.createElement("input");
+            optionInput.setAttribute("type", "radio");
+            optionInput.setAttribute("name", "answer");
+            optionInput.onclick = () => changeValueRadio(form);
+            var textField = document.createElement("input");
+            textField.setAttribute("type", "text");
+            textField.setAttribute("placeholder", "Enter text here");
+            var container = document.createElement("div");
+            container.setAttribute("class", "newContainer");
+            container.appendChild(optionInput);
+            container.appendChild(textField);
+            form.appendChild(container);
+        }
+        // function            alu            orm) {
+        //     var items = for            electorAll('input[name="answer"]');
+        //     items.forEach(i            
+        //         item.classL            le("checked");
+        //     });
+        //             console.log(items);
+
+        // }
+        function getSelectedValue(container) {
+            var selectedRadio = container.querySelector('input[name="answer"]:checked');
+            if (selectedRadio) {
+                return selectedRadio.value;
+            } else {
+                return null;
+            }
+        }
+        function saveFunction(form) {
+            var formData = [];
+            var questionInput = form.querySelector(".question");
+            questionInput.style.border = "none";
+            var optionsData = [];
+
+            var containers = form.querySelectorAll(".newContainer");
+
+            for (var i = 0; i < containers.length; i++) {
+                var value = getSelectedValue(containers[i]);
+                var textField = containers[i].querySelector('input[type="text"]');
+                var text = textField ? textField.value : "";
+                textField.style.border = "none";
+
+                optionsData.push({
+                    value: value,
+                    text: text
+                });
+            }
+
+            formData.push({
+                question: questionInput.value,
+                optionsData: optionsData
+            })
+            data.push(formData);
+
+            const buttons = form.querySelectorAll('button');
+            buttons.forEach(button => {
+                if (button.textContent != "Edit" && button.textContent != "Delete") {
+                    button.style.display = "none";
+                }
+                else
+                    button.style.display = "inline";
+            })
+
+
+
+        }
+
+        function editFunction(form) {
+            var questionInput = form.querySelector(".question");
+            questionInput.style.border = "1px solid black";
+            var containers = form.querySelectorAll(".newContainer");
+
+            for (var i = 0; i < containers.length; i++) {
+                var textField = containers[i].querySelector('input[type="text"]');
+                textField.style.border = "1px solid black";
+            }
+            const buttons = form.querySelectorAll('button');
+            buttons.forEach(button => {
+                if (button.textContent == "Edit" || button.textContent == "Delete") {
+                    button.style.display = "none";
+                }
+                else
+                    button.style.display = "inline";
+            }
+            )
+        }
+        function deleteFunction(item) {
+            item.remove();
+        }
+        function deleteAll() {
+            var formContainer = document.getElementById("form-container");
+            items = formContainer.querySelectorAll("li");
+            items.forEach(item => {
+                item.remove();
+            });
+        }
+        function saveAll() {
+            window.history.back();
+        }
+
+    </script>
+
+</body>
+
+</html>
