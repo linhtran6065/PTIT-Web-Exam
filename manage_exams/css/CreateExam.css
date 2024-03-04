@@ -56,7 +56,18 @@ h1 {
   justify-content: end;
 }
 .buttonHeader button {
-  margin-right: 20px;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin: 20px 10px;
+}
+
+#import-container {
+  display: flex;
+  justify-content: end;
+  margin: 10px 20px;
+}
+#import-container input[type="file"] {
+  margin-left: 12px;
+}
+#import-container a {
+  color: #d32f2f;
+  text-decoration: underline;
 }

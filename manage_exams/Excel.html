@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.2/xlsx.full.min.js"></script>
+    <script lang="javascript" src="dist/xlsx.core.min.js"></script>
+</head>
+
+<body>
+    <input type="file" id="file-input" accept=".xlsx" />
+    <button id="import-btn">Nhập đề thi</button>
+
+    <div id="questions-container"></div>
+    <script>
+        const fileInput = document.getElementById("file-input");
+        const importBtn = document.getElementById("import-btn");
+        const questionsContainer = document.getElementById("questions-container");
+
+        importBtn.addEventListener("click", () => {
+            const file = fileInput.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const data = e.target.result;
+                const workbook = XLSX.read(data, { type: "array" });
+
+                const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+                const questions = [];
+                const rows = XLSX.utils.sheet_to_json(worksheet);
+                for (const row of rows) {
+                    var options = [
+                        row.option1, row.option2, row.option3, row.option4
+                    ];
+
+                    const question = {
+                        question: row.question,
+                        options: options,
+                        answerText: row.answer,
+                    };
+                    questions.push(question);
+                }
+                console.log(questions);
+            };
+            reader.readAsArrayBuffer(file);
+        });
+    </script>
+</body>
+
+</html>
