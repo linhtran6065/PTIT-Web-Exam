@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tìm Kết Quả Sinh Viên</title>
+    <link rel="stylesheet" href="../static/css/studentResults.css">
+    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="../static/css/common.css">
+    <link rel='stylesheet' href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css'>
+</head>
+
+<body>
+    <div class="main-container">
+
+        <div class="sidebar close">
+            <div class="logo-details">
+                <img src="https://portal.ptit.edu.vn/wp-content/uploads/2016/04/ptit-logo.png" alt="logo">
+
+            </div>
+            <ul class="nav-links">
+                <li class="">
+                    <a href="../admin/index.html">
+                        <i class='bx bx-grid-alt'></i>
+                        <span class="link_name">Trang chủ</span>
+                    </a>
+                    <ul class="sub-menu blank">
+                        <li><a class="link_name" href="../admin/index.html">Trang chủ</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <div class="iocn-link">
+                        <a href="../admin/ManageStudent.html">
+                            <i class='bx bx-user'></i>
+                            <span class="link_name">Quản lý tài khoản</span>
+                        </a>
+                        <ul class="sub-menu blank">
+                            <li><a class="link_name" href="../admin/ManageStudent.html">
+                                    <i class='bx bx-user'></i>Quản lý tài khoản</a></li>
+                        </ul>
+                        <i class='bx bxs-chevron-down arrow'></i>
+                    </div>
+                </li>
+                <li>
+                    <a href="../admin/statistics.html">
+                        <i class='bx bx-line-chart'></i>
+                        <span class="link_name">Thống kê</span>
+                    </a>
+                    <ul class="sub-menu blank">
+                        <li><a class="link_name" href="../admin/statistics.html">Thống kê</a></li>
+                    </ul>
+                </li>
+
+                <li class="active">
+                    <div class="iocn-link">
+                        <a href="../admin/studentResults.html">
+                            <i class='bx bx-search'></i>
+                            <span class="link_name">Tra cứu</span>
+                        </a>
+                        <ul class="sub-menu blank">
+                            <li><a class="link_name" href="../admin/studentResults.html">Tra cứu</a></li>
+                        </ul>
+                        <i class='bx bxs-chevron-down arrow'></i>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="content-container">
+            <div class="logo">
+                <img src="https://portal.ptit.edu.vn/wp-content/uploads/2016/04/ptit-logo.png" alt="logo">
+            </div>
+
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Nhập tên hoặc MSV sinh viên...">
+
+            </div>
+            <button class="searchButton" onclick="searchStudent()">Tìm Kiếm</button>
+            <button class="exportButton" onclick="exportToExcel()">Export Excel</button>
+            
+            <div id="resultsContainer"></div>
+            <!-- Popup chi tiết bài thi -->
+            <div id="examDetailPopup" class="popup-container" style="display:none;">
+                <div class="popup-content">
+                    <span class="close-btn" onclick="closePopup()">&times;</span>
+                    <div id="examDetails"></div>
+                </div>
+            </div>
+        </div> <!-- content-container -->
+    </div>
+
+    <script src="../static/js/fixedData.js"></script>
+    <script src="../static/js/studentResults.js"></script>
+</body>
+
+</html>

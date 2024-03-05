@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thống Kê Kết Quả Thi</title>
+    <link rel="stylesheet" href="../static/css/statistics.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.2/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="../static/css/common.css">
+    <link rel='stylesheet' href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css'>
+</head>
+
+<body>
+    <div class="main-container">
+
+        <div class="sidebar close">
+            <div class="logo-details">
+                <img src="https://portal.ptit.edu.vn/wp-content/uploads/2016/04/ptit-logo.png" alt="logo">
+
+            </div>
+            <ul class="nav-links">
+                <li class="">
+                    <a href="../admin/index.html">
+                        <i class='bx bx-grid-alt'></i>
+                        <span class="link_name">Trang chủ</span>
+                    </a>
+                    <ul class="sub-menu blank">
+                        <li><a class="link_name" href="../admin/index.html">Trang chủ</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <div class="iocn-link">
+                        <a href="../admin/ManageStudent.html">
+                            <i class='bx bx-user'></i>
+                            <span class="link_name">Quản lý tài khoản</span>
+                        </a>
+                        <ul class="sub-menu blank">
+                            <li><a class="link_name" href="../admin/ManageStudent.html">
+                                    <i class='bx bx-user'></i>Quản lý tài khoản</a></li>
+                        </ul>
+                        <i class='bx bxs-chevron-down arrow'></i>
+                    </div>
+                </li>
+                <li class="active">
+                    <a href="../admin/statistics.html">
+                        <i class='bx bx-line-chart'></i>
+                        <span class="link_name">Thống kê</span>
+                    </a>
+                    <ul class="sub-menu blank">
+                        <li><a class="link_name"href="../admin/statistics.html">Thống kê</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <div class="iocn-link">
+                        <a href="../admin/studentResults.html">
+                            <i class='bx bx-search'></i>
+                            <span class="link_name">Tra cứu</span>
+                        </a>
+                        <ul class="sub-menu blank">
+                            <li><a class="link_name" href="../admin/studentResults.html">Tra cứu</a></li>
+                        </ul>
+                        <i class='bx bxs-chevron-down arrow'></i>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="content-container">
+
+            <div class="container">
+                <h2>Thống Kê Kết Quả Thi</h2>
+                <!-- Các phần tử điều khiển (bộ lọc, sắp xếp, xuất dữ liệu) -->
+                <div class="controls">
+                    <select id="examFilter" onchange="filterResults()">
+                        <option value="">Chọn kỳ thi</option>
+                        <!-- Các tùy chọn kỳ thi sẽ được thêm vào đây từ JavaScript -->
+                    </select>
+                    <label>Ngày bắt đầu:</label>
+                    <input type="date" id="startDateFilter" onchange="filterResults()">
+                    <label>Ngày kết thúc:</label>
+                    <input type="date" id="endDateFilter" onchange="filterResults()">
+                    <select id="sortSelect" onchange="sortData()">
+                        <option value="">Sắp xếp</option>
+                        <option value="name">Tên Sinh Viên</option>
+                        <option value="studentId">MSV</option>
+                        <option value="exam">Kỳ Thi</option>
+                        <option value="examDate">Ngày Thi</option>
+                        <option value="score">Điểm Số</option>
+                    </select>
+                    <button onclick="exportToExcel()">Export dữ liệu</button>
+                </div>
+                <div class="statistics-container">
+                    <!-- Biểu Đồ Phân Phối Điểm Số -->
+                    <div class="chart-container" style="position: relative; height:40vh; width:80vw">
+                        <canvas id="scoreDistributionChart"></canvas>
+                    </div>
+                    <!-- Phần Thống Kê Tổng Quan -->
+                    <div class="statistics-summary">
+                        <h3>Thống Kê Tổng Quan</h3>
+                        <p>Tổng số lần tham gia: <span id="totalParticipations"></span></p>
+                        <p>Tỷ lệ hoàn thành: <span id="completionRate"></span>%</p>
+                        <p>Điểm trung bình: <span id="averageScore"></span></p>
+                    </div>
+                </div>
+                <!-- Bảng Hiển Thị Dữ Liệu -->
+                <div class="table-responsive">
+                    <table id="resultsTable">
+                        <thead>
+                            <tr>
+                                <th>Tên Sinh Viên</th>
+                                <th>MSV</th>
+                                <th>Kì Thi</th>
+                                <th>Ngày Thi</th>
+                                <th>Điểm Số</th>
+                                <th>Hoàn Thành</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Dữ liệu bảng được đổ vào đây từ JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+
+
+        </div> <!-- content-container -->
+    </div>
+
+    <script src="../static/js/statistics.js"></script>
+</body>
+
+</html>

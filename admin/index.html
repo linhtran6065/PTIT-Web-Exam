@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | Trang chủ</title>
+    <link rel="stylesheet" href="../static/css/homepage.css">
+    <link rel="stylesheet" href="../static/css/common.css">
+    <link rel='stylesheet' href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css'>
+
+</head>
+
+<body>
+    <div class="main-container">
+
+        <div class="sidebar close">
+            <div class="logo-details">
+                <img src="https://portal.ptit.edu.vn/wp-content/uploads/2016/04/ptit-logo.png" alt="logo">
+
+            </div>
+            <ul class="nav-links">
+                <li class="active">
+                    <a href="../admin/index.html">
+                        <i class='bx bx-grid-alt'></i>
+                        <span class="link_name">Trang chủ</span>
+                    </a>
+                    <ul class="sub-menu blank">
+                        <li><a class="link_name" href="../admin/index.html">Trang chủ</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <div class="iocn-link">
+                        <a href="../admin/ManageStudent.html">
+                            <i class='bx bx-user'></i>
+                            <span class="link_name">Quản lý tài khoản</span>
+                        </a>
+                        <ul class="sub-menu blank">
+                            <li><a class="link_name" href="../admin/ManageStudent.html">
+                                <i class='bx bx-user'></i>Quản lý tài khoản</a></li>
+                        </ul>
+                        <i class='bx bxs-chevron-down arrow'></i>
+                    </div>
+                </li>
+                <li>
+                    <a href="../admin/statistics.html">
+                        <i class='bx bx-line-chart'></i>
+                        <span class="link_name">Thống kê</span>
+                    </a>
+                    <ul class="sub-menu blank">
+                        <li><a class="link_name"href="../admin/statistics.html">Thống kê</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <div class="iocn-link">
+                        <a href="../admin/studentResults.html">
+                            <i class='bx bx-search'></i>
+                            <span class="link_name">Tra cứu</span>
+                        </a>
+                        <ul class="sub-menu blank">
+                            <li><a class="link_name" href="../admin/studentResults.html">Tra cứu</a></li>
+                        </ul>
+                        <i class='bx bxs-chevron-down arrow'></i>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="content-container">
+
+            <div class="head-title">
+                <div class="left">
+                    <h1>Trang chủ</h1>
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="#">Hệ thống thi trắc nghiệm trực tuyến</a>
+                        </li>
+                        <li><i class='bx bx-chevron-right'></i></li>
+                        <li>
+                            <a class="active" href="#">Trang chủ</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+
+            <div class="table-data">
+                <div class="order">
+                    <div class="head">
+                        <h3>Quản lý kỳ thi</h3>
+                        <div class="search">
+                            <div class="search-box">
+                                <i class='bx bx-search'></i>
+                                <input type="text" id="searchInput" placeholder="Tìm kiếm tên kỳ thi...">
+                            </div>
+                            <select id="statusFilter">
+                                <option value="all">Tất cả</option>
+                                <option value="accessible">Truy cập tự do</option>
+                                <option value="scheduled">Yêu cầu thời gian cụ thể</option>
+                            </select>
+                            <button id="createExamBtn">Tạo kỳ thi</button>
+                        </div>
+
+                    </div>
+                    <div class="createForm inactive" id="createForm">
+                        <form onsubmit="event.preventDefault();onFormSubmit();" autocomplete="off">
+                            <label id="validation" style="color: red;font-style: italic;">**Cần nhập đầy đủ các thông
+                                tin**</label>
+                            <div>
+                                <label>Tên kỳ thi*</label>
+                                <input type="text" name="name" id="name">
+                            </div>
+                            <div>
+                                <label>Mô tả*</label>
+                                <input type="text" name="description" id="description">
+                            </div>
+                            <div>
+                                <label>Loại kỳ thi*</label>
+                                <select id="statusFilterForm">
+                                    <option value="accessible">Truy cập tự do</option>
+                                    <option value="scheduled">Yêu cầu thời gian cụ thể</option>
+                                </select>
+                            </div>
+                            <div class="form-action-buttons">
+                                <button type="submit" id="saveBtn">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tên kì thi</th>
+                                <th>Mô tả</th>
+                                <th>Loại kì thi</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody id="examTable">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div> <!-- content-container -->
+    </div>
+    <script src="../static/js/homepage.js"></script>
+    <script src="../static/js/adminhomepage.js"></script>
+</body>
+
+
+</html>

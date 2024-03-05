@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kết quả bài thi</title>
+  <link rel="stylesheet" href="../static/css/result.css">
+  <link rel="stylesheet" href="../static/css/common.css">
+  <link rel='stylesheet' href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css'>>
+
+</head>
+
+<body>
+  <div class="main-container">
+    <div class="sidebar close">
+      <div class="logo-details">
+          <img src="https://portal.ptit.edu.vn/wp-content/uploads/2016/04/ptit-logo.png" alt="logo">
+
+      </div>
+      <ul class="nav-links">
+          <li class="active">
+              <a href="#">
+                  <i class='bx bx-grid-alt'></i>
+                  <span class="link_name">Trang chủ</span>
+              </a>
+              <ul class="sub-menu blank">
+                  <li><a class="link_name" href="#">Trang chủ</a></li>
+              </ul>
+          </li>
+      </ul>
+  </div>
+    <div class="content-container">
+      <main>
+        <div class="result-info">
+          <h1> Chúc mừng bạn đã hoàn thành bài thi</h1>
+          <div class="result-info-text">
+            <p>Số câu trả lời đúng: <span id="correctAnswers"></span></p>
+            <p>Tổng số câu: <span id="totalQuestions"></span></p>
+            <p>Điểm số: <span id="score"></span></p>
+            <button id="reviewButton">Xem lại câu trả lời và đáp án đúng</button>
+          </div>
+
+        </div>
+        
+        <div id="answerDetails">
+          <!-- Chi tiết câu trả lời sẽ được thêm vào đây bằng JavaScript -->
+        </div>
+      </main>
+    </div> <!-- content-container -->
+  </div>
+  <script type="module" src="../static/js/result.js"></script>
+</body>
+
+
+
+
+
+
+</html>

@@ -1,0 +1,186 @@
+
+/* Google Fonts Import Link */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --poppins: 'Poppins', sans-serif;
+  --lato: 'Lato', sans-serif;
+  --light: #F9F9F9;
+  --blue: #3C91E6;
+  --light-blue: #CFE8FF;
+  --grey: #eee;
+  --dark-grey: #AAAAAA;
+  --dark: #342E37;
+  --red: #DB504A;
+  --yellow: #FFCE26;
+  --light-yellow: #FFF2C6;
+  --orange: #FD7238;
+  --light-orange: #FFE0D3;
+  --lightlightgray: #fff9f9;
+  --white: #FFFFFF;
+  --ptit: #93181a;
+  --light-green: #D4F3D4;
+  --green: #4CAF50;
+  --light-red: #F8D7DA;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: var(--poppins); /* Sử dụng font chữ Poppins */
+    background-color: #fff; /* Nền trắng */
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+    color: #333;
+}
+
+.container h2 {
+    margin-bottom: 20px;
+}
+
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px; /* Khoảng cách giữa các phần tử */
+    margin-bottom: 20px;
+}
+
+.controls label {
+    margin: auto 0; /* Căn giữa label với các phần tử nhập liệu khác */
+}
+
+.controls select, .controls input[type=date], .controls button {
+    padding: 10px;
+    margin: 0 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.controls button {
+    background-color: #fff; /* Nền trắng */
+    color: var(--ptit); /* Màu đỏ */
+    border: 2px solid var(--ptit); /* Viền màu đỏ */
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold; /* Chữ đậm */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.controls button:hover {
+    background-color: var(--ptit); /* Khi hover, nền đổi thành màu đỏ */
+    color: #fff; /* Chữ màu trắng */
+}
+
+h2 {
+    text-align: center;
+    color: var(--ptit); /* Màu đỏ */
+}
+
+.statistics-summary {
+    gap: 10px; /* Khoảng cách giữa các phần tử con */
+    margin: 20px 0;
+    border: 1px solid #ddd;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.table-responsive {
+    display: flex;
+    justify-content: center;
+    overflow-x: auto; /* Cho phép cuộn ngang trên thiết bị nhỏ */
+    max-width: 100%; /* Hoặc giới hạn chiều rộng tối đa của bảng */
+}
+
+table {
+    width: 90%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    margin: auto;
+    font-size: 13px; /* Giảm kích thước font để làm cho bảng nhỏ lại */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Ẩn phần thừa nếu có */
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+th {
+    background-color: var(--ptit); /* Màu đỏ */
+    color: white;
+}
+
+.statistics-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* Giảm khoảng cách giữa các phần tử con */
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.statistics-summary {
+    padding: 10px;
+    width: 45%;
+    box-sizing: border-box; /* Đảm bảo padding không làm tăng chiều rộng tổng thể */
+}
+
+.chart-container {
+    width: 45%;
+    height: auto; /* Hoặc đặt chiều cao cố định nếu bạn muốn */
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+
+.statistics-summary h3 {
+    color: var(--ptit); /* Màu đỏ cho tiêu đề */
+    margin-bottom: 15px;
+}
+
+.statistics-summary p {
+    font-size: 16px; /* Tăng kích thước font */
+    margin: 10px 0; /* Khoảng cách giữa các dòng */
+}
+.chart-container {
+    margin: 20px auto; /* Căn giữa khối biểu đồ */
+    width: 90%; /* Đặt chiều rộng tối đa cho biểu đồ */
+    max-width: 600px; /* Giới hạn chiều rộng tối đa để biểu đồ không quá to trên màn hình lớn */
+    height: auto; /* Chiều cao tự động dựa vào nội dung */
+    text-align: center; /* Căn giữa nội dung */
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+    .controls {
+        flex-direction: column; /* Chuyển sang chế độ dọc trên màn hình nhỏ */
+    }
+    .statistics-container {
+        flex-direction: column; /* Chuyển sang chế độ dọc trên màn hình nhỏ */
+    }
+    .statistics-summary p {
+        font-size: 14px; /* Giảm kích thước font trên thiết bị nhỏ */
+        flex-basis: 100%;
+        width: 100%;
+        max-width: 100%;
+    }
+    .chart-container {
+        width: 100%; /* Cho phép các phần tử mở rộng chiếm toàn bộ chiều rộng */
+        flex-basis: 100%;
+        max-width: 100%;
+    }
+}

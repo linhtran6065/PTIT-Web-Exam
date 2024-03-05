@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đăng nhập</title>
+  <link rel="stylesheet" href="./style.css">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+  <div class="backgroundleft">
+    <img src="https://code.ptit.edu.vn/2020/images/bg_left.png" alt="background">
+  </div>
+  <div class="backgroundright">
+    <img src="https://code.ptit.edu.vn/2020/images/bg_right.png" alt="background">
+  </div>
+  <div class="wrapper">
+    <form id="loginForm">
+      <div class="logo">
+        <img src="https://portal.ptit.edu.vn/wp-content/uploads/2016/04/ptit-logo.png" alt="logo">
+      </div>
+      <h1>Đăng nhập</h1>
+      
+      <div class="input-box">
+        <input id="loginUsername" type="text" placeholder="Username" required>
+        <i class='bx bxs-user'></i>
+      </div>
+      
+      <div class="input-box">
+        <input id = "loginPassword" type="password" placeholder="Password" required>
+        <i class='bx bxs-lock-alt' ></i>
+      </div>
+
+      <div class="remember-forgot">
+        <label><input type="checkbox">Lưu người dùng</label>
+        <a href="#">Quên mật khẩu</a>
+      </div>
+
+      <button onclick="validateLogin()" type="button" class="btn">Đăng nhập</button>
+      
+      <div class="register-link">
+        <p>Chưa có tài khoản? <a href="./register.html">Đăng ký</a></p>
+      </div>
+    </form>
+  </div>
+
+  
+<script>
+    function validateLogin() {
+        var loginUsername = document.getElementById("loginUsername").value;
+        var loginPassword = document.getElementById("loginPassword").value;
+
+        // Kiểm tra tính hợp lệ - Demo: Kiểm tra từ cơ sở dữ liệu (mô phỏng)
+       if (loginUsername == "admin" && loginPassword == "admin") {
+            alert("Đăng nhập thành công");
+            window.location.href = "../admin/index.html";
+        } else {
+          let user = JSON.parse(localStorage.getItem(loginUsername));
+          if (!user) {
+            alert("Tài khoản không tồn tại");
+            return;
+          }
+          if (user.password == loginPassword) {
+            alert("Đăng nhập thành công");
+            window.location.href = "../user/index.html";
+          } else {
+            alert("Đăng nhập thất bại");
+          }
+        }
+    }
+
+</script>
+
+</body>
+
+
+</html>
