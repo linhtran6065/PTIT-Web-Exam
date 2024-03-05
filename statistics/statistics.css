@@ -1,0 +1,144 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #fff; /* Nền trắng */
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+    color: #333;
+}
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px; /* Khoảng cách giữa các phần tử */
+    margin-bottom: 20px;
+}
+
+.controls label {
+    margin: auto 0; /* Căn giữa label với các phần tử nhập liệu khác */
+}
+
+.controls select, .controls input[type=date], .controls button {
+    padding: 10px;
+    margin: 0 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.controls button {
+    background-color: #fff; /* Nền trắng */
+    color: #d32f2f; /* Chữ màu đỏ */
+    border: 2px solid #d32f2f; /* Viền màu đỏ */
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold; /* Chữ đậm */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.controls button:hover {
+    background-color: #d32f2f; /* Khi hover, nền đổi thành màu đỏ */
+    color: #fff; /* Chữ màu trắng */
+}
+
+h2 {
+    color: #d32f2f; /* Màu đỏ */
+}
+
+
+.table-responsive {
+    display: flex;
+    justify-content: center;
+    overflow-x: auto; /* Cho phép cuộn ngang trên thiết bị nhỏ */
+    max-width: 90%; /* Hoặc giới hạn chiều rộng tối đa của bảng */
+}
+
+table {
+    width: 90%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    margin: auto;
+    font-size: 13px; /* Giảm kích thước font để làm cho bảng nhỏ lại */
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+th {
+    background-color: #d32f2f; /* Màu đỏ */
+    color: white;
+}
+
+.statistics-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; /* Hoặc thay đổi thành 'space-between' nếu muốn giảm khoảng cách */
+    align-items: flex-start; /* Giữ cho các items căng đều ở phía trên */
+    gap: 10px; /* Giảm khoảng cách giữa các phần tử con */
+    margin: 20px 0;
+}
+
+.statistics-summary {
+    flex-basis: 35%; /* Chiếm khoảng 35% không gian */
+    max-width: 35%; /* Giới hạn chiều rộng tối đa để không vượt quá 35% */
+    padding: 10px;
+    box-sizing: border-box; /* Đảm bảo padding không làm tăng chiều rộng tổng thể */
+}
+
+.chart-container {
+    flex-basis: 65%; /* Chiếm khoảng 70% không gian, để lại một chút không gian cho khoảng cách */
+    max-width: 65%; /* Giới hạn chiều rộng tối đa */
+    height: auto; /* Hoặc đặt chiều cao cố định nếu bạn muốn */
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+
+.statistics-summary h3 {
+    color: #d32f2f; /* Màu đỏ cho tiêu đề */
+    margin-bottom: 15px;
+}
+
+.statistics-summary p {
+    font-size: 16px; /* Tăng kích thước font */
+    margin: 10px 0; /* Khoảng cách giữa các dòng */
+}
+.chart-container {
+    margin: 20px auto; /* Căn giữa khối biểu đồ */
+    width: 90%; /* Đặt chiều rộng tối đa cho biểu đồ */
+    max-width: 600px; /* Giới hạn chiều rộng tối đa để biểu đồ không quá to trên màn hình lớn */
+    height: auto; /* Chiều cao tự động dựa vào nội dung */
+    text-align: center; /* Căn giữa nội dung */
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+    .controls {
+        flex-direction: column; /* Chuyển sang chế độ dọc trên màn hình nhỏ */
+    }
+    .statistics-container {
+        flex-direction: column; /* Chuyển sang chế độ dọc trên màn hình nhỏ */
+    }
+    .statistics-summary p {
+        font-size: 14px; /* Giảm kích thước font trên thiết bị nhỏ */
+        flex-basis: 100%;
+        width: 100%;
+        max-width: 100%;
+    }
+    .chart-container {
+        width: 100%; /* Cho phép các phần tử mở rộng chiếm toàn bộ chiều rộng */
+        flex-basis: 100%;
+        max-width: 100%;
+    }
+}

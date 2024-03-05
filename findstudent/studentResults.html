@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tìm Kết Quả Sinh Viên</title>
+    <link rel="stylesheet" href="studentResults.css">
+    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Nhập tên hoặc MSV sinh viên...">
+        <button onclick="searchStudent()">Tìm Kiếm</button>
+    </div>
+    <button onclick="exportToExcel()">Export Excel</button>
+    <div id="resultsContainer"></div>
+    <!-- Popup chi tiết bài thi -->
+    <div id="examDetailPopup" class="popup-container" style="display:none;">
+        <div class="popup-content">
+        <span class="close-btn" onclick="closePopup()">&times;</span>
+        <div id="examDetails"></div>
+        </div>
+    </div>
+    <script src="fixedData.js"></script>
+    <script src="studentResults.js"></script>
+</body>
+</html>
