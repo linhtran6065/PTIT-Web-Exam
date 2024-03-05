@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        form {
+            width: 300px;
+            margin: 0 auto;
+        }
+        input {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Đăng ký mới</h2>
+
+<form id="registerForm">
+    <label for="registerUsername">Tên người dùng:</label>
+    <input type="text" id="registerUsername" required><br>
+
+    <label for="registerEmail">Email:</label>
+    <input type="email" id="registerEmail" required><br>
+
+    <label for="registerPassword">Mật khẩu:</label>
+    <input type="password" id="registerPassword" required><br>
+
+    <label for="confirmPassword">Xác nhận mật khẩu:</label>
+    <input type="password" id="confirmPassword" required><br>
+
+    <button type="button" onclick="validateRegistration()">Đăng ký</button>
+</form>
+
+<script>
+    function validateRegistration() {
+        var registerUsername = document.getElementById("registerUsername").value;
+        var registerEmail = document.getElementById("registerEmail").value;
+        var registerPassword = document.getElementById("registerPassword").value;
+        var confirmPassword = document.getElementById("confirmPassword").value;
+
+        // Kiểm tra tính hợp lệ - Demo: Chỉ kiểm tra có giá trị hay không
+        if (registerUsername && registerEmail && registerPassword && confirmPassword) {
+            if (registerPassword === confirmPassword) {
+                // Kiểm tra xem người dùng đã tồn tại chưa
+                if (!isUserExist(registerUsername)) {
+                    // Lưu thông tin người dùng vào localStorage
+                    var user = {
+                        username: registerUsername,
+                        email: registerEmail,
+                        password: registerPassword
+                    };
+                    localStorage.setItem(registerUsername, JSON.stringify(user));
+
+                    alert("Đăng ký thành công!\nTên người dùng: " + registerUsername + "\nEmail: " + registerEmail);
+                    window.location.href = "login.html";
+                } else {
+                    alert("Tên người dùng đã tồn tại. Vui lòng chọn tên khác.");
+                }
+            } else {
+                alert("Mật khẩu và xác nhận mật khẩu không khớp!");
+            }
+        } else {
+            alert("Vui lòng nhập đầy đủ thông tin đăng ký!");
+        }
+    }
+
+    // Hàm kiểm tra xem người dùng đã tồn tại hay chưa
+    function isUserExist(username) {
+        return localStorage.getItem(username) !== null;
+    }
+</script>
+
+</body>
+</html>
