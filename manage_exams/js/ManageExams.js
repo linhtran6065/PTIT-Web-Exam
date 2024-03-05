@@ -1,51 +1,51 @@
 var selectedRow = null;
 var createForm = document.getElementById("createForm");
-console.log(createForm);
+var examList = [];
 createForm.style.display = "none";
 var isValid = (document.getElementById("validation").style.display = "none");
 
 document.addEventListener("DOMContentLoaded", function () {
-  const examList = [
+  examList = [
     {
       name: "Kỳ thi luyện tập",
       description: "Kỳ thi luyện tập cho sinh viên",
-      status: "accessible",
+      type: "Truy cập tự do",
     },
     {
       name: "Kỳ thi giữa kỳ",
       description: "Kỳ thi được sẽ thực hiện trên phòng máy",
-      status: "scheduled",
+      type: "Yêu cầu thời gian cụ thể",
     },
     {
       name: "Kỳ thi cuối kỳ",
       description: "Kỳ thi quan trọng nhất",
-      status: "scheduled",
+      type: "Yêu cầu thời gian cụ thể",
     },
     // Thêm các kỳ thi khác vào đây
   ];
 
-  const examTable = document.getElementById("examList");
-
-  examTable.innerHTML = "";
-  examList.forEach((exam) => {
-    const row = document.createElement("tr");
-    row.innerHTML = `
-        <td>${exam.name}</td>
-        <td>${exam.description}</td>
-        <td>${
-          exam.status === "accessible"
-            ? "Truy cập tự do"
-            : "Yêu cầu thời gian cụ thể"
-        }</td>
-        <td>
-        <div class="detailBtn"> <button onclick="onEdit(this)">Sửa</button>
-                       <button onClick="onDelete(this)">Xóa</button>
-                       <button onClick="onViewDetail(this)">Xem</button></div>
-      </td>`;
-    examTable.appendChild(row);
-  });
+  renderExams(examList);
 });
+function renderExams(examList) {
+  var table = document
+    .getElementById("examList")
+    .getElementsByTagName("tbody")[0];
+  table.innerHTML = "";
+  examList.forEach((exam) => {
+    var newRow = table.insertRow(table.length);
+    cell1 = newRow.insertCell(0);
+    cell1.innerHTML = exam.name;
+    cell2 = newRow.insertCell(1);
+    cell2.innerHTML = exam.description;
+    cell3 = newRow.insertCell(2);
+    cell3.innerHTML = exam.type;
 
+    cell4 = newRow.insertCell(3);
+    cell4.innerHTML = `<div class="detailBtn"> <button onclick="onEdit(this)">Sửa</button>
+                       <button onClick="onDelete(this)">Xóa</button>
+                       <button onClick="onViewDetail(this)">Xem</button></div>`;
+  });
+}
 function onFormSubmit() {
   if (validate()) {
     var formData = readFormData();
@@ -62,7 +62,14 @@ function readFormData() {
   var formData = {};
   formData["name"] = document.getElementById("name").value;
   formData["description"] = document.getElementById("description").value;
-  formData["type"] = document.getElementById("statusFilter").value;
+
+  if (document.getElementById("statusFilter").value == "accessible") {
+    formData["type"] = "Truy cập tự do";
+  } else {
+    formData["type"] = "Yêu cầu thời gian cụ thể";
+  }
+
+  examList.push(formData);
   return formData;
 }
 function onCreate() {
@@ -102,8 +109,11 @@ function onEdit(td) {
   selectedRow = td.parentElement.parentElement.parentElement;
   document.getElementById("name").value = selectedRow.cells[0].innerHTML;
   document.getElementById("description").value = selectedRow.cells[1].innerHTML;
-  document.getElementById("statusFilter").value =
-    selectedRow.cells[2].innerHTML;
+  if (selectedRow.cells[2].innerHTML == "Truy cập tự do") {
+    document.getElementById("statusFilter").value = "accessible";
+  } else {
+    document.getElementById("statusFilter").value = "scheduled";
+  }
 }
 function updateRecord(formData) {
   selectedRow.cells[0].innerHTML = formData.name;
@@ -132,3 +142,16 @@ function validate() {
 
   return isValid;
 }
+
+const searchInput = document.getElementById("searchInput");
+function filterExams() {
+  const searchText = searchInput.value.toLowerCase();
+  const filteredExam = examList.filter((exam) => {
+    const nameMatch = exam.name.toLowerCase().includes(searchText);
+    return nameMatch;
+  });
+
+  renderExams(filteredExam);
+}
+
+searchInput.addEventListener("input", filterExams);
