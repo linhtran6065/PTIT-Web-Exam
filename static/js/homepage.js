@@ -1,7 +1,7 @@
 function startExam(examName, status) {
   if (status === 'accessible') {
     alert(`Bạn sẽ bắt đầu làm bài ${examName}`);
-    window.location.href = "../user/test.html";
+    window.location.href = "./user/test.html";
   } else {
     alert(`Bài thi ${examName} yêu cầu thời gian cụ thể, bạn sẽ được chuyển đến trang chờ`);
   }
