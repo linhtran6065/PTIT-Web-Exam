@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function () {
     alert("Bài đã được nộp. Chúc mừng!");
     checkAnswer();
 
-    window.location.href = "./user/result.html";
+    window.location.href = "user/result.html";
   });
 
   function renderData(questions) {

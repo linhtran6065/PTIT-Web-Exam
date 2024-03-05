@@ -54,7 +54,7 @@
         // Kiểm tra tính hợp lệ - Demo: Kiểm tra từ cơ sở dữ liệu (mô phỏng)
        if (loginUsername == "admin" && loginPassword == "admin") {
             alert("Đăng nhập thành công");
-            window.location.href = "./admin/index.html";
+            window.location.href = "admin/index.html";
         } else {
           let user = JSON.parse(localStorage.getItem(loginUsername));
           if (!user) {
@@ -63,7 +63,7 @@
           }
           if (user.password == loginPassword) {
             alert("Đăng nhập thành công");
-            window.location.href = "./user/index.html";
+            window.location.href = "user/index.html";
           } else {
             alert("Đăng nhập thất bại");
           }
