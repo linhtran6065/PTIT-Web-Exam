@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function () {
     alert("Bài đã được nộp. Chúc mừng!");
     checkAnswer();
 
-    window.location.href = "user/result.html";
+    window.location.href = "https://linhtran6065.github.io/PTIT-Web-Exam/user/result.html";
   });
 
   function renderData(questions) {
