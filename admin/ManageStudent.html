@@ -7,7 +7,7 @@
     <title>
         Quản lý thông tin sinh viên
     </title>
-    
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../static/css/common.css">
     <link rel="stylesheet" href="../static/css/ManageStudent.css">
@@ -23,24 +23,27 @@
 
             </div>
             <ul class="nav-links">
-                <li>
+                <li class="active">
                     <a href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/index.html">
                         <i class='bx bx-grid-alt'></i>
                         <span class="link_name">Trang chủ</span>
                     </a>
                     <ul class="sub-menu blank">
-                        <li><a class="link_name" href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/index.html">Trang chủ</a></li>
+                        <li><a class="link_name"
+                                href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/index.html">Trang
+                                chủ</a></li>
                     </ul>
                 </li>
-                <li class="active">
+                <li>
                     <div class="iocn-link">
                         <a href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/ManageStudent.html">
                             <i class='bx bx-user'></i>
                             <span class="link_name">Quản lý tài khoản</span>
                         </a>
                         <ul class="sub-menu blank">
-                            <li><a class="link_name" href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/ManageStudent.html">
-                                <i class='bx bx-user'></i>Quản lý tài khoản</a></li>
+                            <li><a class="link_name"
+                                    href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/ManageStudent.html">
+                                    <i class='bx bx-user'></i>Quản lý tài khoản</a></li>
                         </ul>
                         <i class='bx bxs-chevron-down arrow'></i>
                     </div>
@@ -51,7 +54,10 @@
                         <span class="link_name">Thống kê</span>
                     </a>
                     <ul class="sub-menu blank">
-                        <li><a class="link_name"href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/statistics.html">Thống kê</a></li>
+                        <li><a class="link_name"
+                                href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/statistics.html">Thống
+                                kê</a>
+                        </li>
                     </ul>
                 </li>
 
@@ -62,13 +68,29 @@
                             <span class="link_name">Tra cứu</span>
                         </a>
                         <ul class="sub-menu blank">
-                            <li><a class="link_name" href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/studentResults.html">Tra cứu</a></li>
+                            <li><a class="link_name"
+                                    href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/studentResults.html">Tra
+                                    cứu</a></li>
                         </ul>
                         <i class='bx bxs-chevron-down arrow'></i>
                     </div>
                 </li>
+
+                <li>
+                    <a href="https://linhtran6065.github.io/PTIT-Web-Exam/index.html">
+                        <i class='bx bx-log-out'></i>
+                        <span class="link_name">Đăng xuất</span>
+                    </a>
+                    <ul class="sub-menu blank">
+                        <li><a class="link_name" href="https://linhtran6065.github.io/PTIT-Web-Exam/index.html">Đăng
+                                xuất</a>
+                        </li>
+                    </ul>
+                </li>
+
             </ul>
         </div>
+
         <div class="content-container">
 
             <div class="container">
@@ -76,10 +98,11 @@
                     <h1>Quản lý thông tin sinh viên</h1>
                     <button type="button" id="createBtn" onclick="onCreate(this)">Tạo mới</button>
                 </div>
-        
+
                 <div class="createForm" id="createForm">
                     <form onsubmit="event.preventDefault();onFormSubmit();" autocomplete="off">
-                        <label id="validation" style="color: red;font-style: italic;">**Cần nhập đầy đủ các thông tin**</label>
+                        <label id="validation" style="color: red;font-style: italic;">**Cần nhập đầy đủ các thông
+                            tin**</label>
                         <div>
                             <label>Mã sinh viên*</label>
                             <input type="text" name="msv" id="msv">
@@ -103,7 +126,7 @@
                 </div>
                 <br>
                 <input type="text" id="searchInput" placeholder="Tìm kiếm tên/mã sinh viên...">
-        
+
                 <div id="student-table">
                     <table class="list" id="studentList">
                         <thead>
@@ -120,11 +143,11 @@
                         </tbody>
                     </table>
                 </div>
-        
+
             </div>
         </div> <!-- content-container -->
     </div>
-    
+
 
     <script src="../static/js/ManageStudent.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
