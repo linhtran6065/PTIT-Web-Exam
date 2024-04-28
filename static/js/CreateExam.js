@@ -24,7 +24,7 @@ var formContainer = document.getElementById("form-container");
 window.onload = renderQuestion(questionFixed);
 
 //create question form
-function myForm() {
+function renderQuestion() {
   var item = document.createElement("li");
   var form = document.createElement("form");
   form.setAttribute("id", "quizForm");

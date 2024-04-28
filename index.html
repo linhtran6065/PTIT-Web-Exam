@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Đăng nhập</title>
   <link rel="stylesheet" href="./style.css">
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
 </head>
 
 <body>
@@ -21,15 +23,15 @@
         <img src="https://portal.ptit.edu.vn/wp-content/uploads/2016/04/ptit-logo.png" alt="logo">
       </div>
       <h1>Đăng nhập</h1>
-      
+
       <div class="input-box">
         <input id="loginUsername" type="text" placeholder="Username" required>
         <i class='bx bxs-user'></i>
       </div>
-      
+
       <div class="input-box">
-        <input id = "loginPassword" type="password" placeholder="Password" required>
-        <i class='bx bxs-lock-alt' ></i>
+        <input id="loginPassword" type="password" placeholder="Password" required>
+        <i class='bx bxs-lock-alt'></i>
       </div>
 
       <div class="remember-forgot">
@@ -37,39 +39,53 @@
         <a href="#">Quên mật khẩu</a>
       </div>
 
-      <button onclick="validateLogin()" type="button" class="btn">Đăng nhập</button>
-      
+      <button id="loginBtn" onclick="validateLogin()" type="button" class="btn">Đăng nhập</button>
+
       <div class="register-link">
         <p>Chưa có tài khoản? <a href="./register.html">Đăng ký</a></p>
       </div>
     </form>
   </div>
 
-  
-<script>
-    function validateLogin() {
-        var loginUsername = document.getElementById("loginUsername").value;
-        var loginPassword = document.getElementById("loginPassword").value;
 
-        // Kiểm tra tính hợp lệ - Demo: Kiểm tra từ cơ sở dữ liệu (mô phỏng)
-       if (loginUsername == "admin" && loginPassword == "admin") {
-            alert("Đăng nhập thành công");
-            window.location.href = "https://linhtran6065.github.io/PTIT-Web-Exam/admin/index.html";
-        } else {
-          let user = JSON.parse(localStorage.getItem(loginUsername));
-          if (!user) {
-            
-          }
-          if (user.password == loginPassword) {
-            alert("Đăng nhập thành công");
-            window.location.href = "https://linhtran6065.github.io/PTIT-Web-Exam/user/index.html";
-          } else {
-            alert("Đăng nhập thất bại");
-          }
-        }
-    }
+  <script type="module" src="./auth.js">
+    // import { apiPost } from "./js/apiService.js";
+    // function validateLogin() {
+    //   var loginUsername = document.getElementById("loginUsername").value;
+    //   var loginPassword = document.getElementById("loginPassword").value;
 
-</script>
+    //   // Kiểm tra tính hợp lệ - Demo: Kiểm tra từ cơ sở dữ liệu (mô phỏng)
+    //   // if (loginUsername == "admin" && loginPassword == "admin") {
+    // alert("Đăng nhập thành công");
+    // window.location.href = "https://linhtran6065.github.io/PTIT-Web-Exam/admin/index.html";
+    //   // } else {
+    //   //   let user = JSON.parse(localStorage.getItem(loginUsername));
+    //   //   if (!user) {
+
+    //   //   }
+    //   //   if (user.password == loginPassword) {
+    //   //     alert("Đăng nhập thành công");
+    //   //     window.location.href = "https://linhtran6065.github.io/PTIT-Web-Exam/user/index.html";
+    //   //   } else {
+    //   //     alert("Đăng nhập thất bại");
+    //   //   }
+    //   // }
+    //   if (loginUsername != "" && loginPassword != "") {
+    //     handleLogin(loginUsername, loginPassword)
+    //   }
+    // }
+    // function handleLogin(loginUsername, loginPassword) {
+    //   apiPost("/api/loginUser", token)
+    //     .then((response) => {
+    //       console.log("Fetched students:", response);
+
+    //     })
+    //     .catch((error) => {
+    //       console.error("Error fetching students:", error);
+    //     });
+    //}
+
+  </script>
 
 </body>
 
