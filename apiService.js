@@ -2,15 +2,13 @@
 const API_BASE_URL = "http://localhost:8080"; // Base URL for your API
 
 // Function to create default headers, with optional Bearer token
-function createHeaders(token = null, refreshToken = null) {
+function createHeaders(token = null) {
   const headers = {
     "Content-Type": "application/json", // Default content type
   };
 
   if (token) {
     headers["Authorization"] = `Bearer ${token}`; // Add Bearer token if provided
-  } else if (refreshToken) {
-    headers["Authorization"] = `Bearer ${refreshToken}`;
   }
 
   return headers;
@@ -39,10 +37,10 @@ export function apiGet(endpoint, token = null) {
 }
 
 // Function to make a POST request
-export function apiPost(endpoint, data, token = null, refreshToken = null) {
+export function apiPost(endpoint, data, token = null) {
   return fetch(`${API_BASE_URL}${endpoint}`, {
     method: "POST",
-    headers: createHeaders(token, refreshToken),
+    headers: createHeaders(token),
     body: JSON.stringify(data), // Stringify JSON data
   })
     .then(handleApiError)

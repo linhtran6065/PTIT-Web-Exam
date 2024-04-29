@@ -1,38 +1,26 @@
 import { apiPost } from "./apiService.js";
 
 const token = localStorage.getItem("token");
+
 isTokenExpired();
 
-function isTokenExpired() {
+export function isTokenExpired() {
   var data = { token: token };
   apiPost("/api/checkTokenExpired", data)
     .then((response) => {
       if (response.isTokenExpired) {
         refreshToken();
       } else {
-        window.location.href = "http://127.0.0.1:5500/admin/index.html";
+        const currentUrl = window.location.href;
+        if (currentUrl == "http://127.0.0.1:5500/index.html") {
+          window.location.href =
+            "http://127.0.0.1:5500/admin/ManageStudent.html";
+        }
       }
     })
     .catch((error) => {
       console.log("Error", error);
     });
-  // fetch("http://localhost:8080/api/checkTokenExpired", {
-  //   method: "POST",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  //   body: JSON.stringify({
-  //     token: token,
-  //   }),
-  // })
-  //   .then((res) => {
-  //     if (!res.ok) {
-  //       throw new Error("Network response was not ok ${response.status}");
-  //     }
-  //     return res.json();
-  //   })
-
-  //   .catch((error) => console.log(error));
 }
 
 function validateLogin() {
@@ -49,7 +37,7 @@ function handleLogin(loginUsername, loginPassword) {
     password: loginPassword,
   };
 
-  apiPost("/api/loginUser", data)
+  apiPost("/api/login", data)
     .then((response) => {
       console.log("Fetched students:", response);
       localStorage.setItem("token", response.accessToken);
@@ -64,9 +52,26 @@ function handleLogin(loginUsername, loginPassword) {
 
 function refreshToken() {
   const refreshToken = localStorage.getItem("refreshToken");
-  apiPost("/api/refreshToken", null, null, refreshToken)
+
+  apiPost("/api/refreshToken", {}, refreshToken)
     .then((response) => {
-      if (!response.ok) localStorage.setItem("token", response.accessToken);
+      console.log(response);
+      localStorage.setItem("token", response.accessToken);
+    })
+    .catch((error) => {
+      console.log(error);
+      logout();
+    });
+}
+
+export function logout() {
+  isTokenExpired();
+  apiPost("/api/logout", {}, token)
+    .then((response) => {
+      localStorage.removeItem("token");
+      localStorage.removeItem("refreshToken");
+      alert("Đăng xuất thành công");
+      window.location.href = "http://127.0.0.1:5500/index.html";
     })
     .catch((error) => {
       console.log(error);

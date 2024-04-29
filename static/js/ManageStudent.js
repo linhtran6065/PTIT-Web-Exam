@@ -1,4 +1,6 @@
 import { apiDelete, apiGet, apiPost, apiPut } from "../../apiService.js";
+import { isTokenExpired, logout } from "../../auth.js";
+
 var selectedRow = null;
 var msv = null;
 var createForm = document.getElementById("createForm");
@@ -9,25 +11,41 @@ var isValid = (document.getElementById("validation").style.display = "none");
 
 const token = localStorage.getItem("token");
 
-document.addEventListener("DOMContentLoaded", function () {
-  // fetch("http://localhost:8080/api/students", {
-  //   method: "GET",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //     Authorization: `Bearer ${token}`,
-  //   },
-  // })
-  //   .then((res) => {
-  //     if (!res.ok) {
-  //       throw new Error("Network response was not ok ${response.status}");
-  //     }
-  //     return res.json();
-  //   })
-  //   .then((data) => {
-  //     studentList = data.data;
-  //     renderStudents(studentList);
-  //   })
-  //   .catch((error) => console.log(error));
+initTable();
+
+// document.addEventListener("DOMContentLoaded", function () {
+//   // fetch("http://localhost:8080/api/students", {
+//   //   method: "GET",
+//   //   headers: {
+//   //     "Content-Type": "application/json",
+//   //     Authorization: `Bearer ${token}`,
+//   //   },
+//   // })
+//   //   .then((res) => {
+//   //     if (!res.ok) {
+//   //       throw new Error("Network response was not ok ${response.status}");
+//   //     }
+//   //     return res.json();
+//   //   })
+//   //   .then((data) => {
+//   //     studentList = data.data;
+//   //     renderStudents(studentList);
+//   //   })gv
+//   //   .catch((error) => console.log(error));
+//   isTokenExpired();
+//   apiGet("/api/students", token)
+//     .then((data) => {
+//       studentList = data.data;
+//       console.log("Fetched students:", studentList);
+//       renderStudents(studentList);
+//     })
+//     .catch((error) => {
+//       console.error("Error fetching students:", error);
+//     });
+// });
+
+function initTable() {
+  isTokenExpired();
   apiGet("/api/students", token)
     .then((data) => {
       studentList = data.data;
@@ -37,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
     .catch((error) => {
       console.error("Error fetching students:", error);
     });
-});
+}
 
 function renderStudents(studentList) {
   var table = document
@@ -91,6 +109,7 @@ function onCreate() {
 }
 
 function insertNewRecord(data) {
+  isTokenExpired();
   apiPost("/api/students", data, token)
     .then((response) => {
       console.log("Fetched students:", response);
@@ -101,23 +120,6 @@ function insertNewRecord(data) {
     .catch((error) => {
       alert("Create student error");
     });
-  // var table = document
-  //   .getElementById("studentList")
-  //   .getElementsByTagName("tbody")[0];
-  // var newRow = table.insertRow(table.length);
-  // const cell1 = newRow.insertCell(0);
-  // cell1.innerHTML = data.msv;
-  // const cell2 = newRow.insertCell(1);
-  // cell2.innerHTML = data.firstname + data.lastname;
-  // const cell3 = newRow.insertCell(2);
-  // cell3.innerHTML = data.email;
-  // const cell4 = newRow.insertCell(3);
-  // cell4.innerHTML = data.class;
-
-  // const cell5 = newRow.insertCell(4);
-  // cell5.innerHTML = `<div class="detailBtn"> <button onclick="onEdit(this)">Sửa</button>
-  //                      <button onClick="onDelete(this)">Xóa</button>
-  //                      `;
 }
 
 function resetForm() {
@@ -148,15 +150,21 @@ function onEdit(td) {
   document.getElementById("class").value = selectedRow.cells[3].innerHTML;
 }
 function updateRecord(formData) {
+  console.log(selectedRow);
+  isTokenExpired();
   apiPut(`/api/students/${msv}`, formData, token)
     .then((response) => {
       console.log("Fetched students:", response);
+      initTable();
+      // console.log(selectedRow);
+      // if (selectedRow) {
+      //   selectedRow.cells[0].innerHTML = formData.msv;
+      //   selectedRow.cells[1].innerHTML =
+      //     formData.firstName + " " + formData.lastName;
+      //   selectedRow.cells[2].innerHTML = formData.email;
+      //   selectedRow.cells[3].innerHTML = formData.class;
+      // }
       alert("Update student successful");
-      selectedRow.cells[0].innerHTML = formData.msv;
-      selectedRow.cells[1].innerHTML =
-        formData.firstName + " " + formData.lastName;
-      selectedRow.cells[2].innerHTML = formData.email;
-      selectedRow.cells[3].innerHTML = formData.class;
     })
     .catch((error) => {
       alert("Update student error");
@@ -167,6 +175,7 @@ function onDelete(td) {
   if (confirm("Are you sure to delete this record ?")) {
     var row = td.parentElement.parentElement.parentElement;
     msv = row.cells[0].innerHTML;
+    isTokenExpired();
     apiDelete(`/api/students/${msv}`, token)
       .then((response) => {
         alert("Delete successful");
@@ -210,6 +219,12 @@ function filterStudents() {
 }
 
 searchInput.addEventListener("input", filterStudents);
+
+function handleLogOut() {
+  logout();
+}
+
+window.handleLogOut = handleLogOut;
 
 window.onCreate = onCreate;
 window.onEdit = onEdit;

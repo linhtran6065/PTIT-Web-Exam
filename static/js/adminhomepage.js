@@ -1,3 +1,7 @@
+import { logout } from "../../auth.js";
+import { isTokenExpired } from "../../auth.js";
+isTokenExpired();
+
 var selectedRow = null;
 const createExamBtn = document.getElementById("createExamBtn");
 var createForm = document.getElementById("createForm");
@@ -145,3 +149,8 @@ function renderExams(exams) {
     examTable.appendChild(row);
   });
 }
+function handleLogOut() {
+  logout();
+}
+
+window.handleLogOut = handleLogOut;
