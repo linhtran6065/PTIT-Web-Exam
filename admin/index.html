@@ -120,13 +120,18 @@
                             </select>
                             <button id="createExamBtn">Tạo kỳ thi</button>
                         </div>
-
                     </div>
+
                     <div class="createForm inactive" id="createForm">
                         <form onsubmit="event.preventDefault();onFormSubmit();" autocomplete="off">
                             <label id="validation" style="color: red;font-style: italic;">**Cần nhập đầy đủ các thông
                                 tin**</label>
-                            <div>
+                                <div>
+                                    <label>ID*</label>
+                                    <input type="text" name="userId" id="userId">
+                                </div>
+
+                                <div>
                                 <label>Tên kỳ thi*</label>
                                 <input type="text" name="name" id="name">
                             </div>
@@ -146,7 +151,7 @@
                             </div>
                         </form>
                     </div>
-                    <table>
+                    <table id = "examList">
                         <thead>
                             <tr>
                                 <th>Tên kì thi</th>
@@ -162,7 +167,8 @@
             </div>
         </div> <!-- content-container -->
     </div>
-    <script src="../static/js/homepage.js"></script>
+    <!-- script: gồm homepage.js và admin homepage -->
+    <!-- <script src="../static/js/homepage.js"></script> -->
     <script type="module" src="../static/js/adminhomepage.js"></script>
 </body>
 
