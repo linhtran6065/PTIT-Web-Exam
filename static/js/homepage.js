@@ -1,9 +1,16 @@
+import { logout } from "../../auth.js";
+import { isTokenExpired } from "../../auth.js";
+isTokenExpired();
+
 function startExam(examName, status) {
-  if (status === 'accessible') {
+  if (status === "accessible") {
     alert(`Bạn sẽ bắt đầu làm bài ${examName}`);
-    window.location.href = "https://linhtran6065.github.io/PTIT-Web-Exam/user/test.html";
+    window.location.href =
+      "https://linhtran6065.github.io/PTIT-Web-Exam/user/test.html";
   } else {
-    alert(`Bài thi ${examName} yêu cầu thời gian cụ thể, bạn sẽ được chuyển đến trang chờ`);
+    alert(
+      `Bài thi ${examName} yêu cầu thời gian cụ thể, bạn sẽ được chuyển đến trang chờ`
+    );
   }
   //save examName to localStorage
   localStorage.setItem("examName", examName);
@@ -30,22 +37,16 @@ var examList = [
   // Thêm các kỳ thi khác vào đây
 ];
 
-
-
-
-
 document.addEventListener("DOMContentLoaded", function () {
   renderExams(examList);
   searchInput.addEventListener("input", filterExams);
   statusFilter.addEventListener("change", filterExams);
-
 });
-
 
 function filterExams() {
   const searchText = searchInput.value.toLowerCase();
   const statusValue = statusFilter.value;
-  const filteredExams = examList.filter(exam => {
+  const filteredExams = examList.filter((exam) => {
     const nameMatch = exam.name.toLowerCase().includes(searchText);
     const statusMatch = statusValue === "all" || exam.status === statusValue;
     return nameMatch && statusMatch;
@@ -55,9 +56,10 @@ function filterExams() {
 
 function renderExams(exams) {
   examTable.innerHTML = "";
-  exams.forEach(exam => {
+  exams.forEach((exam) => {
     const row = document.createElement("tr");
-    let statusClass = "", statusText = "";
+    let statusClass = "",
+      statusText = "";
     if (exam.status === "accessible") {
       statusClass = "accessible";
       statusText = "Truy cập tự do";
@@ -76,16 +78,20 @@ function renderExams(exams) {
         </tr>
       `;
     examTable.appendChild(row);
-
   });
   let joinExamButton = document.querySelectorAll(".join-exam");
   joinExamButton.forEach((button, index) => {
     button.addEventListener("click", function () {
       let examName = button.getAttribute("exam-name");
-      let status = examList.find(exam => exam.name === examName).status;
+      let status = examList.find((exam) => exam.name === examName).status;
       startExam(button.getAttribute("exam-name"), status);
       searchInput.value = "";
       statusFilter.value = "all";
     });
   });
 }
+function handleLogOut() {
+  logout();
+}
+
+window.handleLogOut = handleLogOut;

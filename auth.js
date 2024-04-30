@@ -1,25 +1,41 @@
 import { apiPost } from "./apiService.js";
 
-const token = localStorage.getItem("token");
-const userId = localStorage.getItem("userId");
-
 isTokenExpired();
 
 export function isTokenExpired() {
-  var data = { token: token };
+  const token = localStorage.getItem("token");
+  const userId = localStorage.getItem("userId");
+  const isAdmin = localStorage.getItem("isAdmin");
+
+  const data = { token: token };
   apiPost("/api/checkTokenExpired", data)
     .then((response) => {
       if (response.isTokenExpired) {
         refreshToken();
       } else {
-        if (userId == null && response.decoded.id != null) {
+        if (userId == null) {
           localStorage.setItem("userId", response.decoded.id);
+          localStorage.setItem("isAdmin", response.decoded.isAdmin);
+          navigate(isAdmin);
+        } else {
+          const currentUrl = window.location.href;
+          if (currentUrl == "http://127.0.0.1:5500/index.html") {
+            navigate(isAdmin);
+          }
         }
       }
     })
     .catch((error) => {
       console.log("Error", error);
     });
+}
+
+function navigate(isAdmin) {
+  if (isAdmin) {
+    window.location.href = "http://127.0.0.1:5500/admin/index.html";
+  } else {
+    window.location.href = "http://127.0.0.1:5500/user/index.html";
+  }
 }
 
 function validateLogin() {
@@ -41,7 +57,7 @@ function handleLogin(loginUsername, loginPassword) {
       localStorage.setItem("token", response.accessToken);
       localStorage.setItem("refreshToken", response.refreshToken);
       alert("Đăng nhập thành công");
-      window.location.href = "http://127.0.0.1:5500/admin/index.html";
+      isTokenExpired();
     })
     .catch((error) => {
       alert("Đăng nhập thất bại");
@@ -56,14 +72,7 @@ function refreshToken() {
       console.log(response);
       localStorage.setItem("token", response.accessToken);
 
-      const currentUrl = window.location.href;
-      if (currentUrl == "http://127.0.0.1:5500/index.html") {
-        if (response.isAdmin) {
-          window.location.href = "http://127.0.0.1:5500/admin/index.html";
-        } else {
-          window.location.href = "http://127.0.0.1:5500/user/index.html";
-        }
-      }
+      isTokenExpired();
     })
     .catch((error) => {
       console.log(error);
@@ -73,11 +82,12 @@ function refreshToken() {
 
 export function logout() {
   isTokenExpired();
-  apiPost("/api/logout", {}, token)
+  apiPost("/api/logout", {}, localStorage.getItem("token"))
     .then((response) => {
       localStorage.removeItem("token");
       localStorage.removeItem("refreshToken");
       localStorage.removeItem("userId");
+      localStorage.removeItem("isAdmin");
       alert("Đăng xuất thành công");
       window.location.href = "http://127.0.0.1:5500/index.html";
     })
