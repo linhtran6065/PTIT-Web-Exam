@@ -1,6 +1,7 @@
 import { apiPost } from "./apiService.js";
 
 const token = localStorage.getItem("token");
+const userId = localStorage.getItem("userId");
 
 isTokenExpired();
 
@@ -11,10 +12,8 @@ export function isTokenExpired() {
       if (response.isTokenExpired) {
         refreshToken();
       } else {
-        const currentUrl = window.location.href;
-        if (currentUrl == "http://127.0.0.1:5500/index.html") {
-          window.location.href =
-            "http://127.0.0.1:5500/admin/ManageStudent.html";
+        if (userId == null && response.decoded.id != null) {
+          localStorage.setItem("userId", response.decoded.id);
         }
       }
     })
@@ -39,7 +38,6 @@ function handleLogin(loginUsername, loginPassword) {
 
   apiPost("/api/login", data)
     .then((response) => {
-      console.log("Fetched students:", response);
       localStorage.setItem("token", response.accessToken);
       localStorage.setItem("refreshToken", response.refreshToken);
       alert("Đăng nhập thành công");
@@ -57,6 +55,15 @@ function refreshToken() {
     .then((response) => {
       console.log(response);
       localStorage.setItem("token", response.accessToken);
+
+      const currentUrl = window.location.href;
+      if (currentUrl == "http://127.0.0.1:5500/index.html") {
+        if (response.isAdmin) {
+          window.location.href = "http://127.0.0.1:5500/admin/index.html";
+        } else {
+          window.location.href = "http://127.0.0.1:5500/user/index.html";
+        }
+      }
     })
     .catch((error) => {
       console.log(error);
@@ -70,6 +77,7 @@ export function logout() {
     .then((response) => {
       localStorage.removeItem("token");
       localStorage.removeItem("refreshToken");
+      localStorage.removeItem("userId");
       alert("Đăng xuất thành công");
       window.location.href = "http://127.0.0.1:5500/index.html";
     })
