@@ -16,14 +16,14 @@ function startExam(examName, status) {
   localStorage.setItem("examName", examName);
 }
 
-const Exam = class {
-  constructor(name, status, time, description) {
-    this.name = name;
-    this.status = status;
-    this.time = time;
-    this.description = description;
-  }
-};
+// const Exam = class {
+//   constructor(name, status, time, description) {
+//     this.name = name;
+//     this.status = status;
+//     this.time = time;
+//     this.description = description;
+//   }
+// };
 
 const examTable = document.getElementById("examTable");
 const searchInput = document.getElementById("searchInput");
