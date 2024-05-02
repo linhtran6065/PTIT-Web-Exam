@@ -281,6 +281,8 @@ body {
   background: var(--ptit);
 }
 
+
+
 .content-container .table-data .order table tr td.join-exam:hover {
   transform: scale(1.1);
   transition: 0.3s ease;

@@ -1,57 +1,27 @@
-import { logout } from "../../auth.js";
-import { isTokenExpired } from "../../auth.js";
+import { apiDelete, apiGet, apiPost, apiPut } from "../../apiService.js";
+import { isTokenExpired, logout } from "../../auth.js";
+
+var examList = [];
+
+const token = localStorage.getItem("token");
 isTokenExpired();
+initTable();
+var id = null;
 
-function startExam(examName, status) {
-  if (status === "accessible") {
-    alert(`Bạn sẽ bắt đầu làm bài ${examName}`);
-    window.location.href =
-      "https://linhtran6065.github.io/PTIT-Web-Exam/user/test.html";
-  } else {
-    alert(
-      `Bài thi ${examName} yêu cầu thời gian cụ thể, bạn sẽ được chuyển đến trang chờ`
-    );
-  }
-  //save examName to localStorage
-  localStorage.setItem("examName", examName);
-}
+var selectedRow = null;
 
-// const Exam = class {
-//   constructor(name, status, time, description) {
-//     this.name = name;
-//     this.status = status;
-//     this.time = time;
-//     this.description = description;
-//   }
-// };
-
-const examTable = document.getElementById("examTable");
-const searchInput = document.getElementById("searchInput");
-const statusFilter = document.getElementById("statusFilter");
-const totalUser = document.getElementById("totalUser");
-var examList = [
-  new Exam("Lập trình C++", "accessible", "5 - 3 - 2024", "Mô tả"),
-  new Exam("Giữa kỳ Kiến trúc máy tính", "scheduled", "20 - 3 - 2024", "Mô tả"),
-  new Exam("Cuối kỳ Mạng Máy tính", "accessible", "10 - 4 - 2024", "Mô tả"),
-  new Exam("Thực hành Mạng máy tính", "accessible", "30 - 4 - 2024", "Mô tả"),
-  // Thêm các kỳ thi khác vào đây
-];
-
-document.addEventListener("DOMContentLoaded", function () {
-  renderExams(examList);
-  searchInput.addEventListener("input", filterExams);
-  statusFilter.addEventListener("change", filterExams);
-});
-
-function filterExams() {
-  const searchText = searchInput.value.toLowerCase();
-  const statusValue = statusFilter.value;
-  const filteredExams = examList.filter((exam) => {
-    const nameMatch = exam.name.toLowerCase().includes(searchText);
-    const statusMatch = statusValue === "all" || exam.status === statusValue;
-    return nameMatch && statusMatch;
-  });
-  renderExams(filteredExams);
+// 1. Tạo bảng và render bảng
+function initTable() {
+  isTokenExpired();
+  apiGet("/api/exams", token)
+    .then((exam) => {
+      examList = exam.data;
+      console.log("Fetched exams:", examList);
+      renderExams(examList);
+    })
+    .catch((error) => {
+      console.error("Error fetching exams:", error);
+    });
 }
 
 function renderExams(exams) {
@@ -60,38 +30,36 @@ function renderExams(exams) {
     const row = document.createElement("tr");
     let statusClass = "",
       statusText = "";
-    if (exam.status === "accessible") {
+    if (exam.type === "Tự do") {
       statusClass = "accessible";
       statusText = "Truy cập tự do";
-    } else if (exam.status === "scheduled") {
+    } else if (exam.type === "Yêu cầu thời gian cụ thể") {
       statusClass = "scheduled";
       statusText = "Yêu cầu thời gian cụ thể";
     }
     row.innerHTML = `
-            <tr>
-            <td>
-                <p>${exam.name}</p>
-            </td>
-            <td>${exam.time}</td>
-            <td><span class="status ${statusClass}">${statusText}</span></td>
-            <td class="join-exam" exam-name="${exam.name}"><span class="status join">Tham gia thi</span></td>
-        </tr>
-      `;
+              <tr>
+              <td>
+                  <p>${exam.name}</p>
+              </td>
+              <td>${exam.description}</td>
+              <td><span class="status ${statusClass}">${statusText}</span></td>
+              <td class="join-exam" exam-name="${exam.name}"><button class="status join" onClick="onViewDetail(this)" >Tham gia thi</button></td>
+          </tr>
+        `;
     examTable.appendChild(row);
   });
-  let joinExamButton = document.querySelectorAll(".join-exam");
-  joinExamButton.forEach((button, index) => {
-    button.addEventListener("click", function () {
-      let examName = button.getAttribute("exam-name");
-      let status = examList.find((exam) => exam.name === examName).status;
-      startExam(button.getAttribute("exam-name"), status);
-      searchInput.value = "";
-      statusFilter.value = "all";
-    });
-  });
 }
+
+function onViewDetail(data) {
+  var row = data.parentNode.parentNode; // Get the parent row of the button
+  var examId = row.rowIndex;
+  window.location.href = "./test.html?id=" + examId;
+}
+
 function handleLogOut() {
   logout();
 }
 
+window.onViewDetail = onViewDetail;
 window.handleLogOut = handleLogOut;
