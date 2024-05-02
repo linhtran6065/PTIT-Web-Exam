@@ -12,8 +12,7 @@ var selectedRow = null;
 
 // 1. Tạo bảng và render bảng
 function initTable() {
-  isTokenExpired();
-  apiGet("/api/exams", token)
+  apiGet("/api/exams", localStorage.getItem("token"))
     .then((exam) => {
       examList = exam.data;
       console.log("Fetched exams:", examList);

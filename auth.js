@@ -4,8 +4,8 @@ isTokenExpired();
 
 export function isTokenExpired() {
   const token = localStorage.getItem("token");
-  const userId = localStorage.getItem("userId");
-  const isAdmin = localStorage.getItem("isAdmin");
+  let userId = localStorage.getItem("userId");
+  let isAdmin = JSON.parse(localStorage.getItem("isAdmin"));
 
   const data = { token: token };
   apiPost("/api/checkTokenExpired", data)
@@ -15,7 +15,13 @@ export function isTokenExpired() {
       } else {
         if (userId == null) {
           localStorage.setItem("userId", response.decoded.id);
-          localStorage.setItem("isAdmin", response.decoded.isAdmin);
+          localStorage.setItem(
+            "isAdmin",
+            JSON.stringify(response.decoded.isAdmin)
+          );
+          userId = localStorage.getItem("userId");
+          isAdmin = JSON.parse(localStorage.getItem("isAdmin"));
+
           navigate(isAdmin);
         } else {
           const currentUrl = window.location.href;

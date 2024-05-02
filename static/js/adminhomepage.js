@@ -17,11 +17,10 @@ const createExamBtn = document.getElementById("createExamBtn");
 var createForm = document.getElementById("createForm");
 createExamBtn.addEventListener("click", onCreate);
 
-
 // 1. Tạo bảng và render bảng
 function initTable() {
   isTokenExpired();
-  apiGet("/api/exams", token)
+  apiGet("/api/exams", localStorage.getItem("token"))
     .then((exam) => {
       examList = exam.data;
       console.log("Fetched exams:", examList);
@@ -31,7 +30,6 @@ function initTable() {
       console.error("Error fetching exams:", error);
     });
 }
-
 
 function renderExams(exams) {
   examTable.innerHTML = "";
@@ -62,7 +60,7 @@ function renderExams(exams) {
   });
 }
 
-// 2. Thêm mới bài thi + form thêm mới 
+// 2. Thêm mới bài thi + form thêm mới
 function onCreate() {
   if (createForm.classList.contains("inactive")) {
     createForm.classList.remove("inactive");
@@ -85,7 +83,6 @@ function onFormSubmit() {
   console.log("formData");
 }
 
-
 // đọc dữ liệu nhập
 function readFormData() {
   var formData = {};
@@ -103,7 +100,7 @@ function readFormData() {
 
 function insertNewRecord(data) {
   isTokenExpired();
-  apiPost("/api/exams", data, token)
+  apiPost("/api/exams", data, localStorage.getItem("token"))
     .then((response) => {
       console.log("Fetched exams:", response);
       alert("Create exams successful");
@@ -143,7 +140,7 @@ function validate() {
     document.getElementById("name").value == "" ||
     document.getElementById("description").value == "" ||
     document.getElementById("statusFilterForm").value == "" ||
-    document.getElementById("userId").value == "" 
+    document.getElementById("userId").value == ""
   ) {
     isValid = false;
   } else {
@@ -179,7 +176,7 @@ function onEdit(td) {
 
 function updateRecord(formData) {
   isTokenExpired();
-  apiPut(`/api/exams/${id}`, formData, token)
+  apiPut(`/api/exams/${id}`, formData, localStorage.getItem("token"))
     .then((response) => {
       console.log("Fetched exams:", response);
       initTable();
@@ -190,7 +187,6 @@ function updateRecord(formData) {
     });
 }
 
-
 function onDelete(td) {
   isTokenExpired();
   if (confirm("Bạn có chắc chắn muốn xóa bài thi này?")) {
@@ -199,7 +195,7 @@ function onDelete(td) {
       (exam) => exam.name === row.cells[0].querySelector("p").innerHTML
     );
 
-    apiDelete(`/api/exams/${row.rowIndex}`, token)
+    apiDelete(`/api/exams/${row.rowIndex}`, localStorage.getItem("token"))
       .then((response) => {
         alert("Delete successful");
         document.getElementById("examList").deleteRow(row.rowIndex);
@@ -210,26 +206,21 @@ function onDelete(td) {
         alert("Delete error");
       });
 
-      resetForm();
-
+    resetForm();
   }
 }
-
-
-
 
 function onViewDetail(data) {
   window.location.href = "./create.html";
 }
 
-
 function handleLogOut() {
   logout();
 }
 
-window.onEdit = onEdit
-window.onDelete = onDelete
-window.onFormSubmit= onFormSubmit;
+window.onEdit = onEdit;
+window.onDelete = onDelete;
+window.onFormSubmit = onFormSubmit;
 window.onCreate = onCreate;
 window.onViewDetail = onViewDetail;
 window.handleLogOut = handleLogOut;
