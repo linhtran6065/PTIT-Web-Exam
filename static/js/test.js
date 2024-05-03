@@ -1,53 +1,3 @@
-// const questions = [
-//   {
-//     question: "Câu hỏi 1: Ai là người sáng lập của Microsoft?",
-//     options: [
-//       "A. Bill Gates",
-//       "B. Steve Jobs",
-//       "C. Mark Zuckerberg",
-//       "D. Jeff Bezos",
-//     ],
-//     answer: 1,
-//     answerText: "A",
-//   },
-//   {
-//     question:
-//       "Câu hỏi 2: Trong hệ mặt trời, hành tinh nào là hành tinh thứ tư từ Mặt Trời?",
-//     options: ["A. Mars", "B. Venus", "C. Earth", "D. Jupiter"],
-//     answer: 1,
-//     answerText: "A",
-//   },
-//   {
-//     question: "Câu hỏi 3: Thủ đô của Pháp là gì?",
-//     options: ["A. Madrid", "B. Rome", "C. Paris", "D. Berlin"],
-//     answer: 1,
-//     answerText: "A",
-//   },
-//   {
-//     question: "Câu hỏi 4: Ai là CEO của Amazon?",
-//     options: [
-//       "A. Bill Gates",
-//       "B. Steve Jobs",
-//       "C. Mark Zuckerberg",
-//       "D. Jeff Bezos",
-//     ],
-//     answer: 4,
-//     answerText: "D",
-//   },
-//   {
-//     question: "Câu hỏi 5: Ai là CEO của Facebook?",
-//     options: [
-//       "A. Bill Gates",
-//       "B. Steve Jobs",
-//       "C. Mark Zuckerberg",
-//       "D. Jeff Bezos",
-//     ],
-//     answer: 3,
-//     answerText: "C",
-//   },
-// ];
-// Get the URL parameters
-
 import { apiDelete, apiGet, apiPost, apiPut } from "../../apiService.js";
 import { isTokenExpired, logout } from "../../auth.js";
 
@@ -57,6 +7,8 @@ function getUrlParameter(name) {
   var results = regex.exec(location.search);
   return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
 }
+
+
 
 // Get the value of the 'id' parameter from the URL
 var examId = getUrlParameter('id');

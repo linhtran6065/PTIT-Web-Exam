@@ -46,6 +46,7 @@ function renderExams(exams) {
               <td>
                   <p>${exam.name}</p>
               </td>
+              <td>${exam.id}</td>
               <td>${exam.description}</td>
               <td><span class="status ${statusClass}">${statusText}</span></td>
               <td class="join-exam" exam-name="${exam.name}"><button class="status join" onClick="onViewDetail(this)" >Tham gia thi</button></td>
