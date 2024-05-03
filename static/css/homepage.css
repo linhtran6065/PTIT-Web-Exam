@@ -240,10 +240,10 @@ body {
 }
 
 .content-container .table-data .order table tr td:first-child {
-  display: flex;
-  align-items: center;
+  /* display: flex; */
+  /* align-items: center; */
   grid-gap: 12px;
-  padding-left: 6px;
+  /* padding-left: 6px; */
 }
 
 .content-container .table-data .order table td img {

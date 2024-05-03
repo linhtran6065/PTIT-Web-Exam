@@ -93,21 +93,46 @@
         </div>
         <div class="content-container">
             <h1 id="textTitle"> Danh sách câu hỏi</h1>
+            
             <div class="buttonHeader">
-                <button onclick="optionForm()"> Tạo câu hỏi</button>
+                <button onclick="onCreate()"> Tạo câu hỏi</button>
                 <button onclick="saveAll()"> Lưu</button>
                 <button onclick="deleteAll()"> Xóa hết</button>
                 <button onclick="importFile()"> Nhập đề thi</button>
-
             </div>
-            <div id="import-container">
+
+            <div class="createForm inactive" id="createForm">
+                <form >
+                    <label id="validation" style="color: red;font-style: italic;">**Cần nhập đầy đủ các thông
+                        tin**</label>
+                        <div>
+                            <label>Tên bài thi*</label>
+                            <input type="text" name="name" id="name">
+                        </div>
+
+                       
+                    <div class="form-action-buttons" >
+                        <button type="button" id = "formButton" id="saveBtn">Save</button>
+                    </div>
+
+                </form>
+            </div>
+
+            <form id="quizForm">
+                <div id="quiz-question">
+
+                </div>
+                
+                <input type="radio" name="answer"><br>
+            </form>
+              
+            <!-- <div id="import-container">
                 <a id="import-btn">Chọn</a>
                 <input type="file" id="file-input" accept=".xlsx" name="Chọn file" />
 
-            </div>
-            <ol id="form-container">
+            </div> -->
 
-            </ol>
+        
         </div> <!-- content-container -->
     </div>
 

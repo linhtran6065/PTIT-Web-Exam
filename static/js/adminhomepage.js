@@ -10,7 +10,7 @@ var isValid = (document.getElementById("validation").style.display = "none");
 const token = localStorage.getItem("token");
 isTokenExpired();
 initTable();
-var id = null;
+var examID = null;
 
 var selectedRow = null;
 const createExamBtn = document.getElementById("createExamBtn");
@@ -46,6 +46,7 @@ function renderExams(exams) {
     }
     row.innerHTML = `
               <tr>
+              <td>${exam.id}</td>
               <td>
                   <p>${exam.name}</p>
               </td>
@@ -105,7 +106,6 @@ function insertNewRecord(data) {
       console.log("Fetched exams:", response);
       alert("Create exams successful");
       examList.push(data);
-      renderExams(examList);
     })
     .catch((error) => {
       alert("Create exam error");
@@ -155,13 +155,14 @@ function onEdit(td) {
   if (createForm.classList.contains("inactive")) {
     createForm.classList.remove("inactive");
     selectedRow = td.parentElement.parentElement.parentElement;
+    examID = selectedRow.cells[0].innerHTML;
+    console.log(selectedRow);
     document.getElementById("name").value =
-      selectedRow.cells[0].querySelector("p").innerHTML;
-    //document.getElementById("name").value = selectedRow.cells[0].innerHTML;
+      selectedRow.cells[1].querySelector("p").innerHTML;
     document.getElementById("description").value =
-      selectedRow.cells[1].innerHTML;
+      selectedRow.cells[2].innerHTML;
     if (
-      selectedRow.cells[2].querySelector("span").innerHTML == "Truy cập tự do"
+      selectedRow.cells[3].querySelector("span").innerHTML == "Truy cập tự do"
     ) {
       document.getElementById("statusFilterForm").value = "accessible";
     } else {
@@ -176,7 +177,7 @@ function onEdit(td) {
 
 function updateRecord(formData) {
   isTokenExpired();
-  apiPut(`/api/exams/${id}`, formData, localStorage.getItem("token"))
+  apiPut(`/api/exams/${examID}`, formData, localStorage.getItem("token"))
     .then((response) => {
       console.log("Fetched exams:", response);
       initTable();
@@ -188,30 +189,26 @@ function updateRecord(formData) {
 }
 
 function onDelete(td) {
-  isTokenExpired();
   if (confirm("Bạn có chắc chắn muốn xóa bài thi này?")) {
     var row = td.parentElement.parentElement.parentElement;
-    var name = examList.find(
-      (exam) => exam.name === row.cells[0].querySelector("p").innerHTML
-    );
-
-    apiDelete(`/api/exams/${row.rowIndex}`, localStorage.getItem("token"))
+    examID = row.cells[0].innerHTML;
+    isTokenExpired();
+    apiDelete(`/api/exams/${examID}`, localStorage.getItem("token"))
       .then((response) => {
         alert("Delete successful");
         document.getElementById("examList").deleteRow(row.rowIndex);
-        examList.splice(examList.indexOf(name), 1);
-        renderExams(examList);
       })
       .catch((error) => {
         alert("Delete error");
       });
-
     resetForm();
   }
 }
 
-function onViewDetail(data) {
-  window.location.href = "./create.html";
+function onViewDetail(td) {
+  var row = td.parentElement.parentElement.parentElement;
+  examID = row.cells[0].innerHTML;
+  window.location.href = "./create.html?id=" + examID;
 }
 
 function handleLogOut() {
