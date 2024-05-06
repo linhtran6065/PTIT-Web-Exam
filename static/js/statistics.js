@@ -290,7 +290,8 @@ const studentData = [
 
 const totalQuestions = localStorage.getItem("count");
 // Dữ liệu hiện tại đang được hiển thị
-let currentDisplayedData = studentData;
+//let currentDisplayedData = studentData;
+let currentDisplayedData = null;
 
 // Biểu đồ đang được hiển thị
 let currentChart = null;
@@ -312,11 +313,14 @@ function convertDateFormat(dateStr) {
 }
 
 // Hàm hiển thị dữ liệu
-function displayData() {
-  apiGet("/api/forms", localStorage.getItem("token"))
+function displayData(data, queryParams) {
+  isTokenExpired();
+  apiGet("/api/forms", localStorage.getItem("token"), queryParams)
     .then((data) => {
       currentDisplayedData = data.data;
       renderData(currentDisplayedData);
+      drawScoreDistributionChart(currentDisplayedData);
+      calculateStatistics(data.data);
     })
     .catch((error) => {
       console.error("Error", error);
@@ -350,7 +354,8 @@ function filterResults() {
   const endDateFilterValue = document.getElementById("endDateFilter").value;
 
   let filteredData = currentDisplayedData.filter((student) => {
-    const examDate = new Date(student.examDate);
+    const examStartDate = new Date(student.startTime);
+    const examEndDate = new Date(student.endTime);
     const startDate = startDateFilterValue
       ? new Date(startDateFilterValue)
       : new Date("1900-01-01");
@@ -360,16 +365,21 @@ function filterResults() {
 
     return (
       (!examFilterValue || student.exam === examFilterValue) &&
-      (!startDateFilterValue || examDate >= startDate) &&
-      (!endDateFilterValue || examDate <= endDate)
+      (!startDateFilterValue || examStartDate >= startDate) &&
+      (!endDateFilterValue || examEndDate <= endDate)
     );
   });
 
   // Cập nhật dữ liệu hiện tại và hiển thị
   currentDisplayedData = filteredData;
-  displayData(filteredData);
-  calculateStatistics(filteredData);
-  drawScoreDistributionChart(filteredData);
+  var queryParams = {
+    examName: examFilterValue,
+    startTime: startDateFilterValue,
+    endTime: endDateFilterValue,
+  };
+  displayData(filteredData, queryParams);
+  //calculateStatistics(filteredData);
+  // drawScoreDistributionChart(filteredData);
 }
 
 // Hàm sắp xếp dữ liệu
@@ -381,7 +391,8 @@ function sortData() {
     sortBy === "name" ||
     sortBy === "studentId" ||
     sortBy === "exam" ||
-    sortBy === "examDate"
+    sortBy === "startTime" ||
+    sortBy === "endTime"
   ) {
     sortedData.sort((a, b) => a[sortBy].localeCompare(b[sortBy]));
   } else if (sortBy === "score") {
@@ -392,7 +403,7 @@ function sortData() {
 
 function calculateStatistics(data) {
   const totalParticipations = data.length;
-  const completed = data.filter((student) => student.completed === "Có").length;
+  const completed = data.filter((student) => student.isFinish === "Có").length;
   const completionRate = ((completed / totalParticipations) * 100).toFixed(2);
   const averageScore = (
     data.reduce((acc, curr) => acc + curr.score, 0) / totalParticipations
@@ -428,7 +439,7 @@ function drawScoreDistributionChart(data) {
 
   // Phân loại và đếm điểm số
   data.forEach((student) => {
-    const score = student.score;
+    const score = (student.score / totalQuestions) * 10;
     if (score < 1) scoreCounts[0]++;
     else if (score < 2) scoreCounts[1]++;
     else if (score < 3) scoreCounts[2]++;
@@ -481,7 +492,11 @@ function exportToExcel() {
 
 window.onload = () => {
   loadExamOptions();
-  displayData();
+  displayData(null);
   calculateStatistics(currentDisplayedData);
   drawScoreDistributionChart(currentDisplayedData);
 };
+
+window.filterResults = filterResults;
+window.exportToExcel = exportToExcel;
+window.sortData = sortData;

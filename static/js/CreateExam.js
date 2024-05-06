@@ -3,51 +3,44 @@ import { isTokenExpired, logout } from "../../auth.js";
 
 function getIdFromUrl() {
   var urlParams = new URLSearchParams(window.location.search);
-  var exam_ID = urlParams.get('id');
+  var exam_ID = urlParams.get("id");
   return exam_ID;
 }
 
 var exam_ID = getIdFromUrl();
 var selectedRow = null;
-var selectedRowAns=  null;
+var selectedRowAns = null;
 var answerID = null;
 
 var formButton = document.getElementById("formButton");
 
-formButton.addEventListener('click', function() {
-    onFormSubmit();
+formButton.addEventListener("click", function () {
+  onFormSubmit();
 });
 
 var formButton_ans = document.getElementById("formButton_ans");
 
-formButton_ans.addEventListener('click', function() {
-    onFormSubmitAns();
+formButton_ans.addEventListener("click", function () {
+  onFormSubmitAns();
 });
-
-
 
 const token = localStorage.getItem("token");
 
 initExam();
 isTokenExpired();
 
-
 var isValid = null;
 var isValidAns = null;
-
 
 var questionID = null;
 
 var createForm = document.getElementById("createForm");
 var createForm_ans = document.getElementById("createForm_ans");
 
-
 var examList = [];
 
-
-
 function validate() {
-   isValid = true;
+  isValid = true;
   if (document.getElementById("name").value == "") {
     isValid = false;
   } else {
@@ -58,12 +51,12 @@ function validate() {
 
 function validate_ans() {
   isValidAns = true;
- if (document.getElementById("name_ans").value == "") {
-  isValidAns = false;
- } else {
-  isValidAns = true;
- }
- return isValidAns;
+  if (document.getElementById("name_ans").value == "") {
+    isValidAns = false;
+  } else {
+    isValidAns = true;
+  }
+  return isValidAns;
 }
 
 function initExam() {
@@ -79,21 +72,60 @@ function initExam() {
     });
 }
 
-
 function saveAll() {
-  
-  examList.forEach((questions) => {
-  questions.choices.forEach((choice) => {
-    var ans = document.getElementById(`${choice.id}`);
-    if(ans.checked) {
-      choice.isCorrect = true;
+  isTokenExpired();
+  var questions = document.getElementsByName(`question`);
+  var questionForm = [];
+  questions.forEach((question) => {
+    var listChoices = [];
+    var radioButtons = document.getElementsByName(`answer-${question.id}`);
+    for (var i = 0; i < radioButtons.length; i++) {
+      var labelText = document.querySelector(
+        `label[for="${radioButtons[i].id}"]`
+      ).textContent;
+      if (radioButtons[i].checked) {
+        listChoices.push({
+          id: radioButtons[i].id,
+          name: labelText,
+          isCorrect: true,
+        });
+      } else {
+        listChoices.push({
+          id: radioButtons[i].id,
+          name: labelText,
+          isCorrect: false,
+        });
+      }
     }
-    else choice.isCorrect = false;
-  })
-  })
-  
-  initExam();
-  console.log(examList);  
+    var questionInfo = { id: question.id, name: question.innerHTML };
+    questionForm.push({ question: questionInfo, choices: listChoices });
+  });
+  console.log(questionForm);
+
+  var processedList = { examId: exam_ID, data: questionForm };
+
+  apiPost("/api/questions/listQuestions", processedList, token)
+    .then((response) => {
+      // examList.push(data);
+      initExam();
+      alert("Processing successful");
+    })
+    .catch((error) => {
+      alert("Processing error");
+    });
+
+  // examList.forEach((questions) => {
+  // questions.choices.forEach((choice) => {
+  //   var ans = document.getElementById(`${choice.id}`);
+  //   if(ans.checked) {
+  //     choice.isCorrect = true;
+  //   }
+  //   else choice.isCorrect = false;
+  // })
+  // })
+
+  // initExam();
+  // console.log(examList);
   // formDataAns = readFormDataAns;
   // updateRecordAns(formDataAns);
 }
@@ -102,15 +134,13 @@ function renderExams(data) {
   quizForm.innerHTML = "";
   data.forEach((questions) => {
     var quizQuestion = document.createElement("div");
-  
-    quizQuestion.innerHTML = 
-    `
+
+    quizQuestion.innerHTML = `
     <i onclick = "onDelete(this)" class="quizIcon bi bi-trash" > </i> 
     <i onclick = "onEdit(this)" class="quizIcon bi bi-pencil" > </i>
     <i onclick = "onPlus(this)" class="quizIcon bi bi-plus" > </i> 
-    <div id= "${questions.questions.id}">${questions.questions.name}</div>`
-    
-    
+    <div name ="question" id= "${questions.questions.id}">${questions.questions.name}</div>`;
+
     var quizOption = document.createElement("ul");
     quizOption.id = `questionID-${questions.questions.id}`;
     questions.choices.forEach((choice) => {
@@ -123,18 +153,18 @@ function renderExams(data) {
       </input>
       <i onclick = "onDeleteAns(this)" class="ansIcon bi bi-trash" > </i> 
       <i onclick = "onEditAns(this)" class="ansIcon bi bi-pencil" > </i>
-      `
-      
-      if(choice.isCorrect) {
+      `;
+
+      if (choice.isCorrect) {
         quizChoiceLi.childNodes[1].checked = true;
-      }  
+      }
       quizOption.appendChild(quizChoiceLi);
-    })
+    });
 
     quizForm.appendChild(quizQuestion);
     // quizForm.appendChild(addForm);
     quizForm.appendChild(quizOption);
-  })
+  });
 }
 
 // đọc dữ liệu nhập
@@ -168,10 +198,10 @@ function readFormDataAns() {
 //   console.log(formDataAns);
 //   return formDataAns;
 // }
- 
+
 // console.log(questionID);
 
-// 2. Thêm mới bài thi + form thêm mới 
+// 2. Thêm mới bài thi + form thêm mới
 function onCreate() {
   if (createForm.classList.contains("inactive")) {
     createForm.classList.remove("inactive");
@@ -194,9 +224,7 @@ function resetFormAns() {
   selectedRowAns = null;
 }
 
-
 // chọn time
-
 
 // thêm bài thi mới
 function insertNewRecord(data) {
@@ -207,14 +235,11 @@ function insertNewRecord(data) {
       examList.push(data);
       initExam();
       alert("Create questions successful");
-
     })
     .catch((error) => {
       alert("Create questions error");
     });
 }
-
-
 
 // thêm câu trả lời
 // thêm bài thi mới
@@ -227,7 +252,6 @@ function insertNewRecordAns(data) {
       // examList.push(data);
       initExam();
       alert("Create answer successful");
-
     })
     .catch((error) => {
       alert(error.messsage);
@@ -238,9 +262,9 @@ function insertNewRecordAns(data) {
 // 3. câu hỏi
 function onEdit(data) {
   if (createForm.classList.contains("inactive")) {
-    createForm.classList.remove("inactive");  
+    createForm.classList.remove("inactive");
     var quesName = data.parentElement.lastElementChild;
-    selectedRow =  data.parentElement;
+    selectedRow = data.parentElement;
     questionID = data.parentElement.lastElementChild.id;
     console.log(data.parentElement.lastElementChild.id);
     document.getElementById("name").value = quesName.innerHTML;
@@ -252,14 +276,16 @@ function onEdit(data) {
 
 function onEditAns(data) {
   if (createForm_ans.classList.contains("inactive")) {
-    createForm_ans.classList.remove("inactive");  
+    createForm_ans.classList.remove("inactive");
     answerID = data.parentElement.firstElementChild.id;
-    selectedRowAns =  data.parentElement;
+    selectedRowAns = data.parentElement;
     var ulID = data.parentElement.parentElement.id;
     var parts = ulID.split("-");
     questionID = parts[1];
-    
-    var labelText = document.querySelector(`label[for="${answerID}"]`).textContent;
+
+    var labelText = document.querySelector(
+      `label[for="${answerID}"]`
+    ).textContent;
     console.log(answerID);
     console.log(labelText);
     document.getElementById("name_ans").value = labelText;
@@ -270,7 +296,7 @@ function onEditAns(data) {
 }
 
 function onFormSubmit() {
-    if (validate()) {
+  if (validate()) {
     var formData = readFormData();
     if (selectedRow == null) insertNewRecord(formData);
     else updateRecord(formData);
@@ -278,24 +304,23 @@ function onFormSubmit() {
     document.getElementById("validation").style.display = "none";
   } else {
     document.getElementById("validation").style.display = "inline";
-  } 
+  }
 }
 
 function onFormSubmitAns() {
   if (validate_ans()) {
-  var formDataAns = readFormDataAns();
-  if (selectedRowAns == null) insertNewRecordAns(formDataAns);
-  else updateRecordAns(formDataAns);
-  
-  resetFormAns();
-  document.getElementById("validation_ans").style.display = "none";
-} else {
-  document.getElementById("validation_ans").style.display = "inline";
-} 
+    var formDataAns = readFormDataAns();
+    if (selectedRowAns == null) insertNewRecordAns(formDataAns);
+    else updateRecordAns(formDataAns);
+
+    resetFormAns();
+    document.getElementById("validation_ans").style.display = "none";
+  } else {
+    document.getElementById("validation_ans").style.display = "inline";
+  }
 }
 
-
-console.log( document.getElementById("validation_ans"));
+console.log(document.getElementById("validation_ans"));
 
 // 4. Xóa bài thi
 
@@ -307,7 +332,7 @@ function onDelete(data) {
     apiDelete(`/api/questions/${questionID}`, token)
       .then((response) => {
         initExam();
-        alert("Delete successful");      
+        alert("Delete successful");
       })
       .catch((error) => {
         alert("Delete error");
@@ -322,13 +347,13 @@ function onDeleteAns(data) {
     isTokenExpired();
     apiDelete(`/api/answers/${answerID}`, token)
       .then((response) => {
-        alert("Delete successful");      
+        alert("Delete successful");
         initExam();
       })
       .catch((error) => {
         alert("Delete error");
       });
-  }   
+  }
 }
 
 function updateRecord(formData) {
@@ -360,9 +385,6 @@ function updateRecordAns(formDataAns) {
     });
 }
 
-
-
-
 // 5. thêm mới câu hỏi
 function onPlus(data) {
   questionID = data.parentElement.lastElementChild.id;
@@ -378,23 +400,17 @@ function handleLogOut() {
   logout();
 }
 
-window.onEdit = onEdit
-window.onDelete = onDelete
-window.onDeleteAns = onDeleteAns
-window.onFormSubmit= onFormSubmit;
-window.onFormSubmitAns= onFormSubmitAns;
+window.onEdit = onEdit;
+window.onDelete = onDelete;
+window.onDeleteAns = onDeleteAns;
+window.onFormSubmit = onFormSubmit;
+window.onFormSubmitAns = onFormSubmitAns;
 
 window.onCreate = onCreate;
 window.onEditAns = onEditAns;
 
 window.handleLogOut = handleLogOut;
-window.onPlus = onPlus
-window.saveAll = saveAll
+window.onPlus = onPlus;
+window.saveAll = saveAll;
 // window.deleteAll = deleteAll
 // window.importFile = importFile
-
-
-
-
-
-

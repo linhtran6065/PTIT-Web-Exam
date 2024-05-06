@@ -24,8 +24,11 @@ function handleApiError(response) {
 }
 
 // Function to make a GET request
-export function apiGet(endpoint, token = null) {
-  return fetch(`${API_BASE_URL}${endpoint}`, {
+export function apiGet(endpoint, token = null, queryParams = {}) {
+  const url = new URL(`${API_BASE_URL}${endpoint}`);
+  const searchParams = new URLSearchParams(queryParams);
+  url.search = searchParams.toString();
+  return fetch(url.toString(), {
     method: "GET",
     headers: createHeaders(token),
   })
