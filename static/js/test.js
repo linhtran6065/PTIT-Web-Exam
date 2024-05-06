@@ -138,47 +138,7 @@ function renderExams(examList) {
     quizForm.appendChild(quizOption);
   });
 }
-// quizForm.innerHTML = "";
-// data.forEach((questions) => {
-//   const quizQuestion = document.createElement("div");
-//   console.log(questions.questions.name);
-//   quizQuestion.innerHTML = `<div>${questions.questions.name}</div>`
 
-// })
-// quizForm.appendChild(quizQuestion);
-
-// function renderExams(data) {
-//   let x = 0;
-
-//   return `
-//   <form id="quizForm">
-//   ${data.map(
-
-//       (questions, index) =>
-//         `
-//           <div id = "quiz-question" >${questions.questions.name}</div>
-//           <ul class="quiz-options">
-
-//               ${questions.choices
-//                 .map(
-//                   (chocie, id) =>
-//                     `
-//                   <li class="quiz-option">
-//                   <input name="option-${index}" id = ${x++} type ="radio">${chocie}</input>
-//                   </li>
-//               `
-//                 )
-//                 .join("")}
-//           </ul>
-//   `
-//     )
-//     .join("")}
-// </form>
-
-//   `;
-// }
-
-// }
 
 // Bắt đầu bộ đếm thời gian
 const timer = setInterval(function () {
@@ -186,7 +146,7 @@ const timer = setInterval(function () {
     clearInterval(timer);
     timerDisplay.textContent = "Hết giờ!";
     showMessage("Hết giờ! Bạn đã không kịp nộp bài.");
-    disableForm();
+    // disableForm();
   } else {
     const minutes = Math.floor(timeLeft / 60);
     let seconds = timeLeft % 60;

@@ -83,11 +83,39 @@ function renderExams(exams) {
       var [endHours, endMinutes] = endTime.split(":").slice(0, 2);
       var [startHours, startMinutes] = startTime.split(":").slice(0, 2);
 
+      // Convert startHours to an integer and add 7
+var newStartHours = (parseInt(startHours) + 7) % 24;
+var newEndHours = (parseInt(endHours) + 7) % 24;
+
+// Convert newStartHours back to a string
+var formattedNewStartHours = String(newStartHours);
+var formattedNewEndHours = String(newEndHours);
+
+
+// If newStartHours is less than 10, prepend a '0' to maintain two-digit format
+if (newStartHours < 10) {
+    formattedNewStartHours = "0" + formattedNewStartHours;
+}
+
+if (newEndHours < 10) {
+  formattedNewEndHours = "0" + formattedNewEndHours;
+}
+
       // Format the time
-      var formattedEndTime = `${endHours}:${endMinutes}`;
-      var formattedStartTime = `${startHours}:${startMinutes}`;
+      var formattedEndTime = `${formattedNewEndHours}:${endMinutes}`;
+      var formattedStartTime = `${formattedNewStartHours}:${startMinutes}`;
+    
+  
 
     }
+
+    if(exam.type === "Tự do") {
+      startDate = "Không giới hạn";
+      formattedStartTime = "Không giới hạn";
+      formattedEndTime = "Không giới hạn"
+
+    }
+
 
     row.innerHTML = `
               <tr>
@@ -109,12 +137,6 @@ function renderExams(exams) {
   });
 }
 
-// function searchExam() {
-//   const searchTerm = searchInput.value.toLowerCase();
-//   const filteredItems = items.filter(item => item.toLowerCase().includes(searchTerm));
-
-
-// }
 
 // 2. Thêm mới bài thi + form thêm mới 
 function onCreate() {
@@ -136,6 +158,15 @@ function onFormSubmit() {
   } else {
     document.getElementById("validation").style.display = "inline";
   }
+
+  if (createForm.classList.contains("inactive")) {
+    createForm.classList.remove("inactive");
+  }
+  else {
+    createForm.classList.add("inactive");
+
+  }
+
   console.log("formData");
 }
 
@@ -146,12 +177,17 @@ function readFormData() {
   formData["userId"] = userID;
   formData["name"] = document.getElementById("name").value;
   formData["description"] = document.getElementById("description").value;
-
+  formData["startTime"] = document.getElementById("timeStart").value;
+  formData["endTime"] =document.getElementById("timeEnd").value; ;
   if (document.getElementById("statusFilterForm").value == "accessible") {
     formData["type"] = "Tự do";
   } else {
     formData["type"] = "Yêu cầu thời gian cụ thể";
   }
+
+  console.log( formData["startTime"] );
+  console.log( formData["endTime"] );
+
   return formData;
 }
 
@@ -258,6 +294,7 @@ function onDelete(td) {
 function onViewDetail(td) {
   var row = td.parentElement.parentElement.parentElement;
   examID = row.cells[0].innerHTML;
+ 
   window.location.href = "./create.html?id=" + examID;
 }
 
