@@ -5,14 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-        Câu hỏi kỳ thi
+        Quản lý thông tin giáo viên
     </title>
-    <link rel="stylesheet" href="../static/css/common.css">
-    <link rel="stylesheet" href="../static/css/create.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.2/xlsx.full.min.js"></script>
-    <link rel='stylesheet' href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css'>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../static/css/common.css">
+    <link rel="stylesheet" href="../static/css/ManageStudent.css">
+    <link rel='stylesheet' href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css'>
 </head>
 
 <body>
@@ -35,22 +34,20 @@
                                 chủ</a></li>
                     </ul>
                 </li>
-
                 <li>
                     <div class="iocn-link">
                         <a href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/ManageStudent.html">
                             <i class='bx bx-user'></i>
-                            <span class="link_name">Quản lý sinh viên</span>
+                            <span class="link_name">Quản lý tài khoản</span>
                         </a>
                         <ul class="sub-menu blank">
                             <li><a class="link_name"
                                     href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/ManageStudent.html">
-                                    <i class='bx bx-user'></i>Quản lý sinh viên</a></li>
+                                    <i class='bx bx-user'></i>Quản lý tài khoản</a></li>
                         </ul>
                         <i class='bx bxs-chevron-down arrow'></i>
                     </div>
                 </li>
-                
                 <li>
                     <a href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/statistics.html">
                         <i class='bx bx-line-chart'></i>
@@ -80,12 +77,12 @@
                 </li>
 
                 <li>
-                    <a href="https://linhtran6065.github.io/PTIT-Web-Exam/index.html">
+                    <a onclick="handleLogOut()">
                         <i class='bx bx-log-out'></i>
                         <span class="link_name">Đăng xuất</span>
                     </a>
                     <ul class="sub-menu blank">
-                        <li><a class="link_name" href="https://linhtran6065.github.io/PTIT-Web-Exam/index.html">Đăng
+                        <li><a class="link_name" onclick="handleLogOut()">Đăng
                                 xuất</a>
                         </li>
                     </ul>
@@ -93,73 +90,75 @@
 
             </ul>
         </div>
+
         <div class="content-container">
-            <h1 id="textTitle"> Danh sách câu hỏi</h1>
-            
-            <div class="buttonHeader">
-                <button onclick="onCreate()"> Tạo câu hỏi</button>
-                <button onclick="saveAll()"> Lưu</button>
-                <button onclick="importFile()"> Nhập đề thi</button>
-            </div>
 
-            <div class="createForm inactive" id="createForm">
-                <form >
-                    <label id="validation" style="color: red;font-style: italic;">**Cần nhập đầy đủ các thông
-                        tin**</label>
+            <div class="container">
+                <div class="header">
+                    <h1>Quản lý thông tin giáo viên</h1>
+                    <button type="button" id="createBtn" onclick="onCreate(this)">Tạo mới</button>
+                </div>
+
+                <div class="createForm" id="createForm">
+                    <form onsubmit="event.preventDefault();onFormSubmit();" autocomplete="off">
+                        <label id="validation" style="color: red;font-style: italic;">**Cần nhập đầy đủ các thông
+                            tin**</label>
                         <div>
-                            <label>Nhập câu hỏi*</label>
-                            <input type="text" name="name" id="name">
+                            <label>Họ*</label>
+                            <input type="text" name="firstname" id="firstname">
                         </div>
+                        <div>
+                            <label>Tên*</label>
+                            <input type="text" name="lastname" id="lastname">
+                        </div>
+                        <div>
+                            <label>Email*</label>
+                            <input type="text" name="email" id="email">
+                        </div>
+                        <div>
+                            <label>Mật khẩu*</label>
+                            <input type="text" name="password" id="password">
+                        </div>
+                        <div class="form-action-buttons">
+                            <button type="submit" id="saveBtn">Save</button>
+                        </div>
+                    </form>
+                </div>
+                <br>
+                <input type="text" id="searchInput" placeholder="Tìm kiếm tên">
 
-                       
-                    <div class="form-action-buttons" >
-                        <button type="button" id = "formButton" id="saveBtn">Save</button>
-                    </div>
+                <div id="student-table">
+                    <table class="list" id="studentList">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Họ và tên</th>
+                                <th>Email</th>
+                                <!-- <th>Password</th> -->
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Danh sách sinh viên sẽ được hiển thị ở đây -->
+                        </tbody>
+                    </table>
+                </div>
 
-                </form>
             </div>
-
-            <section class="createForm_ans inactive" id="createForm_ans">
-                <form >
-                    <label id="validation_ans" style="color: red;font-style: italic;">**Cần nhập đầy đủ các thông
-                        tin**</label>
-                        <section>
-                            <label>Nhập lựa chọn*</label>
-                            <input type="text" name="name_ans" id="name_ans">
-                            </br>
-                            <!-- <input id = "ans_true" name = "ans_option" type="radio" value="true"> -->
-                            <!-- <label for="ans_true">True</label>  -->
-                            <!-- <input id = "ans_false"  name = "ans_option"  type="radio" value="false"> -->
-                            <!-- <label for="ans_false">False</label> -->
-                        </section>
-
-                       
-                    <section class="form-action-buttons" >
-                        <button type="button" id="formButton_ans">Save</button>
-                    </section>
-
-                </form>
-            </section>
-
-            <form id="quizForm">
-         
-                
-    
-           
-            </form>
-      
-              
-            <!-- <div id="import-container">
-                <a id="import-btn">Chọn</a>
-                <input type="file" id="file-input" accept=".xlsx" name="Chọn file" />
-
-            </div> -->
-
-        
         </div> <!-- content-container -->
     </div>
 
-    <script type="module" src="../static/js/CreateExam.js"></script>
+
+    <script type="module" src="../static/js/ManageAccount.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 
 </body>
 

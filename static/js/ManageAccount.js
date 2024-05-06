@@ -5,7 +5,7 @@ var selectedRow = null;
 var msv = null;
 var createForm = document.getElementById("createForm");
 
-var studentList = [];
+var userList = [];
 createForm.style.display = "none";
 var isValid = (document.getElementById("validation").style.display = "none");
 
@@ -13,67 +13,35 @@ const token = localStorage.getItem("token");
 isTokenExpired();
 initTable();
 
-// document.addEventListener("DOMContentLoaded", function () {
-//   // fetch("http://localhost:8080/api/students", {
-//   //   method: "GET",
-//   //   headers: {
-//   //     "Content-Type": "application/json",
-//   //     Authorization: `Bearer ${token}`,
-//   //   },
-//   // })
-//   //   .then((res) => {
-//   //     if (!res.ok) {
-//   //       throw new Error("Network response was not ok ${response.status}");
-//   //     }
-//   //     return res.json();
-//   //   })
-//   //   .then((data) => {
-//   //     studentList = data.data;
-//   //     renderStudents(studentList);
-//   //   })gv
-//   //   .catch((error) => console.log(error));
-//   isTokenExpired();
-//   apiGet("/api/students", token)
-//     .then((data) => {
-//       studentList = data.data;
-//       console.log("Fetched students:", studentList);
-//       renderStudents(studentList);
-//     })
-//     .catch((error) => {
-//       console.error("Error fetching students:", error);
-//     });
-// });
+
 
 function initTable() {
-  apiGet("/api/students", localStorage.getItem("token"))
+  apiGet("/api/users", localStorage.getItem("token"))
     .then((data) => {
-      studentList = data.data;
-      console.log("Fetched students:", studentList);
-      renderStudents(studentList);
+      userList = data.data;
+      console.log("Fetched users:", userList);
+      renderStudents(userList);
     })
     .catch((error) => {
       console.error("Error fetching students:", error);
     });
 }
 
-function renderStudents(studentList) {
-  var table = document
-    .getElementById("studentList")
-    .getElementsByTagName("tbody")[0];
-  table.innerHTML = "";
-  studentList.forEach((student) => {
+function renderStudents(userList) {
+  var table = document.getElementById("studentList").getElementsByTagName("tbody")[0];
+    table.innerHTML = "";
+    userList.forEach((user) => {
     var newRow = table.insertRow(table.length);
     const cell1 = newRow.insertCell(0);
-    cell1.innerHTML = student.msv;
+    cell1.innerHTML = user.id;
     const cell2 = newRow.insertCell(1);
-    cell2.innerHTML = student.firstName + " " + student.lastName;
+    cell2.innerHTML = user.firstName + " " + user.lastName;
     const cell3 = newRow.insertCell(2);
-    cell3.innerHTML = student.email;
-    const cell4 = newRow.insertCell(3);
-    cell4.innerHTML = student.class;
+    cell3.innerHTML = user.email;
+ 
 
-    const cell5 = newRow.insertCell(4);
-    cell5.innerHTML = `<div class="detailBtn"> <button onclick="onEdit(this)">Sửa</button>
+    const cell4 = newRow.insertCell(3);
+    cell4.innerHTML = `<div class="detailBtn"> <button onclick="onEdit(this)">Sửa</button>
                        <button onClick="onDelete(this)">Xóa</button>
                        `;
   });
@@ -93,11 +61,10 @@ function onFormSubmit() {
 
 function readFormData() {
   var formData = {};
-  formData["msv"] = document.getElementById("msv").value;
   formData["firstName"] = document.getElementById("firstname").value;
   formData["lastName"] = document.getElementById("lastname").value;
   formData["email"] = document.getElementById("email").value;
-  formData["class"] = document.getElementById("class").value;
+  formData["password"] = document.getElementById("password").value;
   //studentList.push(formData);
 
   return formData;
@@ -109,34 +76,29 @@ function onCreate() {
 
 function insertNewRecord(data) {
   isTokenExpired();
-  apiPost("/api/students", data, localStorage.getItem("token"))
+  apiPost("/api/users", data, localStorage.getItem("token"))
     .then((response) => {
-      console.log("Fetched students:", response);
-      alert("Create student successful");
-      studentList.push(data);
-      renderStudents(studentList);
+      console.log("Fetched users:", response);
+      alert("Create users successful");
+      renderStudents(userList);
     })
     .catch((error) => {
-      alert("Create student error");
+      alert("Create user error");
     });
 }
 
 function resetForm() {
-  document.getElementById("msv").value = "";
   document.getElementById("firstname").value = "";
   document.getElementById("lastname").value = "";
   document.getElementById("email").value = "";
-  document.getElementById("class").value = "";
+  document.getElementById("password").value = "";
 
   selectedRow = null;
 }
 
 function onEdit(td) {
- createForm.style.display = createForm.style.display === "none" ? "block" : "none";  
-
+  createForm.style.display = createForm.style.display === "none" ? "block" : "none";
   selectedRow = td.parentElement.parentElement.parentElement;
-  msv = selectedRow.cells[0].innerHTML;
-  document.getElementById("msv").value = selectedRow.cells[0].innerHTML;
   const cellContent = selectedRow.cells[1].innerHTML.trim();
   const parts = cellContent.split(" ");
   document.getElementById("firstname").value = parts[0];
@@ -145,19 +107,17 @@ function onEdit(td) {
   } else {
     document.getElementById("lastname").value = "";
   }
-
   document.getElementById("email").value = selectedRow.cells[2].innerHTML;
-  document.getElementById("class").value = selectedRow.cells[3].innerHTML;
-
+  // document.getElementById("password").
 }
 function updateRecord(formData) {
-  console.log(selectedRow);
+  var userID = selectedRow.firstElementChild.innerHTML;
   isTokenExpired();
-  apiPut(`/api/students/${msv}`, formData, localStorage.getItem("token"))
+  apiPut(`/api/users/${userID}`, formData, localStorage.getItem("token"))
     .then((response) => {
       console.log("Fetched students:", response);
       initTable();
-       alert("Update student successful");
+      alert("Update student successful");
     })
     .catch((error) => {
       alert("Update student error");
@@ -165,14 +125,14 @@ function updateRecord(formData) {
 }
 
 function onDelete(td) {
+  selectedRow = td.parentElement.parentElement.parentElement;
+  var userID = selectedRow.firstElementChild.innerHTML;
   if (confirm("Are you sure to delete this record ?")) {
-    var row = td.parentElement.parentElement.parentElement;
-    msv = row.cells[0].innerHTML;
     isTokenExpired();
-    apiDelete(`/api/students/${msv}`, token)
+    apiDelete(`/api/users/${userID}`, token)
       .then((response) => {
         alert("Delete successful");
-        document.getElementById("studentList").deleteRow(row.rowIndex);
+        initTable();
       })
       .catch((error) => {
         alert("Delete error");
@@ -184,11 +144,10 @@ function onDelete(td) {
 function validate() {
   isValid = true;
   if (
-    document.getElementById("msv").value == "" ||
     document.getElementById("firstname").value == "" ||
     document.getElementById("lastname").value == "" ||
     document.getElementById("email").value == "" ||
-    document.getElementById("class").value == ""
+    document.getElementById("password").value == "" 
   ) {
     isValid = false;
   } else {
@@ -201,14 +160,13 @@ function validate() {
 const searchInput = document.getElementById("searchInput");
 function filterStudents() {
   const searchText = searchInput.value.toLowerCase();
-  const filteredStudent = studentList.filter((student) => {
-    var name = student.firstName + " " + student.lastName;
-    const nameMatch = name.toLowerCase().includes(searchText);
-    const msvMatch = student.msv.toLowerCase().includes(searchText);
-    return nameMatch || msvMatch;
+  const filteredUser = userList.filter((user) => {
+    var name = user.firstName + " " + user.lastName;
+    const userMatch = name.toLowerCase().includes(searchText);
+    return userMatch;
   });
 
-  renderStudents(filteredStudent);
+  renderStudents(filteredUser);
 }
 
 searchInput.addEventListener("input", filterStudents);
