@@ -35,6 +35,7 @@
                                 chủ</a></li>
                     </ul>
                 </li>
+
                 <li>
                     <div class="iocn-link">
                         <a href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/ManageStudent.html">
@@ -49,6 +50,7 @@
                         <i class='bx bxs-chevron-down arrow'></i>
                     </div>
                 </li>
+                
                 <li>
                     <a href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/statistics.html">
                         <i class='bx bx-line-chart'></i>
@@ -97,7 +99,6 @@
             <div class="buttonHeader">
                 <button onclick="onCreate()"> Tạo câu hỏi</button>
                 <button onclick="saveAll()"> Lưu</button>
-                <button onclick="deleteAll()"> Xóa hết</button>
                 <button onclick="importFile()"> Nhập đề thi</button>
             </div>
 
@@ -106,7 +107,7 @@
                     <label id="validation" style="color: red;font-style: italic;">**Cần nhập đầy đủ các thông
                         tin**</label>
                         <div>
-                            <label>Tên bài thi*</label>
+                            <label>Nhập câu hỏi*</label>
                             <input type="text" name="name" id="name">
                         </div>
 
@@ -118,13 +119,35 @@
                 </form>
             </div>
 
-            <form id="quizForm">
-                <div id="quiz-question">
+            <section class="createForm_ans inactive" id="createForm_ans">
+                <form >
+                    <label id="validation_ans" style="color: red;font-style: italic;">**Cần nhập đầy đủ các thông
+                        tin**</label>
+                        <section>
+                            <label>Nhập lựa chọn*</label>
+                            <input type="text" name="name_ans" id="name_ans">
+                            </br>
+                            <!-- <input id = "ans_true" name = "ans_option" type="radio" value="true"> -->
+                            <!-- <label for="ans_true">True</label>  -->
+                            <!-- <input id = "ans_false"  name = "ans_option"  type="radio" value="false"> -->
+                            <!-- <label for="ans_false">False</label> -->
+                        </section>
 
-                </div>
+                       
+                    <section class="form-action-buttons" >
+                        <button type="button" id="formButton_ans">Save</button>
+                    </section>
+
+                </form>
+            </section>
+
+            <form id="quizForm">
+         
                 
-                <input type="radio" name="answer"><br>
+    
+           
             </form>
+      
               
             <!-- <div id="import-container">
                 <a id="import-btn">Chọn</a>

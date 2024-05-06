@@ -26,6 +26,26 @@ function initTable() {
       console.error("Error fetching exams:", error);
     });
 }
+statusFilter.addEventListener('change', renderFilteredExams);
+searchInput.addEventListener('input', renderFilteredExams);
+
+function renderFilteredExams() {
+  const searchTerm = searchInput.value.trim().toLowerCase();
+  var selectedCategory = statusFilter.value;
+  console.log(selectedCategory);
+  const filteredExams = examList.filter(exam => {
+      const nameMatch = exam.name.toLowerCase().includes(searchTerm);
+      if(selectedCategory === 'accessible') selectedCategory = 'Tự do';
+      if(selectedCategory === 'scheduled') selectedCategory = 'Yêu cầu thời gian cụ thể';
+      if (selectedCategory === 'all') {
+          return nameMatch;
+      } else {
+          return (nameMatch) && exam.type === selectedCategory;
+      }
+  });
+  
+  renderExams(filteredExams);
+}
 
 
 function renderExams(exams) {
@@ -43,10 +63,11 @@ function renderExams(exams) {
     }
     row.innerHTML = `
               <tr>
+              <td>${exam.id}</td>
               <td>
                   <p>${exam.name}</p>
               </td>
-              <td>${exam.id}</td>
+              <td>${exam.startTime} - ${exam.endTime}</td>
               <td>${exam.description}</td>
               <td><span class="status ${statusClass}">${statusText}</span></td>
               <td class="join-exam" exam-name="${exam.name}"><button class="status join" onClick="onViewDetail(this)" >Tham gia thi</button></td>
@@ -58,8 +79,8 @@ function renderExams(exams) {
 
 function onViewDetail(data) {
   var row = data.parentNode.parentNode; // Get the parent row of the button
-  var examId = row.rowIndex;  
-  window.location.href = "./test.html?id=" + examId;
+  var examID = row.firstElementChild.innerHTML
+  window.location.href = "./test.html?id=" + examID;
 }
 
 

@@ -1,6 +1,7 @@
 import { apiDelete, apiGet, apiPost, apiPut } from "../../apiService.js";
 import { isTokenExpired, logout } from "../../auth.js";
 
+// import flatpickr from "flatpickr";
 // var createForm = document.getElementById("createForm");
 
 var examList = [];
@@ -8,6 +9,8 @@ var examList = [];
 var isValid = (document.getElementById("validation").style.display = "none");
 
 const token = localStorage.getItem("token");
+var userID = localStorage.getItem("userId");
+
 isTokenExpired();
 initTable();
 var examID = null;
@@ -32,10 +35,34 @@ function initTable() {
     });
 }
 
+const searchInput = document.getElementById('searchInput');
+const statusFilter = document.getElementById('statusFilter');
+
+statusFilter.addEventListener('change', renderFilteredExams);
+searchInput.addEventListener('input', renderFilteredExams);
+
+function renderFilteredExams() {
+  const searchTerm = searchInput.value.trim().toLowerCase();
+  var selectedCategory = statusFilter.value;
+  console.log(selectedCategory);
+  const filteredExams = examList.filter(exam => {
+      const nameMatch = exam.name.toLowerCase().includes(searchTerm);
+      if(selectedCategory === 'accessible') selectedCategory = 'Tự do';
+      if(selectedCategory === 'scheduled') selectedCategory = 'Yêu cầu thời gian cụ thể';
+      if (selectedCategory === 'all') {
+          return nameMatch;
+      } else {
+          return (nameMatch) && exam.type === selectedCategory;
+      }
+  });
+  
+  renderExams(filteredExams);
+}
+
 
 function renderExams(exams) {
   examTable.innerHTML = "";
-  exams.forEach((exam) => {
+  exams.forEach((exam) => {    
     const row = document.createElement("tr");
     let statusClass = "",
       statusText = "";
@@ -46,12 +73,31 @@ function renderExams(exams) {
       statusClass = "scheduled";
       statusText = "Yêu cầu thời gian cụ thể";
     }
+    var startTimeString = exam.startTime;
+    var endTimeString = exam.endTime;
+    if(startTimeString || endTimeString) {
+      var [startDate, startTime] = startTimeString.split("T");
+      var [endDate, endTime] = endTimeString.split("T");
+      
+      // Extract hours and minutes
+      var [endHours, endMinutes] = endTime.split(":").slice(0, 2);
+      var [startHours, startMinutes] = startTime.split(":").slice(0, 2);
+
+      // Format the time
+      var formattedEndTime = `${endHours}:${endMinutes}`;
+      var formattedStartTime = `${startHours}:${startMinutes}`;
+
+    }
+
     row.innerHTML = `
               <tr>
               <td>${exam.id}</td>
               <td>
                   <p>${exam.name}</p>
               </td>
+              <td>${startDate} </td>
+              <td>${formattedStartTime} - ${formattedEndTime} </td>
+
               <td>${exam.description}</td>
               <td><span class="status ${statusClass}">${statusText}</span></td>
               <td class="actionAdminButton"><div class="detailBtn"> <button onClick="onEdit(this)">Sửa</button>
@@ -62,6 +108,13 @@ function renderExams(exams) {
     examTable.appendChild(row);
   });
 }
+
+// function searchExam() {
+//   const searchTerm = searchInput.value.toLowerCase();
+//   const filteredItems = items.filter(item => item.toLowerCase().includes(searchTerm));
+
+
+// }
 
 // 2. Thêm mới bài thi + form thêm mới 
 function onCreate() {
@@ -86,11 +139,11 @@ function onFormSubmit() {
   console.log("formData");
 }
 
-
+console.log(userID);  
 // đọc dữ liệu nhập
 function readFormData() {
   var formData = {};
-  formData["userId"] = document.getElementById("userId").value;
+  formData["userId"] = userID;
   formData["name"] = document.getElementById("name").value;
   formData["description"] = document.getElementById("description").value;
 
@@ -107,44 +160,32 @@ function insertNewRecord(data) {
   apiPost("/api/exams", data, token)
     .then((response) => {
       console.log("Fetched exams:", response);
+      initTable();
       alert("Create exams successful");
-      examList.push(data);
-  
     })
     .catch((error) => {
+      console.log(error.message);
       alert("Create exam error");
     });
 }
 
 // reset form sau khi thêm mới
 function resetForm() {
-  document.getElementById("userId").value = "";
   document.getElementById("name").value = "";
   document.getElementById("description").value = "";
   document.getElementById("statusFilter").value = "";
   selectedRow = null;
 }
 
-// function updateRecord(formData) {
-//   console.log(formData, "object");
-//   selectedRow.cells[0].innerHTML = formData.name;
-//   selectedRow.cells[1].innerHTML = formData.description;
-//   if ((document.getElementById("statusFilterForm").value = "accessible")) {
-//     selectedRow.cells[2].querySelector("span").innerHTML == "Truy cập tự do";
-//   } else {
-//     selectedRow.cells[2].querySelector("span").innerHTML ==
-//       "Yêu cầu thời gian cụ thể";
-//   }
-//   //selectedRow.cells[2].innerHTML = formData.type;
-// }
+
 
 function validate() {
   isValid = true;
   if (
     document.getElementById("name").value == "" ||
     document.getElementById("description").value == "" ||
-    document.getElementById("statusFilterForm").value == "" ||
-    document.getElementById("userId").value == "" 
+    document.getElementById("statusFilterForm").value == ""
+  
   ) {
     isValid = false;
   } else {
@@ -231,3 +272,4 @@ window.onFormSubmit= onFormSubmit;
 window.onCreate = onCreate;
 window.onViewDetail = onViewDetail;
 window.handleLogOut = handleLogOut;
+// window.searchExam = searchExam;

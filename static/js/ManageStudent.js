@@ -10,7 +10,7 @@ createForm.style.display = "none";
 var isValid = (document.getElementById("validation").style.display = "none");
 
 const token = localStorage.getItem("token");
-
+isTokenExpired();
 initTable();
 
 // document.addEventListener("DOMContentLoaded", function () {
@@ -45,8 +45,7 @@ initTable();
 // });
 
 function initTable() {
-  isTokenExpired();
-  apiGet("/api/students", token)
+  apiGet("/api/students", localStorage.getItem("token"))
     .then((data) => {
       studentList = data.data;
       console.log("Fetched students:", studentList);
@@ -110,7 +109,7 @@ function onCreate() {
 
 function insertNewRecord(data) {
   isTokenExpired();
-  apiPost("/api/students", data, token)
+  apiPost("/api/students", data, localStorage.getItem("token"))
     .then((response) => {
       console.log("Fetched students:", response);
       alert("Create student successful");
@@ -152,7 +151,7 @@ function onEdit(td) {
 function updateRecord(formData) {
   console.log(selectedRow);
   isTokenExpired();
-  apiPut(`/api/students/${msv}`, formData, token)
+  apiPut(`/api/students/${msv}`, formData, localStorage.getItem("token"))
     .then((response) => {
       console.log("Fetched students:", response);
       initTable();

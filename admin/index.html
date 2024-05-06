@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../static/css/homepage.css">
     <link rel="stylesheet" href="../static/css/common.css">
     <link rel='stylesheet' href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css'>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
 </head>
 
@@ -113,13 +114,20 @@
                                 <i class='bx bx-search'></i>
                                 <input type="text" id="searchInput" placeholder="Tìm kiếm tên kỳ thi...">
                             </div>
+
                             <select id="statusFilter">
                                 <option value="all">Tất cả</option>
                                 <option value="accessible">Truy cập tự do</option>
                                 <option value="scheduled">Yêu cầu thời gian cụ thể</option>
                             </select>
+
+                            <!-- <button  type ="button" onclick="searchExam()" id="serchBtn">Tìm kiếm</button> -->
+
                             <button id="createExamBtn">Tạo kỳ thi</button>
+
+
                         </div>
+
                     </div>
 
                     <div class="createForm inactive" id="createForm">
@@ -127,18 +135,23 @@
                             <label id="validation" style="color: red;font-style: italic;">**Cần nhập đầy đủ các thông
                                 tin**</label>
                                 <div>
-                                    <label>ID*</label>
-                                    <input type="text" name="userId" id="userId">
-                                </div>
-
-                                <div>
                                 <label>Tên kỳ thi*</label>
-                                <input type="text" name="name" id="name">
+                                <input type="text" name="name" placeholder="Chọn tên kỳ thi" id="name">
                             </div>
                             <div>
                                 <label>Mô tả*</label>
-                                <input type="text" name="description" id="description">
+                                <input type="text" name="description" placeholder="Mô tả kỳ thi" id="description">
                             </div>
+                            <div>
+                                <label>Thời gian bắt đầu*</label>
+                                <input type="datetime-local" name="time" placeholder="Chọn thời gian" class="form-control" id="timeStart">
+                            </div>
+
+                            <div>
+                                <label>Thời gian bắt đầu*</label>
+                                <input type="datetime-local" name="time" placeholder="Chọn thời gian" class="form-control" id="timeEnd">
+                            </div>
+
                             <div>
                                 <label>Loại kỳ thi*</label>
                                 <select id="statusFilterForm">
@@ -157,6 +170,8 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Tên kì thi</th>
+                                <th>Ngày thi</th>
+                                <th>Thời gian làm bài</th>
                                 <th>Mô tả</th>
                                 <th>Loại kì thi</th>
                                 <th>Hành động</th>
@@ -167,11 +182,21 @@
                     </table>
                 </div>
             </div>
+
         </div> <!-- content-container -->
     </div>
     <!-- script: gồm homepage.js và admin homepage -->
     <!-- <script src="../static/js/homepage.js"></script> -->
     <script type="module" src="../static/js/adminhomepage.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        config= {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+        }
+        flatpickr("input[type=datetime-local]", config);
+    </script>
+
 </body>
 
 
