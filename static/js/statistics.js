@@ -298,12 +298,19 @@ let currentChart = null;
 
 // load các loại kì thi cho filter
 function loadExamOptions() {
-  const examSet = new Set(studentData.map((student) => student.exam));
-  const examFilter = document.getElementById("examFilter");
-  examSet.forEach((exam) => {
-    let option = new Option(exam, exam);
-    examFilter.appendChild(option);
-  });
+  isTokenExpired();
+  apiGet("/api/exams", localStorage.getItem("token"))
+    .then((response) => {
+      const examSet = response.data;
+      const examFilter = document.getElementById("examFilter");
+      examSet.forEach((exam) => {
+        let option = new Option(exam.name, exam.name);
+        examFilter.appendChild(option);
+      });
+    })
+    .catch((error) => {
+      console.error("Error fetching exams:", error);
+    });
 }
 
 // hiển thị ngày theo dạng dd-mm-yyy
@@ -369,11 +376,11 @@ function filterResults() {
       (!endDateFilterValue || examEndDate <= endDate)
     );
   });
-
+  console.log(examFilterValue);
   // Cập nhật dữ liệu hiện tại và hiển thị
   currentDisplayedData = filteredData;
   var queryParams = {
-    examName: examFilterValue,
+    examName: encodeURIComponent(examFilterValue),
     startTime: startDateFilterValue,
     endTime: endDateFilterValue,
   };
@@ -390,15 +397,14 @@ function sortData() {
   if (
     sortBy === "name" ||
     sortBy === "studentId" ||
-    sortBy === "exam" ||
-    sortBy === "startTime" ||
-    sortBy === "endTime"
+    sortBy === "exam"
+    //sortBy === "startTime" ||
   ) {
     sortedData.sort((a, b) => a[sortBy].localeCompare(b[sortBy]));
   } else if (sortBy === "score") {
     sortedData.sort((b, a) => a[sortBy] - b[sortBy]);
   }
-  displayData(sortedData);
+  renderData(sortedData);
 }
 
 function calculateStatistics(data) {
