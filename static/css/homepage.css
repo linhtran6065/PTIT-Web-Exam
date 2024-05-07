@@ -35,55 +35,6 @@ body {
   background-color: var(--lightlightgray);
 }
 
-.content-container .head-title {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  grid-gap: 16px;
-  flex-wrap: wrap;
-}
-
-.content-container .head-title .left h1 {
-  font-size: 36px;
-  font-weight: 600;
-  margin-bottom: 10px;
-  color: var(--ptit);
-}
-
-.content-container .head-title .left .breadcrumb {
-  display: flex;
-  align-items: center;
-  grid-gap: 16px;
-}
-
-.content-container .head-title .left .breadcrumb li {
-  list-style: none;
-  color: var(--dark);
-}
-
-.content-container .head-title .left .breadcrumb li a {
-  color: var(--dark-grey);
-  pointer-events: none;
-  text-decoration: none;
-}
-
-.content-container .head-title .left .breadcrumb li a.active {
-  color: var(--ptit);
-  pointer-events: unset;
-}
-
-.content-container .head-title .btn-download {
-  height: 36px;
-  padding: 0 16px;
-  border-radius: 36px;
-  background: var(--blue);
-  color: var(--light);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  grid-gap: 10px;
-  font-weight: 500;
-}
 
 .content-container .box-info {
   display: grid;
