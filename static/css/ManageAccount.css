@@ -1,31 +1,30 @@
 /* Google Fonts Import Link */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
 :root {
-  --poppins: 'Poppins', sans-serif;
-  --lato: 'Lato', sans-serif;
-  --light: #F9F9F9;
-  --blue: #3C91E6;
-  --light-blue: #CFE8FF;
+  --poppins: "Poppins", sans-serif;
+  --lato: "Lato", sans-serif;
+  --light: #f9f9f9;
+  --blue: #3c91e6;
+  --light-blue: #cfe8ff;
   --grey: #eee;
-  --dark-grey: #AAAAAA;
-  --dark: #342E37;
-  --red: #DB504A;
-  --yellow: #FFCE26;
-  --light-yellow: #FFF2C6;
-  --orange: #FD7238;
-  --light-orange: #FFE0D3;
+  --dark-grey: #aaaaaa;
+  --dark: #342e37;
+  --red: #db504a;
+  --yellow: #ffce26;
+  --light-yellow: #fff2c6;
+  --orange: #fd7238;
+  --light-orange: #ffe0d3;
   --lightlightgray: #fff9f9;
-  --white: #FFFFFF;
+  --white: #ffffff;
   --ptit: #93181a;
-  --light-green: #D4F3D4;
-  --green: #4CAF50;
-  --light-red: #F8D7DA;
+  --light-green: #d4f3d4;
+  --green: #4caf50;
+  --light-red: #f8d7da;
 }
 
 .createForm,
-.passwordForm 
-{
+.passwordForm {
   padding: 10px;
   margin: auto;
   width: 50%;
@@ -44,7 +43,6 @@ label.validation-error {
   display: none;
 }
 body {
-  font-family: Arial, sans-serif;
   background-color: var(--lightlightgray);
   margin: 0;
   padding: 0;
@@ -56,22 +54,22 @@ body {
 }
 
 .container {
-  max-width: 800px;
   margin: 20px auto;
   padding: 20px;
   background-color: var(--white);
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-.header {
-  display: flex;
-  justify-content: space-between;
-}
-.header #createBtn {
-  margin-bottom: 10px;
+.head #createBtn {
+  background: var(--ptit);
+  color: var(--light);
   padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  height: 32px;
+  border: none;
 }
 .navbar {
   background-color: #d32f2f !important ;
@@ -94,54 +92,8 @@ body {
   width: 2.5vw;
 }
 
-h1 {
-  color: var(--ptit);
-}
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
 
-th,
-td {
-  border: 1px solid #ddd;
-  padding: 12px;
-  text-align: left;
-}
-
-th {
-  background-color: #f2f2f2;
-}
-
-input[type="text"],
-input[type="email"],
-input[type="password"] {
-  margin-bottom: 10px;
-  padding: 10px;
-  width: 100%;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-input[type="text"]:focus,
-select:focus {
-  outline: none;
-  border-color: var(--ptit);
-}
-
-button {
-  padding: 10px 20px;
-  background-color: var(--ptit);
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: var(--ptit);
-}
 .detailBtn {
   display: flex;
 }
@@ -150,3 +102,134 @@ button:hover {
   margin-right: 2px;
 }
 
+.head h3 {
+  margin-right: auto;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.head .bx {
+  cursor: pointer;
+}
+
+.head .search {
+  display: flex;
+  align-items: center;
+  grid-gap: 16px;
+  flex-wrap: wrap;
+}
+
+.head .search select {
+  border-radius: 10px;
+  border: 1px solid var(--grey);
+  font-size: 12px;
+  color: var(--dark);
+  cursor: pointer;
+  height: 32px;
+  padding: 0 16px;
+}
+
+.head .search .search-box {
+  border-radius: 10px;
+  border: 1px solid var(--grey);
+  font-size: 16px;
+  color: var(--dark);
+  height: 32px;
+  display: flex;
+  align-items: center;
+}
+
+.head .search .search-box input {
+  border: none;
+  outline: none;
+  padding: 0 36px;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}
+
+.head .search .search-box input::placeholder {
+  color: var(--dark-grey);
+  width: 300px;
+}
+
+.head .search .search-box .bx-search {
+  position: relative;
+  left: 10px;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  grid-gap: 16px;
+  margin-bottom: 24px;
+}
+
+
+#student-table table {
+  width: 100%;
+  border-collapse: collapse;
+  
+}
+
+#student-table table th {
+  padding-bottom: 12px;
+  font-size: 13px;
+  text-align: left;
+  border-bottom: 1px solid var(--grey);
+}
+
+#student-table table td {
+  padding: 16px 0;
+}
+
+#student-table table tr td:first-child {
+  /* display: flex; */
+  /* align-items: center; */
+  grid-gap: 12px;
+  /* padding-left: 6px; */
+}
+
+#student-table table td img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+#student-table table tbody tr:hover {
+  background: var(--grey);
+}
+
+#student-table table tr {
+  font-size: 0.8rem;
+}
+
+#student-table table tr td .status {
+  font-size: 0.6rem;
+  padding: 5px;
+  color: var(--light);
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+#student-table table tr td .status.accessible {
+  background: var(--dark);
+}
+
+#student-table table tr td .status.scheduled {
+  background: var(--green);
+}
+
+#student-table table tr td .status.join {
+  background: var(--ptit);
+}
+
+
+
+#student-table table tr td.join-exam:hover {
+  transform: scale(1.1);
+  transition: 0.3s ease;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
