@@ -49,7 +49,6 @@ function renderStudents(userList) {
     const cell4 = newRow.insertCell(3);
     cell4.innerHTML = `<div class="detailBtn"> <button onclick="onEdit(this)">Sửa</button>
                        <button onClick="onDelete(this)">Xóa</button>
-                       <button onClick="onForget(this)">Thay đổi mật khẩu</button>
                        `;
   });
 }
@@ -61,8 +60,11 @@ function onFormSubmit() {
     else updateRecord(formData);
     resetForm();
     document.getElementById("validation").style.display = "none";
+    // createForm.style.display = createForm.style.display === "none" ? "block" : "none";
   } else {
     document.getElementById("validation").style.display = "inline";
+    // createForm.style.display = createForm.style.display === "none" ? "block" : "none";
+
   }
 }
 
@@ -157,33 +159,48 @@ function onDelete(td) {
 }
 function validate() {
   isValid = true;
+  var firstName = document.getElementById("firstname").value;
+  var lastName = document.getElementById("lastname").value;
+  var email = document.getElementById("email").value;
+  var password = document.getElementById("password").value;
+  var validationMessage = document.getElementById("validation");
   if( passwordCreateForm.style.display === 'block') {
+        if (firstName  == "" || lastName == "" || email == "" || password == "" )  {
+          isValid = false;
+          validationMessage.innerText = "**Cần nhập đầy đủ các thông tin**";
+          return;
+        }
+        
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+           validationMessage.innerText = "Email không hợp lệ";
+           isValid = false;
+        }
 
-    if (
-      document.getElementById("firstname").value == "" ||
-      document.getElementById("lastname").value == "" ||
-      document.getElementById("email").value == "" || 
-      document.getElementById("password").value == "" 
-    ) 
-    
-    {
-      isValid = false;
-    } 
-    
+        var passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+        if (!passwordRegex.test(password)) {
+            validationMessage.innerText = "Mật khẩu phải có ít nhất 8 ký tự, bao gồm ít nhất một chữ cái và một số";
+            isValid = false;
+        }
+
     else {
       isValid = true;
     }
   }
   else if ( passwordCreateForm.style.display === 'none') {
-    if (
-      document.getElementById("firstname").value == "" ||
-      document.getElementById("lastname").value == "" ||
-      document.getElementById("email").value == "" 
-    ) 
-
-    {
+    if (firstName  == "" || lastName == "" || email == "" ) {
       isValid = false;
+      validationMessage.innerText = "**Cần nhập đầy đủ các thông tin**";
+      return;
     } 
+
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+       validationMessage.innerText = "Email không hợp lệ";
+       isValid = false;
+        return;
+
+    }
     
     else {
       isValid = true;
@@ -193,9 +210,7 @@ function validate() {
   return isValid;
 }
 
-function onForget() {
-  passwordForm.style.display = passwordForm.style.display === "none" ? "block" : "none";
-}
+
 
 const searchInput = document.getElementById("searchInput");
 function filterStudents() {
@@ -219,7 +234,6 @@ window.handleLogOut = handleLogOut;
 
 window.onCreate = onCreate;
 window.onEdit = onEdit;
-window.onForget = onForget;
 
 window.onDelete = onDelete;
 window.onFormSubmit = onFormSubmit;

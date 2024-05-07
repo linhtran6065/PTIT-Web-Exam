@@ -115,7 +115,6 @@ function insertNewRecord(data) {
       if (response.message === "Student already exists!") {
         alert("Student already exists!");
       } 
-      
       else {
         alert("Create student successful");
         initTable();
