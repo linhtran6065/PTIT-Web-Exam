@@ -265,6 +265,7 @@ function updateRecord(formData) {
       alert("Update exam successful");
     })
     .catch((error) => {
+      alert(error.message);
       alert("Update exam error");
     });
 }

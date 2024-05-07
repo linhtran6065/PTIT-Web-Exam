@@ -4,9 +4,15 @@ import { isTokenExpired, logout } from "../../auth.js";
 var selectedRow = null;
 var msv = null;
 var createForm = document.getElementById("createForm");
+var passwordForm = document.getElementById("passwordForm");
+
+var passwordCreateForm = document.getElementById("passwordDiv");
+
 
 var userList = [];
 createForm.style.display = "none";
+passwordForm.style.display = "none";
+
 var isValid = (document.getElementById("validation").style.display = "none");
 
 const token = localStorage.getItem("token");
@@ -43,6 +49,7 @@ function renderStudents(userList) {
     const cell4 = newRow.insertCell(3);
     cell4.innerHTML = `<div class="detailBtn"> <button onclick="onEdit(this)">Sửa</button>
                        <button onClick="onDelete(this)">Xóa</button>
+                       <button onClick="onForget(this)">Thay đổi mật khẩu</button>
                        `;
   });
 }
@@ -78,12 +85,17 @@ function insertNewRecord(data) {
   isTokenExpired();
   apiPost("/api/users", data, localStorage.getItem("token"))
     .then((response) => {
-      console.log("Fetched users:", response);
-      alert("Create users successful");
-      renderStudents(userList);
+      if (response.message === "User already exists!") {
+        alert("User already exists!");
+      } 
+      else {
+        alert("Create user successful");
+        initTable();
+      }
     })
     .catch((error) => {
-      alert("Create user error");
+      alert(error.message);
+      // alert("Create user error");
     });
 }
 
@@ -98,6 +110,8 @@ function resetForm() {
 
 function onEdit(td) {
   createForm.style.display = createForm.style.display === "none" ? "block" : "none";
+  passwordCreateForm.style.display = passwordCreateForm.style.display === "block" ? "none" : "block" ;
+
   selectedRow = td.parentElement.parentElement.parentElement;
   const cellContent = selectedRow.cells[1].innerHTML.trim();
   const parts = cellContent.split(" ");
@@ -108,18 +122,18 @@ function onEdit(td) {
     document.getElementById("lastname").value = "";
   }
   document.getElementById("email").value = selectedRow.cells[2].innerHTML;
-  // document.getElementById("password").
 }
 function updateRecord(formData) {
   var userID = selectedRow.firstElementChild.innerHTML;
   isTokenExpired();
   apiPut(`/api/users/${userID}`, formData, localStorage.getItem("token"))
     .then((response) => {
-      console.log("Fetched students:", response);
+      console.log("Fetched users:", response);
       initTable();
-      alert("Update student successful");
+      alert("Update users successful");
     })
     .catch((error) => {
+      alert(error.message);
       alert("Update student error");
     });
 }
@@ -143,18 +157,44 @@ function onDelete(td) {
 }
 function validate() {
   isValid = true;
-  if (
-    document.getElementById("firstname").value == "" ||
-    document.getElementById("lastname").value == "" ||
-    document.getElementById("email").value == "" ||
-    document.getElementById("password").value == "" 
-  ) {
-    isValid = false;
-  } else {
-    isValid = true;
+  if( passwordCreateForm.style.display === 'block') {
+
+    if (
+      document.getElementById("firstname").value == "" ||
+      document.getElementById("lastname").value == "" ||
+      document.getElementById("email").value == "" || 
+      document.getElementById("password").value == "" 
+    ) 
+    
+    {
+      isValid = false;
+    } 
+    
+    else {
+      isValid = true;
+    }
+  }
+  else if ( passwordCreateForm.style.display === 'none') {
+    if (
+      document.getElementById("firstname").value == "" ||
+      document.getElementById("lastname").value == "" ||
+      document.getElementById("email").value == "" 
+    ) 
+
+    {
+      isValid = false;
+    } 
+    
+    else {
+      isValid = true;
+    }
   }
 
   return isValid;
+}
+
+function onForget() {
+  passwordForm.style.display = passwordForm.style.display === "none" ? "block" : "none";
 }
 
 const searchInput = document.getElementById("searchInput");
@@ -179,5 +219,7 @@ window.handleLogOut = handleLogOut;
 
 window.onCreate = onCreate;
 window.onEdit = onEdit;
+window.onForget = onForget;
+
 window.onDelete = onDelete;
 window.onFormSubmit = onFormSubmit;

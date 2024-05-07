@@ -1,0 +1,150 @@
+/* Google Fonts Import Link */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --poppins: 'Poppins', sans-serif;
+  --lato: 'Lato', sans-serif;
+  --light: #F9F9F9;
+  --blue: #3C91E6;
+  --light-blue: #CFE8FF;
+  --grey: #eee;
+  --dark-grey: #AAAAAA;
+  --dark: #342E37;
+  --red: #DB504A;
+  --yellow: #FFCE26;
+  --light-yellow: #FFF2C6;
+  --orange: #FD7238;
+  --light-orange: #FFE0D3;
+  --lightlightgray: #fff9f9;
+  --white: #FFFFFF;
+  --ptit: #93181a;
+  --light-green: #D4F3D4;
+  --green: #4CAF50;
+  --light-red: #F8D7DA;
+}
+
+.createForm,
+.passwordForm 
+{
+  padding: 10px;
+  margin: auto;
+  width: 50%;
+}
+
+form div.form-action-buttons {
+  text-align: right;
+}
+
+label.validation-error {
+  color: red;
+  margin-left: 5px;
+}
+
+.hide {
+  display: none;
+}
+body {
+  font-family: Arial, sans-serif;
+  background-color: var(--lightlightgray);
+  margin: 0;
+  padding: 0;
+  transition: all 0.3s;
+}
+
+.content-container {
+  background-color: var(--lightlightgray);
+}
+
+.container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: var(--white);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+.header #createBtn {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+.navbar {
+  background-color: #d32f2f !important ;
+  color: white;
+  height: 10vh;
+}
+#avatar {
+  font-weight: bold !important;
+}
+.nav-link {
+  color: white !important;
+  font-size: 1.1rem;
+}
+
+.dropdown-toggle {
+  width: 12vw !important;
+}
+
+.navbar img {
+  width: 2.5vw;
+}
+
+h1 {
+  color: var(--ptit);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+input[type="text"] {
+  margin-bottom: 10px;
+  padding: 10px;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+input[type="text"]:focus,
+select:focus {
+  outline: none;
+  border-color: var(--ptit);
+}
+
+button {
+  padding: 10px 20px;
+  background-color: var(--ptit);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: var(--ptit);
+}
+.detailBtn {
+  display: flex;
+}
+.detailBtn button {
+  padding: 5px 5px;
+  margin-right: 2px;
+}
+

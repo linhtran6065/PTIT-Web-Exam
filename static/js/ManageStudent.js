@@ -112,12 +112,19 @@ function insertNewRecord(data) {
   apiPost("/api/students", data, localStorage.getItem("token"))
     .then((response) => {
       console.log("Fetched students:", response);
-      alert("Create student successful");
-      studentList.push(data);
-      renderStudents(studentList);
+      if (response.message === "Student already exists!") {
+        alert("Student already exists!");
+      } 
+      
+      else {
+        alert("Create student successful");
+        initTable();
+      }
+        
     })
     .catch((error) => {
-      alert("Create student error");
+      alert(error.message);
+      // alert("Create student error");
     });
 }
 
