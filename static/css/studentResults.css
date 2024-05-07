@@ -1,128 +1,126 @@
-
 /* Google Fonts Import Link */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
 :root {
-  --poppins: 'Poppins', sans-serif;
-  --lato: 'Lato', sans-serif;
-  --light: #F9F9F9;
-  --blue: #3C91E6;
-  --light-blue: #CFE8FF;
+  --poppins: "Poppins", sans-serif;
+  --lato: "Lato", sans-serif;
+  --light: #f9f9f9;
+  --blue: #3c91e6;
+  --light-blue: #cfe8ff;
   --grey: #eee;
-  --dark-grey: #AAAAAA;
-  --dark: #342E37;
-  --red: #DB504A;
-  --yellow: #FFCE26;
-  --light-yellow: #FFF2C6;
-  --orange: #FD7238;
-  --light-orange: #FFE0D3;
+  --dark-grey: #aaaaaa;
+  --dark: #342e37;
+  --red: #db504a;
+  --yellow: #ffce26;
+  --light-yellow: #fff2c6;
+  --orange: #fd7238;
+  --light-orange: #ffe0d3;
   --lightlightgray: #fff9f9;
-  --white: #FFFFFF;
+  --white: #ffffff;
   --ptit: #93181a;
-  --light-green: #D4F3D4;
-  --green: #4CAF50;
-  --light-red: #F8D7DA;
+  --light-green: #d4f3d4;
+  --green: #4caf50;
+  --light-red: #f8d7da;
 }
 
 body {
-    font-family: var(--poppins);
-    margin: 0;
-    padding: 20px;
+  font-family: var(--poppins);
+  margin: 0;
+  padding: 20px;
 }
 
 .content-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .search-container {
-    margin-bottom: 20px;
-    margin-top: 20px;
-    padding: 20px;
-    border-radius: 15px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 15px;
 }
 
 input[type="text"] {
-    padding: 10px;
-    width: 300px;
-    border-radius: 15px;
-    border: 1px solid #ccc;
+  padding: 10px;
+  width: 300px;
+  border-radius: 15px;
+  border: 1px solid #ccc;
 }
 
 .searchButton {
-    padding: 10px 20px;
-    border-radius: 15px;
-    border: none;
+  padding: 10px 20px;
+  border-radius: 15px;
+  border: none;
 
-    cursor: pointer;
-    margin-bottom: 10px;
+  cursor: pointer;
+  margin-bottom: 10px;
 
-
-    background-color: var(--ptit);
-    color: var(--white);
+  background-color: var(--ptit);
+  color: var(--white);
 }
 
 .searchButton:hover {
-    transition: 0.3s;
-    transform: scale(1.05);
+  transition: 0.3s;
+  transform: scale(1.05);
 }
 
 .exportButton {
-    padding: 10px 20px;
-    border-radius: 15px;
-    border: none;
+  padding: 10px 20px;
+  border-radius: 15px;
+  border: none;
 
-    cursor: pointer;
-    margin-bottom: 10px;
-    background-color: var(--white);
-    color: var(--ptit);
-    border: 1px solid var(--ptit);
+  cursor: pointer;
+  margin-bottom: 10px;
+  background-color: var(--white);
+  color: var(--ptit);
+  border: 1px solid var(--ptit);
 }
 
 .exportButton:hover {
-    transition: 0.3s;
-    transform: scale(1.05);
-    background-color: var(--ptit);
-    color: var(--white);
-
+  transition: 0.3s;
+  transform: scale(1.05);
+  background-color: var(--ptit);
+  color: var(--white);
 }
 
 #resultsContainer {
-    width: 100%;
-    border-radius: 15px;
+  width: 100%;
+  border-radius: 15px;
 }
 table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    border-radius: 15px;
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
-    padding: 20px;
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
+  padding: 20px;
 }
 
-th, td {
-    border: 1px solid #ddd;
-    text-align: left;
-    padding: 8px;
+th,
+td {
+  border: 1px solid #ddd;
+  text-align: left;
+  padding: 8px;
 }
 
 th {
-    background-color: var(--ptit);
-    color: white;
+  background-color: var(--ptit);
+  color: white;
 }
 
 table tr:nth-child(even) {
-    background-color: #f2f2f2;
+  background-color: #f2f2f2;
 }
 button {
-    padding: 10px 20px;
-    border-radius: 15px;
-    border: none;
-    cursor: pointer;
-    margin-bottom: 10px;
-    background-color: var(--ptit);
-    color: var(--white);
+  padding: 10px 20px;
+  border-radius: 15px;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 10px;
+  background-color: var(--ptit);
+  color: var(--white);
 }
 
 .popup-container {
@@ -133,9 +131,9 @@ button {
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0, 0, 0, 0.4);
   border-radius: 15px;
-box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
 }
 
 .popup-content {
@@ -166,44 +164,43 @@ box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
 }
 
 .popup-container {
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.4);
-    border-radius: 15px;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 15px;
 }
-  
+
 .popup-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    border-radius: 15px;
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
-    padding: 20px;
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  border-radius: 15px;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
+  padding: 20px;
 }
-  
+
 .close-btn {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
 }
-  
+
 .close-btn:hover,
 .close-btn:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }
-  
+
 .correct-answer {
-    color: green;
-    font-weight: bold;
+  color: green;
+  font-weight: bold;
 }
-  

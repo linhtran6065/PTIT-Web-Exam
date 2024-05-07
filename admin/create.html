@@ -26,7 +26,7 @@
             <ul class="nav-links">
                 <li class="active">
                     <a href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/index.html">
-                        <i class='bx bx-grid-alt'></i>
+                        <i class='bx bxs-home'></i>
                         <span class="link_name">Trang chủ</span>
                     </a>
                     <ul class="sub-menu blank">
@@ -35,20 +35,22 @@
                                 chủ</a></li>
                     </ul>
                 </li>
+
                 <li>
                     <div class="iocn-link">
                         <a href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/ManageStudent.html">
                             <i class='bx bx-user'></i>
-                            <span class="link_name">Quản lý tài khoản</span>
+                            <span class="link_name">Quản lý sinh viên</span>
                         </a>
                         <ul class="sub-menu blank">
                             <li><a class="link_name"
                                     href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/ManageStudent.html">
-                                    <i class='bx bx-user'></i>Quản lý tài khoản</a></li>
+                                    <i class='bx bx-user'></i>Quản lý sinh viên</a></li>
                         </ul>
                         <i class='bx bxs-chevron-down arrow'></i>
                     </div>
                 </li>
+                
                 <li>
                     <a href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/statistics.html">
                         <i class='bx bx-line-chart'></i>
@@ -93,25 +95,71 @@
         </div>
         <div class="content-container">
             <h1 id="textTitle"> Danh sách câu hỏi</h1>
+            
             <div class="buttonHeader">
-                <button onclick="myForm()"> Tạo câu hỏi</button>
+                <button onclick="onCreate()"> Tạo câu hỏi</button>
                 <button onclick="saveAll()"> Lưu</button>
-                <button onclick="deleteAll()"> Xóa hết</button>
                 <button onclick="importFile()"> Nhập đề thi</button>
-
             </div>
-            <div id="import-container">
+
+            <div class="createForm inactive" id="createForm">
+                <form >
+                    <label id="validation" style="color: red;font-style: italic;">**Cần nhập đầy đủ các thông
+                        tin**</label>
+                        <div>
+                            <label>Nhập câu hỏi*</label>
+                            <input type="text" name="name" id="name">
+                        </div>
+
+                       
+                    <div class="form-action-buttons" >
+                        <button type="button" id = "formButton" id="saveBtn">Save</button>
+                    </div>
+
+                </form>
+            </div>
+
+            <section class="createForm_ans inactive" id="createForm_ans">
+                <form >
+                    <label id="validation_ans" style="color: red;font-style: italic;">**Cần nhập đầy đủ các thông
+                        tin**</label>
+                        <section>
+                            <label>Nhập lựa chọn*</label>
+                            <input type="text" name="name_ans" id="name_ans">
+                            </br>
+                            <!-- <input id = "ans_true" name = "ans_option" type="radio" value="true"> -->
+                            <!-- <label for="ans_true">True</label>  -->
+                            <!-- <input id = "ans_false"  name = "ans_option"  type="radio" value="false"> -->
+                            <!-- <label for="ans_false">False</label> -->
+                        </section>
+
+                       
+                    <section class="form-action-buttons" >
+                        <button type="button" id="formButton_ans">Save</button>
+                    </section>
+
+                </form>
+            </section>
+
+            <form id="quizForm">
+         
+                
+    
+           
+            </form>
+      
+              
+            <!-- <div id="import-container">
                 <a id="import-btn">Chọn</a>
                 <input type="file" id="file-input" accept=".xlsx" name="Chọn file" />
 
-            </div>
-            <ol id="form-container">
+            </div> -->
 
-            </ol>
+        
         </div> <!-- content-container -->
     </div>
 
-    <script src="../static/js/CreateExam.js"></script>
+    <script type="module" src="../static/js/CreateExam.js"></script>
 
 </body>
 

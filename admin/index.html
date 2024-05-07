@@ -2,169 +2,233 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin | Trang chủ</title>
-    <link rel="stylesheet" href="../static/css/homepage.css">
-    <link rel="stylesheet" href="../static/css/common.css">
-    <link rel='stylesheet' href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css'>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin | Trang chủ</title>
+  <link rel="stylesheet" href="../static/css/homepage.css" />
+  <link rel="stylesheet" href="../static/css/common.css" />
+  <link rel="stylesheet" href="../static/css/cursor.css" />
+  <script src="../static/js/cursor.js"></script>
 
+  <link rel="stylesheet" href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+  <link rel="shortcut icon" href="https://portal.ptit.edu.vn/wp-content/uploads/2016/04/favicon.png" />
+  <meta property="og:image" content="https://portal.ptit.edu.vn/wp-content/uploads/2015/12/banner-fb.png" />
 </head>
 
 <body>
-    <div class="main-container">
-
-        <div class="sidebar close">
-            <div class="logo-details">
-                <img src="https://portal.ptit.edu.vn/wp-content/uploads/2016/04/ptit-logo.png" alt="logo">
-
-            </div>
-            <ul class="nav-links">
-                <li class="active">
-                    <a href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/index.html">
-                        <i class='bx bx-grid-alt'></i>
-                        <span class="link_name">Trang chủ</span>
-                    </a>
-                    <ul class="sub-menu blank">
-                        <li><a class="link_name"
-                                href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/index.html">Trang chủ</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <div class="iocn-link">
-                        <a href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/ManageStudent.html">
-                            <i class='bx bx-user'></i>
-                            <span class="link_name">Quản lý tài khoản</span>
-                        </a>
-                        <ul class="sub-menu blank">
-                            <li><a class="link_name"
-                                    href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/ManageStudent.html">
-                                    <i class='bx bx-user'></i>Quản lý tài khoản</a></li>
-                        </ul>
-                        <i class='bx bxs-chevron-down arrow'></i>
-                    </div>
-                </li>
-                <li>
-                    <a href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/statistics.html">
-                        <i class='bx bx-line-chart'></i>
-                        <span class="link_name">Thống kê</span>
-                    </a>
-                    <ul class="sub-menu blank">
-                        <li><a class="link_name"
-                                href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/statistics.html">Thống kê</a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li>
-                    <div class="iocn-link">
-                        <a href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/studentResults.html">
-                            <i class='bx bx-search'></i>
-                            <span class="link_name">Tra cứu</span>
-                        </a>
-                        <ul class="sub-menu blank">
-                            <li><a class="link_name"
-                                    href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/studentResults.html">Tra
-                                    cứu</a></li>
-                        </ul>
-                        <i class='bx bxs-chevron-down arrow'></i>
-                    </div>
-                </li>
-
-                <li>
-                    <a href="https://linhtran6065.github.io/PTIT-Web-Exam/index.html">
-                        <i class='bx bx-log-out'></i>
-                        <span class="link_name">Đăng xuất</span>
-                    </a>
-                    <ul class="sub-menu blank">
-                        <li><a class="link_name" href="https://linhtran6065.github.io/PTIT-Web-Exam/index.html">Đăng
-                                xuất</a>
-                        </li>
-                    </ul>
-                </li>
-
-            </ul>
-        </div>
-        <div class="content-container">
-
-            <div class="head-title">
-                <div class="left">
-                    <h1>Trang chủ</h1>
-                    <ul class="breadcrumb">
-                        <li>
-                            <a href="#">Hệ thống thi trắc nghiệm trực tuyến</a>
-                        </li>
-                        <li><i class='bx bx-chevron-right'></i></li>
-                        <li>
-                            <a class="active" href="#">Trang chủ</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-
-
-            <div class="table-data">
-                <div class="order">
-                    <div class="head">
-                        <h3>Quản lý kỳ thi</h3>
-                        <div class="search">
-                            <div class="search-box">
-                                <i class='bx bx-search'></i>
-                                <input type="text" id="searchInput" placeholder="Tìm kiếm tên kỳ thi...">
-                            </div>
-                            <select id="statusFilter">
-                                <option value="all">Tất cả</option>
-                                <option value="accessible">Truy cập tự do</option>
-                                <option value="scheduled">Yêu cầu thời gian cụ thể</option>
-                            </select>
-                            <button id="createExamBtn">Tạo kỳ thi</button>
-                        </div>
-
-                    </div>
-                    <div class="createForm inactive" id="createForm">
-                        <form onsubmit="event.preventDefault();onFormSubmit();" autocomplete="off">
-                            <label id="validation" style="color: red;font-style: italic;">**Cần nhập đầy đủ các thông
-                                tin**</label>
-                            <div>
-                                <label>Tên kỳ thi*</label>
-                                <input type="text" name="name" id="name">
-                            </div>
-                            <div>
-                                <label>Mô tả*</label>
-                                <input type="text" name="description" id="description">
-                            </div>
-                            <div>
-                                <label>Loại kỳ thi*</label>
-                                <select id="statusFilterForm">
-                                    <option value="accessible">Truy cập tự do</option>
-                                    <option value="scheduled">Yêu cầu thời gian cụ thể</option>
-                                </select>
-                            </div>
-                            <div class="form-action-buttons">
-                                <button type="submit" id="saveBtn">Save</button>
-                            </div>
-                        </form>
-                    </div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Tên kì thi</th>
-                                <th>Mô tả</th>
-                                <th>Loại kì thi</th>
-                                <th>Hành động</th>
-                            </tr>
-                        </thead>
-                        <tbody id="examTable">
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div> <!-- content-container -->
+  <div id="cursor"></div>
+  <div class="spinner-square-wrapper" id="loader">
+    <div class="spinner-square">
+      <div class="square-1 square"></div>
+      <div class="square-2 square"></div>
+      <div class="square-3 square"></div>
     </div>
-    <script src="../static/js/homepage.js"></script>
-    <script src="../static/js/adminhomepage.js"></script>
-</body>
+    <div class="white-bg"></div>
+  </div>
+  <div class="main-container">
+    <div class="sidebar close">
+      <div class="logo-details">
+        <img src="https://portal.ptit.edu.vn/wp-content/uploads/2016/04/ptit-logo.png" alt="logo" />
+      </div>
+      <ul class="nav-links">
+        <li class="active">
+          <a href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/index.html">
+            <i class="bx bxs-home"></i>
+            <span class="link_name">Trang chủ</span>
+          </a>
+          <ul class="sub-menu blank">
+            <li>
+              <a class="link_name" href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/index.html">Trang chủ</a>
+            </li>
+          </ul>
+        </li>
 
+        <li class="">
+          <a href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/ManageStudent.html">
+            <i class="bx bx-user"></i>
+          </a>
+          <ul class="sub-menu blank">
+            <li>
+              <a class="link_name" href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/ManageStudent.html">Quản lý sinh viên</a>
+            </li>
+          </ul>
+        </li>
+
+
+        <li class="">
+          <a href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/ManageAccount.html">
+            <i class='bx bxs-graduation'></i>
+          </a>
+          <ul class="sub-menu blank">
+            <li>
+              <a class="link_name" href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/ManageAccount.html">Quản lý giáo viên</a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="">
+          <a href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/statistics.html">
+            <i class="bx bx-line-chart"></i>
+            <span class="link_name">Thống kê</span>
+          </a>
+          <ul class="sub-menu blank">
+            <li>
+              <a class="link_name" href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/statistics.html">Thống kê</a>
+            </li>
+          </ul>
+        </li>
+
+        <li>
+          <div class="iocn-link">
+            <a href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/studentResults.html">
+              <i class="bx bx-search"></i>
+              <span class="link_name">Tra cứu</span>
+            </a>
+            <ul class="sub-menu blank">
+              <li>
+                <a class="link_name" href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/studentResults.html">Tra cứu</a>
+              </li>
+            </ul>
+            <i class="bx bxs-chevron-down arrow"></i>
+          </div>
+        </li>
+
+        <li>
+          <div class="iocn-link">
+            <a href="./setting.html">
+              <i class="bx bx-cog"></i>
+              <span class="link_name">Cài đặt</span>
+            </a>
+            <ul class="sub-menu blank">
+              <li><a class="link_name" href="./setting.html">Cài đặt</a></li>
+            </ul>
+            <i class="bx bxs-chevron-down arrow"></i>
+          </div>
+        </li>
+
+        <li>
+          <a onclick="handleLogOut()">
+            <i class="bx bx-log-out"></i>
+            <span class="link_name">Đăng xuất</span>
+          </a>
+          <ul class="sub-menu blank">
+            <li>
+              <a class="link_name" onclick="handleLogOut()">Đăng xuất</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="content-container">
+      <div class="head-title">
+        <div class="left">
+          <h1>Trang chủ</h1>
+          <ul class="breadcrumb">
+            <li>
+              <a href="#">Hệ thống thi trắc nghiệm trực tuyến</a>
+            </li>
+            <li><i class="bx bx-chevron-right"></i></li>
+            <li>
+              <a class="active" href="#">Trang chủ</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="table-data">
+        <div class="order">
+          <div class="head">
+            <h3>Quản lý kỳ thi</h3>
+            <div class="search">
+              <div class="search-box">
+                <i class="bx bx-search"></i>
+                <input type="text" id="searchInput" placeholder="Tìm kiếm tên kỳ thi..." />
+              </div>
+
+              <select id="statusFilter">
+                <option value="all">Tất cả</option>
+                <option value="accessible">Truy cập tự do</option>
+                <option value="scheduled">Yêu cầu thời gian cụ thể</option>
+              </select>
+
+              <!-- <button  type ="button" onclick="searchExam()" id="serchBtn">Tìm kiếm</button> -->
+
+              <button id="createExamBtn">Tạo kỳ thi</button>
+            </div>
+          </div>
+
+          <div class="createForm inactive" id="createForm">
+            <form onsubmit="event.preventDefault();onFormSubmit();" autocomplete="off">
+              <label id="validation" style="color: red; font-style: italic">**Cần nhập đầy đủ các thông tin**</label>
+              <div>
+                <label>Tên kỳ thi*</label>
+                <input type="text" name="name" placeholder="Chọn tên kỳ thi" id="name" />
+              </div>
+              <div>
+                <label>Mô tả*</label>
+                <input type="text" name="description" placeholder="Mô tả kỳ thi" id="description" />
+              </div>
+              <div>
+                <label>Thời gian bắt đầu*</label>
+                <input type="datetime-local" name="time" placeholder="Chọn thời gian" class="form-control"
+                  id="timeStart" />
+              </div>
+
+              <div>
+                <label>Thời gian kết thúc*</label>
+                <input type="datetime-local" name="time" placeholder="Chọn thời gian" class="form-control"
+                  id="timeEnd" />
+              </div>
+
+              <div>
+                <label>Loại kỳ thi*</label>
+                <select id="statusFilterForm">
+                  <option value="accessible">Truy cập tự do</option>
+                  <option value="scheduled">Yêu cầu thời gian cụ thể</option>
+                </select>
+              </div>
+              <div class="form-action-buttons">
+                <button type="submit" id="saveBtn">Save</button>
+              </div>
+            </form>
+          </div>
+
+          <table id="examList">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Tên kì thi</th>
+                <th>Ngày thi</th>
+                <th>Thời gian làm bài</th>
+                <th>Mô tả</th>
+                <th>Loại kì thi</th>
+                <th>Hành động</th>
+              </tr>
+            </thead>
+            <tbody id="examTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- content-container -->
+  </div>
+  <!-- script: gồm homepage.js và admin homepage -->
+  <!-- <script src="../static/js/homepage.js"></script> -->
+  <script type="module" src="../static/js/adminhomepage.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="../static/js/common.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script>
+    config = {
+      enableTime: true,
+      dateFormat: "Y-m-d H:i",
+    };
+    flatpickr("input[type=datetime-local]", config);
+  </script>
+</body>
 
 </html>

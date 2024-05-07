@@ -9,82 +9,117 @@
     <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
     <link rel="stylesheet" href="../static/css/common.css">
     <link rel='stylesheet' href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css'>
+    <link rel="stylesheet" href="../static/css/cursor.css" />
+    <script src="../static/js/cursor.js"></script>
+    <link rel="shortcut icon" href="https://portal.ptit.edu.vn/wp-content/uploads/2016/04/favicon.png" />
+    <meta property="og:image" content="https://portal.ptit.edu.vn/wp-content/uploads/2015/12/banner-fb.png" />
 </head>
 
 <body>
+    <div id="cursor"></div>
+    <div class="spinner-square-wrapper" id="loader">
+        <div class="spinner-square">
+            <div class="square-1 square"></div>
+            <div class="square-2 square"></div>
+            <div class="square-3 square"></div>
+        </div>
+        <div class="white-bg"></div>
+    </div>
     <div class="main-container">
 
         <div class="sidebar close">
             <div class="logo-details">
-                <img src="https://portal.ptit.edu.vn/wp-content/uploads/2016/04/ptit-logo.png" alt="logo">
-
+                <img src="https://portal.ptit.edu.vn/wp-content/uploads/2016/04/ptit-logo.png" alt="logo" />
             </div>
             <ul class="nav-links">
-                <li class="active">
+                <li class="">
                     <a href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/index.html">
-                        <i class='bx bx-grid-alt'></i>
+                        <i class="bx bxs-home"></i>
                         <span class="link_name">Trang chủ</span>
                     </a>
                     <ul class="sub-menu blank">
-                        <li><a class="link_name"
-                                href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/index.html">Trang
-                                chủ</a></li>
+                        <li>
+                            <a class="link_name" href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/index.html">Trang chủ</a>
+                        </li>
                     </ul>
                 </li>
-                <li>
-                    <div class="iocn-link">
-                        <a href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/ManageStudent.html">
-                            <i class='bx bx-user'></i>
-                            <span class="link_name">Quản lý tài khoản</span>
-                        </a>
-                        <ul class="sub-menu blank">
-                            <li><a class="link_name"
-                                    href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/ManageStudent.html">
-                                    <i class='bx bx-user'></i>Quản lý tài khoản</a></li>
-                        </ul>
-                        <i class='bx bxs-chevron-down arrow'></i>
-                    </div>
+
+                <li class="">
+                    <a href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/ManageStudent.html">
+                        <i class="bx bx-user"></i>
+                    </a>
+                    <ul class="sub-menu blank">
+                        <li>
+                            <a class="link_name" href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/ManageStudent.html">Quản lý sinh
+                                viên</a>
+                        </li>
+                    </ul>
                 </li>
-                <li>
+
+
+                <li class="">
+                    <a href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/ManageAccount.html">
+                        <i class='bx bxs-graduation'></i>
+                    </a>
+                    <ul class="sub-menu blank">
+                        <li>
+                            <a class="link_name" href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/ManageAccount.html">Quản lý giáo
+                                viên</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="">
                     <a href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/statistics.html">
-                        <i class='bx bx-line-chart'></i>
+                        <i class="bx bx-line-chart"></i>
                         <span class="link_name">Thống kê</span>
                     </a>
                     <ul class="sub-menu blank">
-                        <li><a class="link_name"
-                                href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/statistics.html">Thống
-                                kê</a>
+                        <li>
+                            <a class="link_name" href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/statistics.html">Thống kê</a>
                         </li>
                     </ul>
                 </li>
 
-                <li>
+                <li class="active">
                     <div class="iocn-link">
                         <a href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/studentResults.html">
-                            <i class='bx bx-search'></i>
+                            <i class="bx bx-search"></i>
                             <span class="link_name">Tra cứu</span>
                         </a>
                         <ul class="sub-menu blank">
-                            <li><a class="link_name"
-                                    href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/studentResults.html">Tra
-                                    cứu</a></li>
+                            <li>
+                                <a class="link_name" href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/studentResults.html">Tra cứu</a>
+                            </li>
                         </ul>
-                        <i class='bx bxs-chevron-down arrow'></i>
+                        <i class="bx bxs-chevron-down arrow"></i>
                     </div>
                 </li>
 
                 <li>
-                    <a href="https://linhtran6065.github.io/PTIT-Web-Exam/index.html">
-                        <i class='bx bx-log-out'></i>
+                    <div class="iocn-link">
+                        <a href="./setting.html">
+                            <i class="bx bx-cog"></i>
+                            <span class="link_name">Cài đặt</span>
+                        </a>
+                        <ul class="sub-menu blank">
+                            <li><a class="link_name" href="./setting.html">Cài đặt</a></li>
+                        </ul>
+                        <i class="bx bxs-chevron-down arrow"></i>
+                    </div>
+                </li>
+
+                <li>
+                    <a onclick="handleLogOut()">
+                        <i class="bx bx-log-out"></i>
                         <span class="link_name">Đăng xuất</span>
                     </a>
                     <ul class="sub-menu blank">
-                        <li><a class="link_name" href="https://linhtran6065.github.io/PTIT-Web-Exam/index.html">Đăng
-                                xuất</a>
+                        <li>
+                            <a class="link_name" onclick="handleLogOut()">Đăng xuất</a>
                         </li>
                     </ul>
                 </li>
-
             </ul>
         </div>
         <div class="content-container">
@@ -93,7 +128,7 @@
             </div>
 
             <div class="search-container">
-                <input type="text" id="searchInput" placeholder="Nhập tên hoặc MSV sinh viên...">
+                <input type="text" id="searchInput" placeholder="Nhập MSV sinh viên...">
 
             </div>
             <button class="searchButton" onclick="searchStudent()">Tìm Kiếm</button>
@@ -110,8 +145,12 @@
         </div> <!-- content-container -->
     </div>
 
-    <script src="../static/js/fixedData.js"></script>
-    <script src="../static/js/studentResults.js"></script>
+    <!-- <script src="../static/js/fixedData.js"></script> -->
+    <script type="module" src="../static/js/studentResults.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="../static/js/common.js"></script>
 </body>
 
 </html>

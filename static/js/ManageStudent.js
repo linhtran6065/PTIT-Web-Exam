@@ -1,45 +1,78 @@
+import { apiDelete, apiGet, apiPost, apiPut } from "../../apiService.js";
+import { isTokenExpired, logout } from "../../auth.js";
+
 var selectedRow = null;
+var msv = null;
 var createForm = document.getElementById("createForm");
 
 var studentList = [];
 createForm.style.display = "none";
 var isValid = (document.getElementById("validation").style.display = "none");
 
-document.addEventListener("DOMContentLoaded", function () {
-  studentList = [
-    {
-      msv: "B21DCCN101",
-      name: "Nguyễn Văn A",
-      email: "123@gmail.com",
-      class: "E21CQCN02",
-    },
-    {
-      msv: "B21DCCN102",
-      name: "Nguyễn Văn B",
-      email: "123@gmail.com",
-      class: "E21CQCN02",
-    },
-  ];
-  renderStudents(studentList);
-});
+const token = localStorage.getItem("token");
+isTokenExpired();
+initTable();
+
+// document.addEventListener("DOMContentLoaded", function () {
+//   // fetch("http://localhost:8080/api/students", {
+//   //   method: "GET",
+//   //   headers: {
+//   //     "Content-Type": "application/json",
+//   //     Authorization: `Bearer ${token}`,
+//   //   },
+//   // })
+//   //   .then((res) => {
+//   //     if (!res.ok) {
+//   //       throw new Error("Network response was not ok ${response.status}");
+//   //     }
+//   //     return res.json();
+//   //   })
+//   //   .then((data) => {
+//   //     studentList = data.data;
+//   //     renderStudents(studentList);
+//   //   })gv
+//   //   .catch((error) => console.log(error));
+//   isTokenExpired();
+//   apiGet("/api/students", token)
+//     .then((data) => {
+//       studentList = data.data;
+//       console.log("Fetched students:", studentList);
+//       renderStudents(studentList);
+//     })
+//     .catch((error) => {
+//       console.error("Error fetching students:", error);
+//     });
+// });
+
+function initTable() {
+  apiGet("/api/students", localStorage.getItem("token"))
+    .then((data) => {
+      studentList = data.data;
+      console.log("Fetched students:", studentList);
+      renderStudents(studentList);
+    })
+    .catch((error) => {
+      console.error("Error fetching students:", error);
+    });
+}
 
 function renderStudents(studentList) {
   var table = document
     .getElementById("studentList")
     .getElementsByTagName("tbody")[0];
   table.innerHTML = "";
-  studentList.forEach((exam) => {
+  studentList.forEach((student) => {
     var newRow = table.insertRow(table.length);
-    cell1 = newRow.insertCell(0);
-    cell1.innerHTML = exam.msv;
-    cell2 = newRow.insertCell(1);
-    cell2.innerHTML = exam.name;
-    cell3 = newRow.insertCell(2);
-    cell3.innerHTML = exam.email;
-    cell4 = newRow.insertCell(3);
-    cell4.innerHTML = exam.class;
+    const cell1 = newRow.insertCell(0);
+    cell1.innerHTML = student.msv;
+    const cell2 = newRow.insertCell(1);
+    cell2.innerHTML = student.firstName + " " + student.lastName;
+    const cell3 = newRow.insertCell(2);
+    cell3.innerHTML = student.email;
+    const cell4 = newRow.insertCell(3);
+    cell4.innerHTML = student.class;
 
-    cell5 = newRow.insertCell(4);
+    const cell5 = newRow.insertCell(4);
     cell5.innerHTML = `<div class="detailBtn"> <button onclick="onEdit(this)">Sửa</button>
                        <button onClick="onDelete(this)">Xóa</button>
                        `;
@@ -61,41 +94,43 @@ function onFormSubmit() {
 function readFormData() {
   var formData = {};
   formData["msv"] = document.getElementById("msv").value;
-  formData["name"] = document.getElementById("name").value;
+  formData["firstName"] = document.getElementById("firstname").value;
+  formData["lastName"] = document.getElementById("lastname").value;
   formData["email"] = document.getElementById("email").value;
   formData["class"] = document.getElementById("class").value;
-  studentList.push(formData);
+  //studentList.push(formData);
 
   return formData;
 }
 function onCreate() {
-  createForm.style.display =
-    createForm.style.display === "none" ? "block" : "none";
+  resetForm();
+  createForm.style.display = createForm.style.display === "none" ? "block" : "none";
 }
 
 function insertNewRecord(data) {
-  var table = document
-    .getElementById("studentList")
-    .getElementsByTagName("tbody")[0];
-  var newRow = table.insertRow(table.length);
-  cell1 = newRow.insertCell(0);
-  cell1.innerHTML = data.msv;
-  cell2 = newRow.insertCell(1);
-  cell2.innerHTML = data.name;
-  cell3 = newRow.insertCell(2);
-  cell3.innerHTML = data.email;
-  cell4 = newRow.insertCell(3);
-  cell4.innerHTML = data.class;
-
-  cell5 = newRow.insertCell(4);
-  cell5.innerHTML = `<div class="detailBtn"> <button onclick="onEdit(this)">Sửa</button>
-                       <button onClick="onDelete(this)">Xóa</button>
-                       `;
+  isTokenExpired();
+  apiPost("/api/students", data, localStorage.getItem("token"))
+    .then((response) => {
+      console.log("Fetched students:", response);
+      if (response.message === "Student already exists!") {
+        alert("Student already exists!");
+      } 
+      else {
+        alert("Create student successful");
+        initTable();
+      }
+        
+    })
+    .catch((error) => {
+      alert(error.message);
+      // alert("Create student error");
+    });
 }
 
 function resetForm() {
   document.getElementById("msv").value = "";
-  document.getElementById("name").value = "";
+  document.getElementById("firstname").value = "";
+  document.getElementById("lastname").value = "";
   document.getElementById("email").value = "";
   document.getElementById("class").value = "";
 
@@ -103,24 +138,52 @@ function resetForm() {
 }
 
 function onEdit(td) {
-  createForm.style.display = "block";
+ createForm.style.display = createForm.style.display === "none" ? "block" : "none";  
+
   selectedRow = td.parentElement.parentElement.parentElement;
+  msv = selectedRow.cells[0].innerHTML;
   document.getElementById("msv").value = selectedRow.cells[0].innerHTML;
-  document.getElementById("name").value = selectedRow.cells[1].innerHTML;
+  const cellContent = selectedRow.cells[1].innerHTML.trim();
+  const parts = cellContent.split(" ");
+  document.getElementById("firstname").value = parts[0];
+  if (parts.length > 1) {
+    document.getElementById("lastname").value = parts.slice(1).join(" ");
+  } else {
+    document.getElementById("lastname").value = "";
+  }
+
   document.getElementById("email").value = selectedRow.cells[2].innerHTML;
   document.getElementById("class").value = selectedRow.cells[3].innerHTML;
+
 }
 function updateRecord(formData) {
-  selectedRow.cells[0].innerHTML = formData.msv;
-  selectedRow.cells[1].innerHTML = formData.name;
-  selectedRow.cells[2].innerHTML = formData.email;
-  selectedRow.cells[3].innerHTML = formData.class;
+  console.log(selectedRow);
+  isTokenExpired();
+  apiPut(`/api/students/${msv}`, formData, localStorage.getItem("token"))
+    .then((response) => {
+      console.log("Fetched students:", response);
+      initTable();
+       alert("Update student successful");
+    })
+    .catch((error) => {
+      alert("Update student error");
+    });
 }
 
 function onDelete(td) {
   if (confirm("Are you sure to delete this record ?")) {
-    row = td.parentElement.parentElement.parentElement;
-    document.getElementById("studentList").deleteRow(row.rowIndex);
+    var row = td.parentElement.parentElement.parentElement;
+    msv = row.cells[0].innerHTML;
+    isTokenExpired();
+    apiDelete(`/api/students/${msv}`, token)
+      .then((response) => {
+        alert("Delete successful");
+        document.getElementById("studentList").deleteRow(row.rowIndex);
+      })
+      .catch((error) => {
+        alert("Delete error");
+      });
+
     resetForm();
   }
 }
@@ -128,7 +191,8 @@ function validate() {
   isValid = true;
   if (
     document.getElementById("msv").value == "" ||
-    document.getElementById("name").value == "" ||
+    document.getElementById("firstname").value == "" ||
+    document.getElementById("lastname").value == "" ||
     document.getElementById("email").value == "" ||
     document.getElementById("class").value == ""
   ) {
@@ -144,7 +208,8 @@ const searchInput = document.getElementById("searchInput");
 function filterStudents() {
   const searchText = searchInput.value.toLowerCase();
   const filteredStudent = studentList.filter((student) => {
-    const nameMatch = student.name.toLowerCase().includes(searchText);
+    var name = student.firstName + " " + student.lastName;
+    const nameMatch = name.toLowerCase().includes(searchText);
     const msvMatch = student.msv.toLowerCase().includes(searchText);
     return nameMatch || msvMatch;
   });
@@ -153,3 +218,14 @@ function filterStudents() {
 }
 
 searchInput.addEventListener("input", filterStudents);
+
+function handleLogOut() {
+  logout();
+}
+
+window.handleLogOut = handleLogOut;
+
+window.onCreate = onCreate;
+window.onEdit = onEdit;
+window.onDelete = onDelete;
+window.onFormSubmit = onFormSubmit;
