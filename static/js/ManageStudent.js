@@ -103,8 +103,8 @@ function readFormData() {
   return formData;
 }
 function onCreate() {
-  createForm.style.display =
-    createForm.style.display === "none" ? "block" : "none";
+  resetForm();
+  createForm.style.display = createForm.style.display === "none" ? "block" : "none";
 }
 
 function insertNewRecord(data) {
@@ -112,12 +112,18 @@ function insertNewRecord(data) {
   apiPost("/api/students", data, localStorage.getItem("token"))
     .then((response) => {
       console.log("Fetched students:", response);
-      alert("Create student successful");
-      studentList.push(data);
-      renderStudents(studentList);
+      if (response.message === "Student already exists!") {
+        alert("Student already exists!");
+      } 
+      else {
+        alert("Create student successful");
+        initTable();
+      }
+        
     })
     .catch((error) => {
-      alert("Create student error");
+      alert(error.message);
+      // alert("Create student error");
     });
 }
 
@@ -132,7 +138,8 @@ function resetForm() {
 }
 
 function onEdit(td) {
-  createForm.style.display = "block";
+ createForm.style.display = createForm.style.display === "none" ? "block" : "none";  
+
   selectedRow = td.parentElement.parentElement.parentElement;
   msv = selectedRow.cells[0].innerHTML;
   document.getElementById("msv").value = selectedRow.cells[0].innerHTML;
@@ -147,6 +154,7 @@ function onEdit(td) {
 
   document.getElementById("email").value = selectedRow.cells[2].innerHTML;
   document.getElementById("class").value = selectedRow.cells[3].innerHTML;
+
 }
 function updateRecord(formData) {
   console.log(selectedRow);
@@ -155,15 +163,7 @@ function updateRecord(formData) {
     .then((response) => {
       console.log("Fetched students:", response);
       initTable();
-      // console.log(selectedRow);
-      // if (selectedRow) {
-      //   selectedRow.cells[0].innerHTML = formData.msv;
-      //   selectedRow.cells[1].innerHTML =
-      //     formData.firstName + " " + formData.lastName;
-      //   selectedRow.cells[2].innerHTML = formData.email;
-      //   selectedRow.cells[3].innerHTML = formData.class;
-      // }
-      alert("Update student successful");
+       alert("Update student successful");
     })
     .catch((error) => {
       alert("Update student error");
