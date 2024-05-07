@@ -18,7 +18,8 @@ const token = localStorage.getItem("token");
 var examList = [];
 const startTime = new Date().toISOString();
 var count = 0;
-
+var examStartTime = null;
+var examEndTime = null;
 isTokenExpired();
 initExam();
 
@@ -28,9 +29,15 @@ function initExam() {
     .then((exam) => {
       examList = exam.data;
       count = exam.count;
+
+      examStartTime = exam.exam.startTime;
+      examEndTime = exam.exam.endTime;
       localStorage.setItem("count", count);
       console.log("Fetched exams:", exam);
       renderExams(examList);
+      if (examStartTime != null && examEndTime != null) {
+        calculateTime(examStartTime, examEndTime);
+      }
     })
     .catch((error) => {
       console.error("Error fetching exams:", error);
@@ -44,9 +51,20 @@ const message = document.getElementById("message");
 const inputs = quizForm.getElementsByTagName("input");
 
 let isSumbit = false;
-let timeLeft = 300; // 300 giây = 5 phút
+let timeLeft = -1; // 300 giây = 5 phút
 const timerDisplay = document.getElementById("timer");
+const timeDiv = document.querySelector(".timer-div");
+timeDiv.style.display = "none";
 
+function calculateTime(examStartTime, examEndTime) {
+  const date1 = new Date(examStartTime);
+  const date2 = new Date(examEndTime);
+
+  const diffMilliseconds = Math.abs(date2 - date1);
+  timeLeft = diffMilliseconds;
+  console.log(timeLeft);
+  showTime();
+}
 //   let totalPoints = 0;
 //   let totalQuestions = inputs.length / 4;
 
@@ -139,22 +157,44 @@ function renderExams(examList) {
   });
 }
 
+function showTime() {
+  // Bắt đầu bộ đếm thời gian
+  timeDiv.style.display = "inline";
+  const timer = setInterval(function () {
+    if (timeLeft <= 0) {
+      clearInterval(timer); // Stop the interval if time is up
+      timerDisplay.textContent = "Hết giờ!"; // Display message
+      showMessage("Hết giờ! Bạn đã không kịp nộp bài."); // Notify user
+    } else {
+      // Calculate hours, minutes, and seconds from milliseconds
+      const MS_PER_SECOND = 1000;
+      const MS_PER_MINUTE = MS_PER_SECOND * 60;
+      const MS_PER_HOUR = MS_PER_MINUTE * 60;
 
-// Bắt đầu bộ đếm thời gian
-const timer = setInterval(function () {
-  if (timeLeft <= 0) {
-    clearInterval(timer);
-    timerDisplay.textContent = "Hết giờ!";
-    showMessage("Hết giờ! Bạn đã không kịp nộp bài.");
-    // disableForm();
-  } else {
-    const minutes = Math.floor(timeLeft / 60);
-    let seconds = timeLeft % 60;
-    seconds = seconds < 10 ? "0" + seconds : seconds;
-    timerDisplay.textContent = `Thời gian còn lại: ${minutes}:${seconds}`;
-    timeLeft--;
-  }
-}, 1000);
+      const hours = Math.floor(timeLeft / MS_PER_HOUR);
+      const remainingAfterHours = timeLeft % MS_PER_HOUR;
+
+      const minutes = Math.floor(remainingAfterHours / MS_PER_MINUTE);
+      const remainingAfterMinutes = remainingAfterHours % MS_PER_MINUTE;
+
+      const seconds = Math.floor(remainingAfterMinutes / MS_PER_SECOND);
+
+      const formattedMinutes = minutes < 10 ? "0" + minutes : minutes;
+      const formattedSeconds = seconds < 10 ? "0" + seconds : seconds;
+
+      // Update the timer display
+      if (hours > 0) {
+        const formattedHours = hours < 10 ? "0" + hours : hours;
+        timerDisplay.textContent = `Thời gian còn lại: ${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+      } else {
+        timerDisplay.textContent = `Thời gian còn lại: ${formattedMinutes}:${formattedSeconds}`;
+      }
+
+      // Decrement timeLeft by one second (1000 milliseconds)
+      timeLeft -= 1000;
+    }
+  }, 1000); // Update every second
+}
 
 //   // Hàm vô hiệu hóa form sau khi nộp bài
 //   function disableForm() {
