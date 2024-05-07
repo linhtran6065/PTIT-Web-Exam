@@ -44,7 +44,6 @@ label.validation-error {
   display: none;
 }
 body {
-  font-family: Arial, sans-serif;
   background-color: var(--lightlightgray);
   margin: 0;
   padding: 0;

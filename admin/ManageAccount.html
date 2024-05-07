@@ -5,58 +5,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-        Quản lý thông tin giáo viên
+        Admin | Quản lý thông tin giáo viên
     </title>
+    <link rel="stylesheet" href="../static/css/cursor.css" />
+    <script src="../static/js/cursor.js"></script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../static/css/common.css">
     <link rel="stylesheet" href="../static/css/ManageAccount.css">
     <link rel='stylesheet' href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css'>
+    <link rel="shortcut icon" href="https://portal.ptit.edu.vn/wp-content/uploads/2016/04/favicon.png" />
+    <meta property="og:image" content="https://portal.ptit.edu.vn/wp-content/uploads/2015/12/banner-fb.png" />
 </head>
 
 <body>
+    <div id="cursor"></div>
+    <div class="spinner-square-wrapper" id="loader">
+        <div class="spinner-square">
+            <div class="square-1 square"></div>
+            <div class="square-2 square"></div>
+            <div class="square-3 square"></div>
+        </div>
+        <div class="white-bg"></div>
+    </div>
     <div class="main-container">
 
         <div class="sidebar close">
             <div class="logo-details">
-                <img src="https://portal.ptit.edu.vn/wp-content/uploads/2016/04/ptit-logo.png" alt="logo">
-
+                <img src="https://portal.ptit.edu.vn/wp-content/uploads/2016/04/ptit-logo.png" alt="logo" />
             </div>
             <ul class="nav-links">
-                <li class="active">
+                <li class="">
                     <a href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/index.html">
-                        <i class='bx bx-grid-alt'></i>
+                        <i class="bx bxs-home"></i>
                         <span class="link_name">Trang chủ</span>
                     </a>
                     <ul class="sub-menu blank">
-                        <li><a class="link_name"
-                                href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/index.html">Trang
-                                chủ</a></li>
+                        <li>
+                            <a class="link_name" href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/index.html">Trang chủ</a>
+                        </li>
                     </ul>
                 </li>
-                <li>
-                    <div class="iocn-link">
-                        <a href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/ManageStudent.html">
-                            <i class='bx bx-user'></i>
-                            <span class="link_name">Quản lý tài khoản</span>
-                        </a>
-                        <ul class="sub-menu blank">
-                            <li><a class="link_name"
-                                    href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/ManageStudent.html">
-                                    <i class='bx bx-user'></i>Quản lý tài khoản</a></li>
-                        </ul>
-                        <i class='bx bxs-chevron-down arrow'></i>
-                    </div>
+
+                <li class="">
+                    <a href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/ManageStudent.html">
+                        <i class="bx bx-user"></i>
+                    </a>
+                    <ul class="sub-menu blank">
+                        <li>
+                            <a class="link_name" href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/ManageStudent.html">Quản lý sinh
+                                viên</a>
+                        </li>
+                    </ul>
                 </li>
-                <li>
+
+
+                <li class="active">
+                    <a href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/ManageAccount.html">
+                        <i class='bx bxs-graduation'></i>
+                    </a>
+                    <ul class="sub-menu blank">
+                        <li>
+                            <a class="link_name" href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/ManageAccount.html">Quản lý giáo
+                                viên</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="">
                     <a href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/statistics.html">
-                        <i class='bx bx-line-chart'></i>
+                        <i class="bx bx-line-chart"></i>
                         <span class="link_name">Thống kê</span>
                     </a>
                     <ul class="sub-menu blank">
-                        <li><a class="link_name"
-                                href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/statistics.html">Thống
-                                kê</a>
+                        <li>
+                            <a class="link_name" href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/statistics.html">Thống kê</a>
                         </li>
                     </ul>
                 </li>
@@ -64,39 +87,78 @@
                 <li>
                     <div class="iocn-link">
                         <a href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/studentResults.html">
-                            <i class='bx bx-search'></i>
+                            <i class="bx bx-search"></i>
                             <span class="link_name">Tra cứu</span>
                         </a>
                         <ul class="sub-menu blank">
-                            <li><a class="link_name"
-                                    href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/studentResults.html">Tra
-                                    cứu</a></li>
+                            <li>
+                                <a class="link_name" href="https://linhtran6065.github.io/PTIT-Web-Exam/admin/studentResults.html">Tra cứu</a>
+                            </li>
                         </ul>
-                        <i class='bx bxs-chevron-down arrow'></i>
+                        <i class="bx bxs-chevron-down arrow"></i>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="iocn-link">
+                        <a href="./setting.html">
+                            <i class="bx bx-cog"></i>
+                            <span class="link_name">Cài đặt</span>
+                        </a>
+                        <ul class="sub-menu blank">
+                            <li><a class="link_name" href="./setting.html">Cài đặt</a></li>
+                        </ul>
+                        <i class="bx bxs-chevron-down arrow"></i>
                     </div>
                 </li>
 
                 <li>
                     <a onclick="handleLogOut()">
-                        <i class='bx bx-log-out'></i>
+                        <i class="bx bx-log-out"></i>
                         <span class="link_name">Đăng xuất</span>
                     </a>
                     <ul class="sub-menu blank">
-                        <li><a class="link_name" onclick="handleLogOut()">Đăng
-                                xuất</a>
+                        <li>
+                            <a class="link_name" onclick="handleLogOut()">Đăng xuất</a>
                         </li>
                     </ul>
                 </li>
-
             </ul>
         </div>
 
         <div class="content-container">
 
-            <div class="container">
-                <div class="header">
+            <div class="head-title">
+                <div class="left">
                     <h1>Quản lý thông tin giáo viên</h1>
-                    <button type="button" id="createBtn" onclick="onCreate(this)">Tạo mới</button>
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="#">Hệ thống thi trắc nghiệm trực tuyến</a>
+                        </li>
+                        <li><i class="bx bx-chevron-right"></i></li>
+                        <li>
+                            <a class="active" href="#">Quản lý thông tin giáo viên</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div class="container">
+
+
+                <div class="head">
+                    <h3>Quản lý thông tin giáo viên</h3>
+                    <div class="search">
+                        <div class="search-box">
+                            <i class="bx bx-search"></i>
+                            <input type="text" id="searchInput" placeholder="Tìm kiếm tên">
+                        </div>
+
+                        <button type="button" id="createBtn" onclick="onCreate(this)">
+                            Tạo mới
+                        </button>
+                    </div>
                 </div>
 
                 <div class="createForm" id="createForm">
@@ -120,7 +182,7 @@
                             <input type="password" name="password" id="password">
                         </div>
 
-               
+
 
                         <div class="form-action-buttons">
                             <button type="submit" id="saveBtn">Save</button>
@@ -132,7 +194,7 @@
                     <form onsubmit="event.preventDefault();onFormSubmit();" autocomplete="off">
                         <!-- <label id="validation" style="color: red;font-style: italic;">**Cần nhập đầy đủ các thông
                             tin**</label> -->
-                
+
                         <div>
                             <label>Nhập mật khẩu cũ*</label>
                             <input type="text" name="oldPassword" id="oldPassword">
@@ -141,7 +203,7 @@
                             <label>Nhập mật khẩu mới*</label>
                             <input type="text" name="newPassword" id="newPassword">
                         </div>
-              
+
                         <div class="form-action-buttons">
                             <button type="submit" id="saveBtnPassword">Save</button>
                         </div>
@@ -149,7 +211,7 @@
                 </div>
 
                 <br>
-                <input type="text" id="searchInput" placeholder="Tìm kiếm tên">
+
 
                 <div id="student-table">
                     <table class="list" id="studentList">
@@ -177,6 +239,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
+    <script src="../static/js/common.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
