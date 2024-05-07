@@ -35,7 +35,7 @@ function initExam() {
       localStorage.setItem("count", count);
       console.log("Fetched exams:", exam);
       renderExams(examList);
-      if (examStartTime != null && examEndTime != null) {
+      if (exam.exam.type !== "Tự do") {
         calculateTime(examStartTime, examEndTime);
       }
     })
