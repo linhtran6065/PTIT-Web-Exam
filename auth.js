@@ -25,7 +25,7 @@ export function isTokenExpired() {
           navigate(isAdmin);
         } else {
           const currentUrl = window.location.href;
-          if (currentUrl == "https://linhtran6065.github.io/PTIT-Web-Exam/index.html") {
+          if (currentUrl == "http://127.0.0.1:5500/index.html") {
             navigate(isAdmin);
           }
         }
@@ -38,9 +38,9 @@ export function isTokenExpired() {
 
 function navigate(isAdmin) {
   if (isAdmin) {
-    window.location.href = "https://linhtran6065.github.io/PTIT-Web-Exam/admin/index.html";
+    window.location.href = "http://127.0.0.1:5500/admin/index.html";
   } else {
-    window.location.href = "https://linhtran6065.github.io/PTIT-Web-Exam/user/index.html";
+    window.location.href = "http://127.0.0.1:5500/user/index.html";
   }
 }
 
@@ -95,7 +95,7 @@ export function logout() {
       localStorage.removeItem("userId");
       localStorage.removeItem("isAdmin");
       alert("Đăng xuất thành công");
-      window.location.href = "https://linhtran6065.github.io/PTIT-Web-Exam/index.html";
+      window.location.href = "http://127.0.0.1:5500/index.html";
     })
     .catch((error) => {
       console.log(error);

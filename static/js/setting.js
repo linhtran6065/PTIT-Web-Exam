@@ -46,5 +46,8 @@ function onFormSubmit() {
       alert(error.message);
     });
 }
-
+function handleLogOut() {
+  logout();
+}
 window.onFormSubmit = onFormSubmit;
+window.handleLogOut = handleLogOut;

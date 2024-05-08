@@ -409,10 +409,11 @@ function sortData() {
 
 function calculateStatistics(data) {
   const totalParticipations = data.length;
-  const completed = data.filter((student) => student.isFinish === "Có").length;
+  const completed = data.filter((student) => student.isFinish == true).length;
   const completionRate = ((completed / totalParticipations) * 100).toFixed(2);
   const averageScore = (
-    data.reduce((acc, curr) => acc + curr.score, 0) / totalParticipations
+    data.reduce((acc, curr) => acc + (curr.score / totalQuestions) * 10, 0) /
+    totalParticipations
   ).toFixed(2);
 
   document.getElementById("totalParticipations").textContent =
@@ -502,7 +503,10 @@ window.onload = () => {
   calculateStatistics(currentDisplayedData);
   drawScoreDistributionChart(currentDisplayedData);
 };
-
+function handleLogOut() {
+  logout();
+}
 window.filterResults = filterResults;
 window.exportToExcel = exportToExcel;
 window.sortData = sortData;
+window.handleLogOut = handleLogOut;
